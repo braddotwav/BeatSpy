@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Assets\Ico\icon.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Assets\Fonts\Gilroy-Regular.ttf" />
+    <None Remove="Assets\Images\beatspy-icons-clock.png" />
+    <None Remove="Assets\Images\beatspy-icons-heart.png" />
+    <None Remove="Assets\Images\beatspy-icons-note.png" />
+    <None Remove="Assets\Images\beatspy-icons-volume.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Assets\Ico\icon.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
+    <PackageReference Include="NLog" Version="5.2.2" />
+    <PackageReference Include="SharpVectors" Version="1.8.1" />
+    <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Assets\Fonts\Gilroy-ExtraBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Gilroy-Regular.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\beatspy-icons-clock.png" />
+    <Resource Include="Assets\Images\beatspy-icons-heart.png" />
+    <Resource Include="Assets\Images\beatspy-icons-volume.png" />
+    <Resource Include="Assets\Images\beatspy-icons-note.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Assets\Svg\" />
+  </ItemGroup>
+
+</Project>

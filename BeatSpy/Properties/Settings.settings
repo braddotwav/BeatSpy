@@ -1,0 +1,9 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BeatSpy.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="SpotClientId" Type="System.String" Scope="User">
+      <Value Profile="(Default)">4b675b489cf74ff2a4a2d4483cf1dbe1</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
