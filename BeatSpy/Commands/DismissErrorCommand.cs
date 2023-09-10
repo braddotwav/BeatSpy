@@ -14,7 +14,7 @@ internal class DismissErrorCommand : CommandBase
 
     public override void Execute(object? parameter)
     {
-        messageViewModel.Message = string.Empty;
+        messageViewModel.ClearMessage();
     }
 
     public override bool CanExecute(object? parameter)

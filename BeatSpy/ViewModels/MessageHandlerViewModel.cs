@@ -11,7 +11,7 @@ internal class MessageHandlerViewModel : ObservableObject
 	public string Message
 	{
 		get { return message ?? string.Empty; }
-		set 
+		private set 
 		{ 
 			message = value;
 			OnPropertyChanged();
@@ -27,4 +27,14 @@ internal class MessageHandlerViewModel : ObservableObject
     {
 		DismissError = new DismissErrorCommand(this);
     }
+
+	public void SetMessage(string message)
+	{
+		Message = message;
+	}
+
+	public void ClearMessage()
+	{
+		Message = string.Empty;
+	}
 }

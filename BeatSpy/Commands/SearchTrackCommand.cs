@@ -46,12 +46,12 @@ internal class SearchTrackCommand : AsyncCommandBase
             catch (ArgumentNullException ex)
             {
                 logger.Error(ex, "Client is null");
-                messageViewModel.Message = "Error: Client is null please login using spotify and restart.";
+                messageViewModel.SetMessage("Client is null - Please log-in using your spotify account");
             }
             catch (ArgumentOutOfRangeException ex)
             {
                 logger.Error(ex, $"Could not find a track matching {searchQuery.Text}");
-                messageViewModel.Message = "Error: Could not find a track matching your request.";
+                messageViewModel.SetMessage("Failed to find a track matching your request");
             }
         }
     }

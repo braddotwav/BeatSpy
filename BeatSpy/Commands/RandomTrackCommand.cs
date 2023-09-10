@@ -35,7 +35,7 @@ internal class RandomTrackCommand : AsyncCommandBase
         catch (Exception ex)
         {
             logger.Error(ex);
-            messageViewModel.Message = "Error: Issue retriving a random track";
+            messageViewModel.SetMessage("Failed to retrieve a random track");
         }
     }
 
