@@ -1,16 +1,17 @@
 ﻿using BeatSpy.Commands;
-using BeatSpy.ViewModels.Base;
 using System.Windows.Input;
+using BeatSpy.ViewModels.Base;
+using BeatSpy.DataTypes.Interfaces;
 
 namespace BeatSpy.ViewModels;
 
-internal class MessageHandlerViewModel : ObservableObject
+internal class MessageHandlerViewModel : ObservableObject, IMessageNotify
 {
-	private string? message;
+	private string message = string.Empty;
 
 	public string Message
 	{
-		get { return message ?? string.Empty; }
+		get { return message; }
 		private set 
 		{ 
 			message = value;
