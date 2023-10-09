@@ -1,23 +1,28 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
-    
-    <!--Background Colours-->
-    <SolidColorBrush x:Key="BackgroundPrimaryDark" Color="#0c0c0c"/>
-    <SolidColorBrush x:Key="BackgroundSecondDark" Color="#191919"/>
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
-    <!--Foreground Colours-->
-    <SolidColorBrush x:Key="ForegroundPrimaryDark" Color="#0f0f0f"/>
-    <SolidColorBrush x:Key="ForegroundPrimaryLight" Color="#e5e5e5"/>
+    <!--  Background Colours  -->
+    <SolidColorBrush x:Key="BackgroundPrimaryDark" Color="#0c0c0c" />
+    <SolidColorBrush x:Key="BackgroundSecondDark" Color="#191919" />
 
-    <!--Search Colours-->
-    <SolidColorBrush x:Key="SearchOutline" Color="#d8d8d8" Opacity="0.1"/>
-    <SolidColorBrush x:Key="SearchHoover" Color="#d8d8d8" Opacity="0.2"/>
-    
-    <!--InActive Colours-->
-    <SolidColorBrush x:Key="InActiveBackground" Color="#3c3c3c"/>
-    <SolidColorBrush x:Key="InActiveForeground" Color="#636363"/>
-    
-    <!--Error Colours-->
+    <!--  Foreground Colours  -->
+    <SolidColorBrush x:Key="ForegroundPrimaryDark" Color="#0f0f0f" />
+    <SolidColorBrush x:Key="ForegroundPrimaryLight" Color="#e5e5e5" />
+
+    <!--  Search Colours  -->
+    <SolidColorBrush
+        x:Key="SearchOutline"
+        Opacity="0.1"
+        Color="#d8d8d8" />
+    <SolidColorBrush
+        x:Key="SearchHoover"
+        Opacity="0.2"
+        Color="#d8d8d8" />
+
+    <!--  InActive Colours  -->
+    <SolidColorBrush x:Key="InActiveBackground" Color="#3c3c3c" />
+    <SolidColorBrush x:Key="InActiveForeground" Color="#636363" />
+
+    <!--  Error Colours  -->
     <SolidColorBrush x:Key="ForegroundError" Color="#cd1a2b" />
 
     <DrawingImage x:Key="SVGSearch">
@@ -31,26 +36,26 @@
         </DrawingImage.Drawing>
     </DrawingImage>
 
-    <Style TargetType="TextBlock" x:Key="TrackStyle">
-        <Setter Property="FontFamily" Value="/Assets/Fonts/#Gilroy ExtraBold"/>
-        <Setter Property="Foreground" Value="{StaticResource ForegroundPrimaryLight}"/>
+    <Style x:Key="TrackStyle" TargetType="TextBlock">
+        <Setter Property="FontFamily" Value="/Assets/Fonts/#Gilroy ExtraBold" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundPrimaryLight}" />
     </Style>
 
-    <Style TargetType="TextBlock" x:Key="ErrorStyle">
+    <Style x:Key="ErrorStyle" TargetType="TextBlock">
         <Setter Property="FontFamily" Value="/Assets/Fonts/#Gilroy Regular" />
-        <Setter Property="Foreground" Value="{StaticResource SearchHoover}"/>
+        <Setter Property="Foreground" Value="{StaticResource SearchHoover}" />
     </Style>
-    
-    <Style TargetType="Button" x:Key="SpotifyIcon">
+
+    <Style x:Key="SpotifyIcon" TargetType="Button">
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
                     <Border Background="Transparent">
-                        <ContentPresenter RecognizesAccessKey="True"/>
+                        <ContentPresenter RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Cursor" Value="Hand" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -58,8 +63,8 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Button" x:Key="ApplicationIcon">
-        <Setter Property="OverridesDefaultStyle" Value="True"/>
+    <Style x:Key="ApplicationIcon" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
@@ -90,7 +95,7 @@
                     </Image>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Cursor" Value="Hand"/>
+                            <Setter Property="Cursor" Value="Hand" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -98,47 +103,50 @@
         </Setter>
     </Style>
 
-    <Style TargetType="ContextMenu" x:Key="ContextMenuStyle">
-        <Setter Property="OverridesDefaultStyle" Value="True"/>
+    <Style x:Key="ContextMenuStyle" TargetType="ContextMenu">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ContextMenu">
                     <Border
-                        CornerRadius="8"
                         Padding="10"
-                        Background="{StaticResource ForegroundPrimaryDark}">
-                        <ItemsPresenter/>
+                        Background="{StaticResource ForegroundPrimaryDark}"
+                        CornerRadius="8">
+                        <ItemsPresenter />
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
 
-    <Style TargetType="MenuItem" x:Key="MenuItemStyle">
-        <Setter Property="OverridesDefaultStyle" Value="True"/>
-        <Setter Property="Width" Value="150"/>
-        <Setter Property="Height" Value="42"/>
+    <Style x:Key="MenuItemStyle" TargetType="MenuItem">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Foreground" Value="{StaticResource ForegroundPrimaryLight}" />
+        <Setter Property="Width" Value="150" />
+        <Setter Property="Height" Value="42" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="MenuItem">
                     <Border
                         x:Name="ItemBorder"
-                        CornerRadius="4"
-                        Background="Transparent"
+                        Margin="0,5"
                         Padding="5"
-                        Margin="0,5">
-                        <TextBlock x:Name="ItemText" 
-                                   Text="{Binding Path=Header, RelativeSource={RelativeSource Mode=TemplatedParent}}"
-                                   FontFamily="/Assets/Fonts/#Gilroy Regular"
-                                   VerticalAlignment="Center" 
-                                   HorizontalAlignment="Left"/>
+                        Background="Transparent"
+                        CornerRadius="4">
+                        <TextBlock
+                            x:Name="ItemText"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            FontFamily="/Assets/Fonts/#Gilroy Regular"
+                            Text="{Binding Path=Header, RelativeSource={RelativeSource Mode=TemplatedParent}}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource SearchHoover}"/>
+                            <Setter TargetName="ItemBorder" Property="Background" Value="{StaticResource SearchHoover}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="False">
-                            <Setter TargetName="ItemText" Property="Foreground" Value="{StaticResource InActiveForeground}"/>
+                            <Setter TargetName="ItemText" Property="Foreground" Value="{StaticResource InActiveForeground}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -146,81 +154,92 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Border" x:Key="MessageHandler">
-        <Setter Property="Background" Value="{StaticResource SearchOutline}"/>
+    <Style x:Key="MessageHandler" TargetType="Border">
+        <Setter Property="Background" Value="{StaticResource SearchOutline}" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource SearchHoover}"/>
-                <Setter Property="Cursor" Value="Hand"/>
+                <Setter Property="Background" Value="{StaticResource SearchHoover}" />
+                <Setter Property="Cursor" Value="Hand" />
             </Trigger>
         </Style.Triggers>
     </Style>
-    
-    <Style TargetType="TextBox" x:Key="Search">
-        <Setter Property="OverridesDefaultStyle" Value="True"/>
-        <Setter Property="Cursor" Value="IBeam"/>
-        <Setter Property="CaretBrush" Value="White"/>
-        <Setter Property="FontFamily" Value="/Assets/Fonts/#Gilroy Regular"/>
-        <Setter Property="FontSize" Value="14"/>
-        <Setter Property="Padding" Value="5"/>
-        <Setter Property="Foreground" Value="White"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+
+    <Style x:Key="Search" TargetType="TextBox">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Cursor" Value="IBeam" />
+        <Setter Property="CaretBrush" Value="White" />
+        <Setter Property="FontFamily" Value="/Assets/Fonts/#Gilroy Regular" />
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="Padding" Value="5" />
+        <Setter Property="Foreground" Value="White" />
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Setter Property="FocusVisualStyle" Value="{x:Null}" />
         <Setter Property="ContextMenu">
             <Setter.Value>
                 <ContextMenu Style="{StaticResource ContextMenuStyle}">
-                    <MenuItem Header="Copy" Style="{StaticResource MenuItemStyle}" Command="Copy"/>
-                    <MenuItem Header="Paste" Style="{StaticResource MenuItemStyle}" Command="Paste"/>
+                    <MenuItem
+                        Command="Copy"
+                        Header="Copy"
+                        Style="{StaticResource MenuItemStyle}" />
+                    <MenuItem
+                        Command="Paste"
+                        Header="Paste"
+                        Style="{StaticResource MenuItemStyle}" />
                 </ContextMenu>
             </Setter.Value>
         </Setter>
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="TextBox">
-                    <Border Background="Transparent" BorderThickness="2" CornerRadius="8">
+                    <Border
+                        Background="Transparent"
+                        BorderThickness="2"
+                        CornerRadius="8">
                         <Border.Style>
                             <Style TargetType="Border">
                                 <Style.Triggers>
                                     <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource TemplatedParent}}" Value="true">
-                                        <Setter Property="BorderBrush" Value="{StaticResource SearchHoover}"/>
+                                        <Setter Property="BorderBrush" Value="{StaticResource SearchHoover}" />
                                     </DataTrigger>
                                 </Style.Triggers>
-                                <Setter Property="BorderBrush" Value="{StaticResource SearchOutline}"/>
+                                <Setter Property="BorderBrush" Value="{StaticResource SearchOutline}" />
                             </Style>
                         </Border.Style>
                         <Grid>
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                      Focusable="False"
-                                      HorizontalScrollBarVisibility="Hidden"
-                                      VerticalScrollBarVisibility="Hidden"/>
-                            
-                            <TextBlock IsHitTestVisible="False"
-                                       Text="Search"
-                                       Name="SearchText"
-                                       VerticalAlignment="Center"
-                                       HorizontalAlignment="Left"
-                                       Margin="10,0,0,0"
-                                       FontSize="14"
-                                       FontFamily="/Assets/Fonts/#Gilroy Regular"
-                                       Foreground="#535353"
-                                       Grid.Column="1">
+                            <ScrollViewer
+                                x:Name="PART_ContentHost"
+                                Focusable="False"
+                                HorizontalScrollBarVisibility="Hidden"
+                                VerticalScrollBarVisibility="Hidden" />
+
+                            <TextBlock
+                                Name="SearchText"
+                                Grid.Column="1"
+                                Margin="10,0,0,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                FontFamily="/Assets/Fonts/#Gilroy Regular"
+                                FontSize="14"
+                                Foreground="#535353"
+                                IsHitTestVisible="False"
+                                Text="Search">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Style.Triggers>
                                             <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
-                                                <Setter Property="Visibility" Value="Visible"/>
+                                                <Setter Property="Visibility" Value="Visible" />
                                             </DataTrigger>
                                         </Style.Triggers>
-                                        <Setter Property="Visibility" Value="Hidden"/>
+                                        <Setter Property="Visibility" Value="Hidden" />
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
-                            <Image 
+                            <Image
                                 Width="12"
-                                IsHitTestVisible="False"
                                 Height="12"
+                                Margin="0,0,10,0"
                                 HorizontalAlignment="Right"
-                                Margin="0,0,10,0">
+                                IsHitTestVisible="False">
                                 <Image.Source>
                                     <DrawingImage>
                                         <DrawingImage.Drawing>
@@ -237,23 +256,26 @@
                         </Grid>
                     </Border>
                 </ControlTemplate>
-            </Setter.Value>            
+            </Setter.Value>
         </Setter>
     </Style>
 
-    <!-- TODO: Consolidate both of these styles into one button as I am only changing the mouse over colour-->
+    <!--  TODO: Consolidate both of these styles into one button as I am only changing the mouse over colour  -->
 
-    <Style TargetType="Button" x:Key="WindowButton">
-        <Setter Property="OverridesDefaultStyle" Value="True"/>
+    <Style x:Key="WindowButton" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="Border" Background="Transparent" Width="50">
-                        <ContentPresenter RecognizesAccessKey="True"/>
+                    <Border
+                        Name="Border"
+                        Width="50"
+                        Background="Transparent">
+                        <ContentPresenter RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource BackgroundSecondDark}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource BackgroundSecondDark}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -261,19 +283,38 @@
         </Setter>
     </Style>
 
-    <Style TargetType="Button" x:Key="WindowCloseButton">
-        <Setter Property="OverridesDefaultStyle" Value="True"/>
+    <Style x:Key="WindowCloseButton" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border Name="Border" Background="Transparent" Width="50">
-                        <ContentPresenter RecognizesAccessKey="True"/>
+                    <Border
+                        Name="Border"
+                        Width="50"
+                        Background="Transparent">
+                        <ContentPresenter RecognizesAccessKey="True" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ForegroundError}"/>
+                            <Setter TargetName="Border" Property="Background" Value="{StaticResource ForegroundError}" />
                         </Trigger>
                     </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <Style x:Key="WindowContextButton" TargetType="Button">
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+                    <Border
+                        Name="Border"
+                        Width="50"
+                        Background="Transparent">
+                        <ContentPresenter RecognizesAccessKey="True" />
+                    </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
