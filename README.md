@@ -26,7 +26,6 @@ Resources & Packages used
 - [NLog](https://github.com/NLog/NLog)
 - [Spotify API by JohnnyCrazy](https://github.com/JohnnyCrazy/SpotifyAPI-NET)
 - [SharpVectors by ElinamLLC](https://github.com/ElinamLLC/SharpVectors)
-- [XamlBehaviorsWpf by Microsoft](https://github.com/microsoft/XamlBehaviorsWpf/tree/master)
 - [Google Icons](https://fonts.google.com/icons)
 - [Bootstrap Icons](https://icons.getbootstrap.com/)
 - [Inno Set up](https://github.com/jrsoftware/issrc/)
