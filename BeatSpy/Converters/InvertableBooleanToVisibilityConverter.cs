@@ -7,17 +7,18 @@ namespace BeatSpy.Converters;
 
 internal class InvertableBooleanToVisibilityConverter : IValueConverter
 {
-    enum Parameters
+    enum VisibilityParameter
     {
-        Normal, Inverted
+        Normal, 
+        Inverted
     }
 
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
         var boolValue = (bool)value;
-        var direction = (Parameters)Enum.Parse(typeof(Parameters), (string)parameter);
+        var direction = (VisibilityParameter)Enum.Parse(typeof(VisibilityParameter), (string)parameter);
 
-        if (direction == Parameters.Inverted)
+        if (direction == VisibilityParameter.Inverted)
             return !boolValue ? Visibility.Visible : Visibility.Collapsed;
 
         return boolValue ? Visibility.Visible : Visibility.Collapsed;
