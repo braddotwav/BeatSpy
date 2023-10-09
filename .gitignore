@@ -397,5 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-# Custom
-auth.json
+#Ignore Installer folder
+Installer/
