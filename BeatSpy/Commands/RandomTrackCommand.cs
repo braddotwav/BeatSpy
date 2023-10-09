@@ -1,12 +1,12 @@
 ﻿using NLog;
 using System;
-using BeatSpy.Models;
 using SpotifyAPI.Web;
+using BeatSpy.Models;
 using BeatSpy.Helpers;
+using BeatSpy.Services;
 using BeatSpy.ViewModels;
 using BeatSpy.Commands.Base;
 using System.Threading.Tasks;
-using BeatSpy.DataTypes.Interfaces;
 
 namespace BeatSpy.Commands;
 
@@ -14,28 +14,25 @@ internal class RandomTrackCommand : AsyncCommandBase
 {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-    private readonly ISpotifyService service;
-    private readonly BeatTrackViewModel trackViewModel;
-    private readonly MessageHandlerViewModel messageViewModel;
+    private readonly ISpotifyService spotify;
+    private readonly TrackViewModel trackViewModel;
 
-    public RandomTrackCommand(MessageHandlerViewModel messageViewModel, BeatTrackViewModel trackViewModel, ISpotifyService service)
+    public RandomTrackCommand(TrackViewModel trackViewModel, ISpotifyService spotify)
     {
-        this.service = service;
+        this.spotify = spotify;
         this.trackViewModel = trackViewModel;
-        this.messageViewModel = messageViewModel;
     }
 
     protected override async Task ExcuteAsync(object? parameter)
     {
         try
         {
-            var track = await GetRandomTrack(service.Client);
-            trackViewModel.CurrentTrack = track;
+            var fetchedTrack = await GetRandomTrack(spotify.Client);
+            trackViewModel.Track = fetchedTrack;
         }
         catch (Exception ex)
         {
-            logger.Error(ex);
-            messageViewModel.SetMessage("Failed to retrieve a random track");
+            logger.Error(ex, "Random track request failed");
         }
     }
 
@@ -43,7 +40,7 @@ internal class RandomTrackCommand : AsyncCommandBase
     {
         if (client is not null)
         {
-            var top = await client.Playlists.Get("37i9dQZEVXbMDoHDwVN2tF"); //Top 50 playlist
+            var top = await client.Playlists.Get("37i9dQZEVXbMDoHDwVN2tF");
             var track = top.Tracks.Items[RandomRange.Range(0, top.Tracks.Items.Count)].Track as FullTrack;
             var trackFeatures = await client.Tracks.GetAudioFeatures(track.Id);
             logger.Info($"Successfully retrieved {track.Name} as a random song");

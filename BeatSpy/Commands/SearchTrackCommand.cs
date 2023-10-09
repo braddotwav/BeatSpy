@@ -2,6 +2,7 @@
 using System;
 using BeatSpy.Models;
 using SpotifyAPI.Web;
+using BeatSpy.Services;
 using BeatSpy.ViewModels;
 using System.Windows.Input;
 using BeatSpy.Commands.Base;
@@ -15,21 +16,27 @@ internal class SearchTrackCommand : AsyncCommandBase
 {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-    private readonly ISpotifyService service;
-    private readonly BeatTrackViewModel trackViewModel;
-    private readonly MessageHandlerViewModel messageViewModel;
+    private readonly ISpotifyService spotify;
+    private readonly IMessageNotify messageNotify;
+    private readonly TrackViewModel trackViewModel;
 
-    public SearchTrackCommand(MessageHandlerViewModel messageViewModel, BeatTrackViewModel trackViewModel, ISpotifyService service)
+    public SearchTrackCommand(TrackViewModel trackViewModel, IMessageNotify messageNotify, ISpotifyService spotify)
     {
-        this.service = service;
+        this.spotify = spotify;
+        this.messageNotify = messageNotify;
         this.trackViewModel = trackViewModel;
-        this.messageViewModel = messageViewModel;
     }
 
     public override bool CanExecute(object? parameter)
     {
-        var searchQuery = parameter as TextBox;
-        return !string.IsNullOrEmpty(searchQuery?.Text) && service.IsConnected();
+        if(parameter is TextBox searchQuery)
+        {
+            return !string.IsNullOrEmpty(searchQuery.Text);
+        }
+        else
+        {
+            return false;
+        }
     }
 
     protected override async Task ExcuteAsync(object? parameter)
@@ -40,18 +47,18 @@ internal class SearchTrackCommand : AsyncCommandBase
             try
             {
                 logger.Info($"Searching for {searchQuery.Text}");
-                var track = await SearchTrack(service.Client, searchQuery.Text);
-                trackViewModel.CurrentTrack = track;
-            }
-            catch (ArgumentNullException ex)
-            {
-                logger.Error(ex, "Client is null");
-                messageViewModel.SetMessage("Client is null - Please log-in using your spotify account");
+                var fetchedTrack = await SearchTrack(spotify.Client, searchQuery.Text);
+                trackViewModel.Track = fetchedTrack;
             }
             catch (ArgumentOutOfRangeException ex)
             {
                 logger.Error(ex, $"Could not find a track matching {searchQuery.Text}");
-                messageViewModel.SetMessage("Failed to find a track matching your request");
+                messageNotify.SetMessage($"Could not find a track matching {searchQuery.Text}");
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "Search request failed, please login with spotify.");
+                messageNotify.SetMessage("Search request failed, please login with spotify.");
             }
         }
     }

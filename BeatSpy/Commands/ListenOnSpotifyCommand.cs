@@ -10,20 +10,26 @@ internal class ListenOnSpotifyCommand : CommandBase
 {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
-    private BeatTrack? currentTrack;
-
     public override void Execute(object? parameter)
     {
-        currentTrack = parameter as BeatTrack;
-        if (string.IsNullOrEmpty(currentTrack.TrackUrl)) { return; }
-        try
-        { 
-            BrowsUtil.OpenUrl(currentTrack.TrackUrl);
-            logger.Info($"Opening {currentTrack.TrackTitle} via spotify: {currentTrack.TrackUrl}");
-        }
-        catch (Exception ex)
+        if(parameter is BeatTrack currentTrack)
         {
-            logger.Error(ex);
+            try
+            {
+                if(!string.IsNullOrEmpty(currentTrack.TrackUrl))
+                {
+                    BrowsUtil.OpenUrl(currentTrack.TrackUrl);
+                    logger.Info($"Opening {currentTrack.TrackTitle} URL: {currentTrack.TrackUrl}");
+                }
+                else
+                {
+                    throw new ArgumentNullException(nameof(currentTrack.TrackUrl));
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex);
+            }
         }
     }
 }
