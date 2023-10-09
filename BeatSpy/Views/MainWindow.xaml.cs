@@ -1,5 +1,8 @@
 ﻿using System.Windows;
+using BeatSpy.Helpers;
 using System.Windows.Input;
+using System.Windows.Controls;
+using BeatSpy.DataTypes.Constants;
 
 namespace BeatSpy
 {
@@ -44,6 +47,37 @@ namespace BeatSpy
         private void OnWindowMinimiseClick(object sender, RoutedEventArgs e)
         {
             Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        /// <summary>
+        /// This method is fired when ever the user mouse clicks on the context button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnContextMenuClick(object sender, RoutedEventArgs e)
+        {
+            if(sender is Button contextButton)
+            {
+                contextButton.ContextMenu.IsOpen = true;
+            }
+        }
+
+        /// <summary>
+        /// This method is fired when ever the user loads the context menu
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnContextMenuLoaded(object sender, RoutedEventArgs e)
+        {
+            if(sender is ContextMenu contextMenu)
+            {
+                contextMenu.DataContext = DataContext;
+            }
+        }
+
+        private void OnBeatSpyClicked(object sender, RoutedEventArgs e)
+        {
+            BrowsUtil.OpenUrl(DefaultConstants.LINK_GITHUB_REPO);
         }
     }
 }
