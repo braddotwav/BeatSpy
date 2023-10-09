@@ -4,7 +4,7 @@
 #define MyAppName "BeatSpy"
 #define MyAppVersion "1.0"
 #define MyAppPublisher "BeatSpy"
-#define MyAppURL "https://www.example.com/"
+#define MyAppURL "https://github.com/RealJamako/BeatSpy"
 #define MyAppExeName "BeatSpy.exe"
 
 [Setup]
@@ -19,8 +19,8 @@ AppPublisherURL={#MyAppURL}
 DefaultDirName={commonpf64}\{#MyAppName}
 DisableProgramGroupPage=yes
 ; Remove the following line to run in administrative install mode (install for all users.)
-OutputDir=D:\Dev Source\BeatSpy\BeatSpy\bin\Installer
-OutputBaseFilename=BeatSpy-Install
+OutputDir=D:\Source\BeatSpy\Installer
+OutputBaseFilename=BeatSpy-Installer
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -32,25 +32,7 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\BeatSpy.deps.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\BeatSpy.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\BeatSpy.dll.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\BeatSpy.pdb"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\BeatSpy.runtimeconfig.json"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\Microsoft.Xaml.Behaviors.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\NLog.config"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\NLog.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SharpVectors.Converters.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SharpVectors.Core.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SharpVectors.Css.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SharpVectors.Dom.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SharpVectors.Model.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SharpVectors.Rendering.Gdi.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SharpVectors.Rendering.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SharpVectors.Runtime.Wpf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dev Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\SpotifyAPI.Web.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "D:\Source\BeatSpy\BeatSpy\bin\Release\net6.0-windows\win-x64\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
