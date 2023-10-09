@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.39" />
     <PackageReference Include="NLog" Version="5.2.2" />
     <PackageReference Include="SharpVectors" Version="1.8.1" />
     <PackageReference Include="SpotifyAPI.Web" Version="7.0.0" />
@@ -56,10 +55,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Assets\Svg\" />
   </ItemGroup>
 
 </Project>

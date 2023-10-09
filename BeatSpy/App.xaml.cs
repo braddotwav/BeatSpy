@@ -1,4 +1,6 @@
 ﻿using System.Windows;
+using BeatSpy.Services;
+using BeatSpy.ViewModels;
 
 namespace BeatSpy;
 
@@ -7,7 +9,18 @@ namespace BeatSpy;
 /// </summary>
 public partial class App : Application
 {
-    private void Application_Startup(object sender, StartupEventArgs e)
+    protected override async void OnStartup(StartupEventArgs e)
     {
+        base.OnStartup(e);
+
+        ISpotifyService spotifyService = new SpotifyService();
+
+        MainWindow mainWindow = new();
+        MainWindowViewModel mainViewModel = new(spotifyService);
+        mainWindow.DataContext = mainViewModel;
+
+        await spotifyService.Connect();
+
+        mainWindow.Show();
     }
 }
