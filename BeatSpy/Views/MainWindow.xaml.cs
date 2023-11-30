@@ -75,6 +75,11 @@ namespace BeatSpy
             }
         }
 
+        /// <summary>
+        /// This method is fired when the user clicks BeatSpy logo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnBeatSpyClicked(object sender, RoutedEventArgs e)
         {
             BrowsUtil.OpenUrl(DefaultConstants.LINK_GITHUB_REPO);
