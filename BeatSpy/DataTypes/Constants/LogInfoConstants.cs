@@ -11,11 +11,17 @@ internal static class LogInfoConstants
     public const string AUTH_REQUEST_FAILED = "Failed to retrieve new request token.";
     #endregion
 
-    #region SERVER CALLBACK CONSTANS
+    #region SERVER CALLBACK CONSTANTS
     public const string SERVER_CALLBACK_INIT = "Successfully started listen server.";
     public const string SERVER_CALLBACK_RECIVED = "Successfully received callback.";
     public const string SERVER_ERROR = "Failed to authorise, please try again";
     public const string SERVER_CONNECTED = "Successfully connected to spotify";
     public const string SERVER_DISCONNECTED = "Successfully disconnected to spotify";
+    #endregion
+
+    #region SEARCH CONSTANTS
+    public const string LOG_SEARCH_OUTOFRANGE = "Failed to fetch a result for";
+    public const string LOG_SEARCH_FAILED = "Failed to fetch search request.";
+    public const string LOG_SEARCH_SUCCESS = "Successfully fetched a result for";
     #endregion
 }
