@@ -33,6 +33,7 @@ internal class MainWindowViewModel : ObservableObject
         spotify = spotifyService;
         spotify.OnConnected += OnSpotifyConnected;
         spotify.OnDisconnected += OnSpotifyDisconnected;
+        spotify.OnServiceError += OnSpotifyServiceError;
         trackViewModel = new();
         messageViewModel = new();
         contextMenuViewModel = new(spotify);
@@ -46,20 +47,29 @@ internal class MainWindowViewModel : ObservableObject
     /// </summary>
     private void OnSpotifyConnected()
     {
-        if(spotify.Client != null)
+        if(spotify.IsConnected())
         {
             RandomTrack?.Execute(this);
             contextMenuViewModel.IsConnected = true;
+            messageViewModel.ClearMessage();
         }
     }
 
     /// <summary>
     /// This method is raised when the spotify service is disconnected
     /// </summary>
-    /// <exception cref="System.NotImplementedException"></exception>
     private void OnSpotifyDisconnected()
     {
         contextMenuViewModel.IsConnected = false;
         messageViewModel.SetMessage("Disconnected from spotify.");
+    }
+
+    /// <summary>
+    /// This method is raised when the spotify service errors
+    /// </summary>
+    /// <param name="obj"></param>
+    private void OnSpotifyServiceError(string obj)
+    {
+        messageViewModel.SetMessage(obj);
     }
 }
