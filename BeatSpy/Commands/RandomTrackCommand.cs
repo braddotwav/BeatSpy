@@ -7,6 +7,7 @@ using BeatSpy.Services;
 using BeatSpy.ViewModels;
 using BeatSpy.Commands.Base;
 using System.Threading.Tasks;
+using BeatSpy.DataTypes.Constants;
 
 namespace BeatSpy.Commands;
 
@@ -32,10 +33,16 @@ internal class RandomTrackCommand : AsyncCommandBase
         }
         catch (Exception ex)
         {
-            logger.Error(ex, "Random track request failed");
+            logger.Error(ex, LogInfoConstants.LOG_SEARCH_FAILED);
         }
     }
 
+    /// <summary>
+    /// Returns a new BeatTrack object from the spotify top 40 playlist
+    /// </summary>
+    /// <param name="client">Spotify Client</param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentNullException"></exception>
     private static async Task<BeatTrack> GetRandomTrack(SpotifyClient client)
     {
         if (client is not null)
@@ -43,7 +50,7 @@ internal class RandomTrackCommand : AsyncCommandBase
             var top = await client.Playlists.Get("37i9dQZEVXbMDoHDwVN2tF");
             var track = top.Tracks.Items[RandomRange.Range(0, top.Tracks.Items.Count)].Track as FullTrack;
             var trackFeatures = await client.Tracks.GetAudioFeatures(track.Id);
-            logger.Info($"Successfully retrieved {track.Name} as a random song");
+            logger.Info(string.Join(" ", LogInfoConstants.LOG_SEARCH_SUCCESS, track.Name));
 
             return new BeatTrack(track, trackFeatures);
         }
