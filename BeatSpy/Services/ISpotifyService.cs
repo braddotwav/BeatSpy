@@ -9,6 +9,7 @@ public interface ISpotifyService
     public SpotifyClient? Client { get; }
     public event Action OnConnected;
     public event Action OnDisconnected;
+    public event Action<string> OnServiceError;
     public Task Connect();
     public Task Login();
     public void Disconnect();
