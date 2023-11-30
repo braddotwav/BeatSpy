@@ -18,11 +18,17 @@ internal class SpotifyService : ISpotifyService
     public SpotifyClient Client => spotifyClient;
     private SpotifyClient? spotifyClient;
 
-    private readonly string tokenFilePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/BeatSpy/auth.json";
+    private readonly string serviceCallBack = "http://localhost:5543/callback";
+    private readonly string tokenFilePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/BeatSpy/AppAuth.json";
 
     public event Action? OnConnected;
     public event Action? OnDisconnected;
+    public event Action<string>? OnServiceError;
 
+    /// <summary>
+    /// Starts the connect process of the spotify client
+    /// </summary>
+    /// <returns></returns>
     public async Task Connect()
     {
         try
@@ -56,13 +62,24 @@ internal class SpotifyService : ISpotifyService
         }
         catch (Exception ex)
         {
-            logger.Info(ex, LogInfoConstants.AUTH_FILE_NOTFOUND);
+            switch(ex)
+            {
+                case FileNotFoundException:
+                    OnServiceError?.Invoke(LogInfoConstants.AUTH_FILE_NOTFOUND);
+                    break;
+                default:
+                    logger.Info(ex, ex.Message);
+                    break;
+            }
         }
     }
 
+    /// <summary>
+    /// Disconnect from spotify
+    /// </summary>
     public void Disconnect()
     {
-        if(spotifyClient != null)
+        if(IsConnected())
         {
             spotifyClient = null;
             File.Delete(tokenFilePath);
@@ -71,17 +88,25 @@ internal class SpotifyService : ISpotifyService
         }
     }
 
+    /// <summary>
+    /// Check if the spotify client is null
+    /// </summary>
+    /// <returns></returns>
     public bool IsConnected()
     {
         return spotifyClient != null;
     }
 
+    /// <summary>
+    /// Starts the login process
+    /// </summary>
+    /// <returns></returns>
     public async Task Login()
     {
         var (verifier, challenge) = PKCEUtil.GenerateCodes(120);
 
         var loginRequest = new LoginRequest(
-          new Uri(AuthConstants.CALL_BACK),
+          new Uri(serviceCallBack),
           Properties.Settings.Default.SpotClientId,
           LoginRequest.ResponseType.Code
         )
@@ -95,10 +120,15 @@ internal class SpotifyService : ISpotifyService
         await StartListenServer(verifier);
     }
 
+    /// <summary>
+    /// Starts a listen server for the OAuth process
+    /// </summary>
+    /// <param name="verifier">PKCE verifer</param>
+    /// <returns></returns>
     private async Task StartListenServer(string verifier)
     {
         using HttpListener listener = new();
-        listener.Prefixes.Add(string.Concat(AuthConstants.CALL_BACK, "/"));
+        listener.Prefixes.Add(string.Concat(serviceCallBack, "/"));
 
         try
         {
@@ -124,14 +154,20 @@ internal class SpotifyService : ISpotifyService
         }
         catch (Exception ex)
         {
-            logger.Error(ex, LogInfoConstants.SERVER_ERROR);
+            InvokeServiceError(ex, LogInfoConstants.SERVER_ERROR);
         }
     }
 
+    /// <summary>
+    /// Manages the callback response from the listen server
+    /// </summary>
+    /// <param name="code">The recived code from the listen server</param>
+    /// <param name="verifier">PKCE verifer that was provided to the listen server</param>
+    /// <returns></returns>
     private async Task GetCallback(string code, string verifier)
     {
         var initialResponse = await new OAuthClient().RequestToken(
-          new PKCETokenRequest(Properties.Settings.Default.SpotClientId, code, new Uri(AuthConstants.CALL_BACK), verifier)
+          new PKCETokenRequest(Properties.Settings.Default.SpotClientId, code, new Uri(serviceCallBack), verifier)
         );
 
         if (initialResponse != null)
@@ -144,6 +180,11 @@ internal class SpotifyService : ISpotifyService
         }
     }
 
+    /// <summary>
+    /// Attempts to retrieve a PKCE token response using a provided refresh token.
+    /// </summary>
+    /// <param name="refreshToken"></param>
+    /// <returns></returns>
     private async Task<PKCETokenResponse?> TryGetPKCERefreshTokenResponse(string refreshToken)
     {
         try
@@ -154,8 +195,20 @@ internal class SpotifyService : ISpotifyService
         }
         catch (Exception ex)
         {
-            logger.Error(ex, LogInfoConstants.AUTH_REQUEST_FAILED);
+            InvokeServiceError(ex, LogInfoConstants.AUTH_REQUEST_FAILED);
             return null;
         }
+    }
+
+    /// <summary>
+    /// Invokes a service error sending it to the 
+    /// message handler and the logger
+    /// </summary>
+    /// <param name="ex">The exception</param>
+    /// <param name="message">Service message</param>
+    private void InvokeServiceError(Exception ex, string message)
+    {
+        OnServiceError?.Invoke(message);
+        logger.Error(ex, message);
     }
 }
