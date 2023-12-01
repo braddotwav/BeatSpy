@@ -3,6 +3,8 @@ using BeatSpy.Helpers;
 using System.Windows.Input;
 using System.Windows.Controls;
 using BeatSpy.DataTypes.Constants;
+using System.Windows.Media.Animation;
+using System;
 
 namespace BeatSpy
 {

@@ -183,8 +183,10 @@
                             Text="{Binding TrackViewModel.Track.TrackArtist}" />
                         <TextBlock
                             FontSize="38"
+                            ScrollViewer.CanContentScroll="True"
                             Style="{StaticResource TrackStyle}"
-                            Text="{Binding TrackViewModel.Track.TrackTitle}" />
+                            Text="{Binding TrackViewModel.Track.TrackTitle}"
+                            TextWrapping="NoWrap" />
                     </StackPanel>
                     <Button
                         Width="28"
