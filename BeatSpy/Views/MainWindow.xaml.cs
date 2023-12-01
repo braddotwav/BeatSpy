@@ -32,26 +32,6 @@ namespace BeatSpy
         }
 
         /// <summary>
-        /// This method is fired when ever the user mouse clicks the close button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnWindowCloseClick(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        /// <summary>
-        /// This method is fired when ever the user mouse clicks the minimise button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnWindowMinimiseClick(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
-        }
-
-        /// <summary>
         /// This method is fired when ever the user mouse clicks on the context button
         /// </summary>
         /// <param name="sender"></param>

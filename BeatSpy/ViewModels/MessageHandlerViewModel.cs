@@ -29,11 +29,18 @@ internal class MessageHandlerViewModel : ObservableObject, IMessageNotify
 		DismissError = new DismissErrorCommand(this);
     }
 
+	/// <summary>
+	/// Set the message of the message handler
+	/// </summary>
+	/// <param name="message">Message to be set</param>
 	public void SetMessage(string message)
 	{
 		Message = message;
 	}
 
+	/// <summary>
+	/// Clear the message handler
+	/// </summary>
 	public void ClearMessage()
 	{
 		Message = string.Empty;

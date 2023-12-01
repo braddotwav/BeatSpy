@@ -3,6 +3,7 @@ using System;
 using BeatSpy.Models;
 using BeatSpy.Helpers;
 using BeatSpy.Commands.Base;
+using BeatSpy.DataTypes.Constants;
 
 namespace BeatSpy.Commands;
 
@@ -19,7 +20,7 @@ internal class ListenOnSpotifyCommand : CommandBase
                 if(!string.IsNullOrEmpty(currentTrack.TrackUrl))
                 {
                     BrowsUtil.OpenUrl(currentTrack.TrackUrl);
-                    logger.Info($"Opening {currentTrack.TrackTitle} URL: {currentTrack.TrackUrl}");
+                    logger.Info(string.Join(" ", LogInfoConstants.LOG_COMMAND_OPENSPOTIFY, currentTrack.TrackTitle));
                 }
                 else
                 {

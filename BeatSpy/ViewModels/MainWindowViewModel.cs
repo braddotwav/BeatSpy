@@ -7,17 +7,15 @@ namespace BeatSpy.ViewModels;
 
 internal class MainWindowViewModel : ObservableObject
 {
-    /// <summary>
-    /// Commands
-    /// </summary>
+    //Commands
+    public ICommand? ExitApplication { get; }
+    public ICommand? MinimizeApplication { get; }
+
     public ICommand? ListenOnSpotify { get; private set; }
     public ICommand? SearchQueryEntered { get; private set; }
-
     private ICommand? RandomTrack { get; }
 
-    /// <summary>
-    /// View Models
-    /// </summary>
+    //Viewmodels
     public TrackViewModel TrackViewModel => trackViewModel;
     public MessageHandlerViewModel MessageHandler => messageViewModel;
     public ContextMenuViewModel ContextMenuViewModel => contextMenuViewModel;
@@ -26,6 +24,7 @@ internal class MainWindowViewModel : ObservableObject
     private readonly MessageHandlerViewModel messageViewModel;
     private readonly ContextMenuViewModel contextMenuViewModel;
 
+    //Services
     private readonly ISpotifyService spotify;
 
     public MainWindowViewModel(ISpotifyService spotifyService)
@@ -37,6 +36,8 @@ internal class MainWindowViewModel : ObservableObject
         trackViewModel = new();
         messageViewModel = new();
         contextMenuViewModel = new(spotify);
+        ExitApplication = new ExitApplicationCommand();
+        MinimizeApplication = new MinimizeApplicationCommand();
         ListenOnSpotify = new ListenOnSpotifyCommand();
         SearchQueryEntered = new SearchTrackCommand(trackViewModel, messageViewModel, spotify);
         RandomTrack = new RandomTrackCommand(trackViewModel, spotify);

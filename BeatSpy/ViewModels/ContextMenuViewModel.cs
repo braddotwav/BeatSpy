@@ -7,25 +7,23 @@ namespace BeatSpy.ViewModels;
 
 internal class ContextMenuViewModel : ObservableObject
 {
-    private bool isConnectd = false;
+    private bool isConnected = false;
     public bool IsConnected 
     {
-        get => isConnectd;
+        get => isConnected;
         set
         {
-            isConnectd = value;
+            isConnected = value;
             OnPropertyChanged(nameof(IsConnected));
         }
     }
 
     public ICommand LoginSpotify { get; }
     public ICommand LogOutSpotify { get; }
-    public ICommand ExitApplication { get; }
 
     public ContextMenuViewModel(ISpotifyService service)
     {
         LoginSpotify = new LogInToSpotifyCommand(service);
         LogOutSpotify = new LogOutOfSpotifyCommand(service);
-        ExitApplication = new ExitApplicationCommand();
     }
 }

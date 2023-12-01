@@ -20,8 +20,12 @@ internal static class LogInfoConstants
     #endregion
 
     #region SEARCH CONSTANTS
-    public const string LOG_SEARCH_OUTOFRANGE = "Failed to fetch a result for";
+    public const string LOG_SEARCH_OUTOFRANGE = "Failed to fetch a result for:";
     public const string LOG_SEARCH_FAILED = "Failed to fetch search request.";
-    public const string LOG_SEARCH_SUCCESS = "Successfully fetched a result for";
+    public const string LOG_SEARCH_SUCCESS = "Successfully fetched a result for:";
+    #endregion
+
+    #region COMMAND CONSTANTS
+    public const string LOG_COMMAND_OPENSPOTIFY = "Successfully opened spotify track:";
     #endregion
 }
