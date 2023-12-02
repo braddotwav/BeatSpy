@@ -4,7 +4,7 @@ Param(
     [string]
     $BuildDirectory,
 
-    # # Target directory for installer file.
+    # Target directory for installer file.
     [Parameter(Mandatory, HelpMessage = "Provide the file path for the INNO installer")]
     [string]
     $InstallerPath,
@@ -14,8 +14,11 @@ Param(
     [string]
     $OutputFileName,
 
-    # Should the script skip installer
+    # Should the script skip installer stage
     [switch] $SkipInstaller = $false,
+
+    # Should the script skip the compress stage
+    [switch] $SkipCompress = $false,
 
     # Target directory for output.
     [Parameter(Mandatory, HelpMessage = "Provide a output directory")]
@@ -25,19 +28,22 @@ Param(
 
 #Try and compress the contents of the build folder 
 #and save it as a zip in the output directory.
-try {
-    $CompressPath = $BuildDirectory + "\*"
-    $DestonationPath = $OutputDirectory + "\$OutputFileName.zip"
-    
-    Write-Host "Attempting to compress build.."
-    Compress-Archive -Path $CompressPath -DestinationPath $DestonationPath -ErrorAction Stop
-    Write-Host "Successfully compressed build at the following location $OutputDirectory"
-} 
-catch {
-    Write-Host "Failed to compress build. Error: $($_.Exception.Message)"
+if(!$SkipCompress)
+{
+    try {
+        $CompressPath = $BuildDirectory + "\*"
+        $DestonationPath = $OutputDirectory + "\$OutputFileName.zip"
+        
+        Write-Host "Attempting to compress build.."
+        Compress-Archive -Path $CompressPath -DestinationPath $DestonationPath -ErrorAction Stop
+        Write-Host "Successfully compressed build at the following location $OutputDirectory"
+    } 
+    catch {
+        Write-Host "Failed to compress build. Error: $($_.Exception.Message)"
+    }
 }
 
-
+#Try and run the installer command
 if(!$SkipInstaller)
 {
     try {
