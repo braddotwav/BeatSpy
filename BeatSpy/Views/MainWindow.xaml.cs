@@ -6,6 +6,7 @@ using System.Windows.Input;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using BeatSpy.DataTypes.Constants;
+using System.Diagnostics;
 
 namespace BeatSpy
 {
@@ -100,6 +101,29 @@ namespace BeatSpy
                     }
                 }
             }));
+        }
+
+        /// <summary>
+        /// This method is fired when the track title is updated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTrackTitleUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                //Check if the tracks title width is passed the animation bounds
+                if (titleAnimBuilder.ShouldAnimate(TrackTitle.ActualWidth) && !titleAnimBuilder.IsAnimationPlaying)
+                {
+                    //Set the animation to location
+                    titleAnimBuilder.SetAnimationTo(-(TrackTitle.ActualWidth - 290));
+
+                    TranslateTransform translateTransform = new();
+                    TrackTitle.RenderTransform = translateTransform;
+
+                    titleAnimBuilder.StartAnimation(translateTransform);
+                }
+            }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
     }
 }

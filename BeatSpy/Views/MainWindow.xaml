@@ -205,12 +205,9 @@
                                     FontSize="38"
                                     MouseEnter="OnTrackTitleMouseEnter"
                                     Style="{StaticResource TrackStyle}"
-                                    Text="{Binding TrackViewModel.Track.TrackTitle}"
-                                    TextWrapping="NoWrap">
-                                    <TextBlock.RenderTransform>
-                                        <TranslateTransform />
-                                    </TextBlock.RenderTransform>
-                                </TextBlock>
+                                    TargetUpdated="OnTrackTitleUpdated"
+                                    Text="{Binding TrackViewModel.Track.TrackTitle, NotifyOnTargetUpdated=True}"
+                                    TextWrapping="NoWrap" />
                             </Canvas>
 
                         </StackPanel>
