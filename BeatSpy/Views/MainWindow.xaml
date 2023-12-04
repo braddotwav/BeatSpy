@@ -155,61 +155,88 @@
             <Border
                 Width="530"
                 Height="190"
+                Padding="25"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
                 Background="{StaticResource BackgroundSecondary}"
                 CornerRadius="28">
-                <StackPanel
-                    Margin="30,20,30,20"
-                    HorizontalAlignment="Left"
-                    VerticalAlignment="Center"
-                    Orientation="Horizontal">
-                    <Border Width="140" Height="140">
+                <Grid Background="Transparent">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  Track Image  -->
+                    <Border Grid.Column="0">
                         <Border.Background>
                             <ImageBrush ImageSource="{Binding TrackViewModel.Track.TrackCoverUrl}" />
                         </Border.Background>
                     </Border>
 
-                    <StackPanel
-                        Width="280"
-                        Margin="20,0,0,0"
-                        HorizontalAlignment="Right"
-                        VerticalAlignment="Center"
-                        Orientation="Vertical">
-                        <TextBlock
-                            FontSize="24"
-                            Style="{StaticResource TrackStyle}"
-                            Text="{Binding TrackViewModel.Track.TrackArtist}" />
-                        <TextBlock
-                            FontSize="38"
-                            ScrollViewer.CanContentScroll="True"
-                            Style="{StaticResource TrackStyle}"
-                            Text="{Binding TrackViewModel.Track.TrackTitle}"
-                            TextWrapping="NoWrap" />
-                    </StackPanel>
-                    <Button
-                        Width="28"
-                        Height="28"
-                        VerticalAlignment="Bottom"
-                        Command="{Binding ListenOnSpotify}"
-                        CommandParameter="{Binding TrackViewModel.Track}"
-                        Style="{StaticResource SpotifyIcon}"
-                        Visibility="{Binding TrackViewModel.IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}">
-                        <svgc:SvgIcon
+                    <Grid Grid.Column="1" Background="Transparent">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!--  Track Artist & Title  -->
+                        <StackPanel
+                            Grid.Row="1"
+                            MinWidth="290"
+                            Margin="25"
+                            HorizontalAlignment="Left"
+                            VerticalAlignment="Center"
+                            ClipToBounds="True"
+                            Orientation="Vertical">
+
+                            <TextBlock
+                                FontSize="24"
+                                Style="{StaticResource TrackStyle}"
+                                Text="{Binding TrackViewModel.Track.TrackArtist}" />
+
+                            <Canvas
+                                x:Name="TrackTitleCanvas"
+                                Height="45"
+                                HorizontalAlignment="Stretch"
+                                Background="Transparent">
+                                <TextBlock
+                                    x:Name="TrackTitle"
+                                    Width="Auto"
+                                    HorizontalAlignment="Stretch"
+                                    FontSize="38"
+                                    MouseEnter="OnTrackTitleMouseEnter"
+                                    Style="{StaticResource TrackStyle}"
+                                    Text="{Binding TrackViewModel.Track.TrackTitle}"
+                                    TextWrapping="NoWrap">
+                                    <TextBlock.RenderTransform>
+                                        <TranslateTransform />
+                                    </TextBlock.RenderTransform>
+                                </TextBlock>
+                            </Canvas>
+
+                        </StackPanel>
+
+                        <!--  Open with spotify button  -->
+                        <Button
                             Width="28"
                             Height="28"
-                            Margin="0,0,0,0"
-                            Fill="{StaticResource TextSecondary}">
-                            <svgc:SvgIcon.SvgSource>
-                                <![CDATA[
+                            HorizontalAlignment="Right"
+                            VerticalAlignment="Bottom"
+                            Command="{Binding ListenOnSpotify}"
+                            CommandParameter="{Binding TrackViewModel.Track}"
+                            Style="{StaticResource SpotifyIcon}"
+                            Visibility="{Binding TrackViewModel.IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}">
+                            <svgc:SvgIcon Fill="{StaticResource TextSecondary}">
+                                <svgc:SvgIcon.SvgSource>
+                                    <![CDATA[
                             <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
                             <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.686zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288z"/>
                             </svg>
                             ]]>
-                            </svgc:SvgIcon.SvgSource>
-                        </svgc:SvgIcon>
-                    </Button>
-                </StackPanel>
+                                </svgc:SvgIcon.SvgSource>
+                            </svgc:SvgIcon>
+                        </Button>
+                    </Grid>
+                </Grid>
             </Border>
         </Grid>
 
