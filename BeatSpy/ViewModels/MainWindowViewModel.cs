@@ -10,9 +10,10 @@ internal class MainWindowViewModel : ObservableObject
     //Commands
     public ICommand? ExitApplication { get; }
     public ICommand? MinimizeApplication { get; }
+    public ICommand? RemoveFocus { get; }
 
-    public ICommand? ListenOnSpotify { get; private set; }
-    public ICommand? SearchQueryEntered { get; private set; }
+    public ICommand? ListenOnSpotify { get; }
+    public ICommand? SearchQueryEntered { get; }
     private ICommand? RandomTrack { get; }
 
     //Viewmodels
@@ -39,7 +40,8 @@ internal class MainWindowViewModel : ObservableObject
         ExitApplication = new ExitApplicationCommand();
         MinimizeApplication = new MinimizeApplicationCommand();
         ListenOnSpotify = new ListenOnSpotifyCommand();
-        SearchQueryEntered = new SearchTrackCommand(trackViewModel, messageViewModel, spotify);
+        RemoveFocus = new RemoveFocusCommand();
+        SearchQueryEntered = new SearchTrackCommand(this, trackViewModel, messageViewModel, spotify);
         RandomTrack = new RandomTrackCommand(trackViewModel, spotify);
     }
 

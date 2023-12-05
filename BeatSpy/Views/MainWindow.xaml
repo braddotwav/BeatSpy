@@ -54,6 +54,7 @@
                     Width="60"
                     Background="Transparent"
                     Click="OnContextMenuClick"
+                    IsTabStop="False"
                     Style="{StaticResource WindowContextButton}">
                     <Button.ContextMenu>
                         <ContextMenu Loaded="OnContextMenuLoaded" Style="{StaticResource ContextMenuStyle}">
@@ -90,7 +91,10 @@
                 Grid.Column="1"
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
-                <Button Command="{Binding MinimizeApplication}" Style="{StaticResource WindowButton}">
+                <Button
+                    Command="{Binding MinimizeApplication}"
+                    IsTabStop="False"
+                    Style="{StaticResource WindowButton}">
                     <svgc:SvgIcon
                         Width="10"
                         Height="10"
@@ -103,7 +107,10 @@
                         </svgc:SvgIcon.SvgSource>
                     </svgc:SvgIcon>
                 </Button>
-                <Button Command="{Binding ExitApplication}" Style="{StaticResource WindowCloseButton}">
+                <Button
+                    Command="{Binding ExitApplication}"
+                    IsTabStop="False"
+                    Style="{StaticResource WindowCloseButton}">
                     <svgc:SvgIcon
                         Width="10"
                         Height="10"
@@ -133,6 +140,7 @@
                 Width="75"
                 Height="38"
                 Click="OnBeatSpyClicked"
+                IsTabStop="False"
                 Style="{StaticResource ApplicationIcon}" />
 
             <TextBox
@@ -145,6 +153,10 @@
                     <KeyBinding
                         Key="Return"
                         Command="{Binding SearchQueryEntered}"
+                        CommandParameter="{Binding ElementName=SearchQuery}" />
+                    <KeyBinding
+                        Key="Esc"
+                        Command="{Binding RemoveFocus}"
                         CommandParameter="{Binding ElementName=SearchQuery}" />
                 </TextBox.InputBindings>
             </TextBox>
@@ -220,6 +232,7 @@
                             VerticalAlignment="Bottom"
                             Command="{Binding ListenOnSpotify}"
                             CommandParameter="{Binding TrackViewModel.Track}"
+                            IsTabStop="False"
                             Style="{StaticResource SpotifyIcon}"
                             Visibility="{Binding TrackViewModel.IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}">
                             <svgc:SvgIcon Fill="{StaticResource TextSecondary}">
