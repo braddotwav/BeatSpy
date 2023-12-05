@@ -118,7 +118,7 @@
     <Style x:Key="MenuItemStyle" TargetType="MenuItem">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
         <Setter Property="Width" Value="150" />
         <Setter Property="Height" Value="40" />
         <Setter Property="Template">
@@ -163,13 +163,13 @@
     <Style x:Key="Search" TargetType="TextBox">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Cursor" Value="IBeam" />
-        <Setter Property="CaretBrush" Value="White" />
-        <Setter Property="FontFamily" Value="/Assets/Fonts/#Gilroy Regular" />
+        <Setter Property="CaretBrush" Value="{StaticResource TextPrimary}" />
+        <Setter Property="FontFamily" Value="/Assets/Fonts/#Gilroy Medium" />
         <Setter Property="FontSize" Value="14" />
-        <Setter Property="Padding" Value="8" />
-        <Setter Property="Foreground" Value="White" />
+        <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
         <Setter Property="VerticalContentAlignment" Value="Center" />
         <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+        <Setter Property="Padding" Value="0,0,20,0" />
         <Setter Property="ContextMenu">
             <Setter.Value>
                 <ContextMenu Style="{StaticResource ContextMenuStyle}">
@@ -201,7 +201,7 @@
                                 <Setter Property="BorderBrush" Value="{StaticResource BorderSecondary}" />
                             </Style>
                         </Border.Style>
-                        <Grid>
+                        <Grid Margin="12,0">
                             <ScrollViewer
                                 x:Name="PART_ContentHost"
                                 Focusable="False"
@@ -210,11 +210,9 @@
 
                             <TextBlock
                                 Name="SearchText"
-                                Grid.Column="1"
-                                Margin="10,0,0,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
-                                FontFamily="/Assets/Fonts/#Gilroy Regular"
+                                FontFamily="/Assets/Fonts/#Gilroy Medium"
                                 FontSize="14"
                                 Foreground="{StaticResource TextSecondary}"
                                 IsHitTestVisible="False"
@@ -230,10 +228,10 @@
                                     </Style>
                                 </TextBlock.Style>
                             </TextBlock>
+
                             <Image
                                 Width="14"
                                 Height="14"
-                                Margin="0,0,12,0"
                                 HorizontalAlignment="Right"
                                 IsHitTestVisible="False">
                                 <Image.Source>
@@ -249,6 +247,7 @@
                                     </DrawingImage>
                                 </Image.Source>
                             </Image>
+
                         </Grid>
                     </Border>
                 </ControlTemplate>

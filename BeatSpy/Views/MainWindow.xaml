@@ -76,7 +76,7 @@
                     <svgc:SvgIcon
                         Width="20"
                         Height="15"
-                        Fill="{StaticResource TextSecondary}">
+                        Fill="{StaticResource TextPrimary}">
                         <svgc:SvgIcon.SvgSource>
                             <![CDATA[
                             <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z"/></svg>
@@ -95,7 +95,7 @@
                         Width="10"
                         Height="10"
                         Margin="0,0,0,0"
-                        Fill="{StaticResource TextSecondary}">
+                        Fill="{StaticResource TextPrimary}">
                         <svgc:SvgIcon.SvgSource>
                             <![CDATA[
                             <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M240-120v-60h481v60H240Z"/></svg>
@@ -108,7 +108,7 @@
                         Width="10"
                         Height="10"
                         Margin="0,0,0,0"
-                        Fill="{StaticResource TextSecondary}">
+                        Fill="{StaticResource TextPrimary}">
                         <svgc:SvgIcon.SvgSource>
                             <![CDATA[
                             <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg>
@@ -139,7 +139,7 @@
                 x:Name="SearchQuery"
                 Grid.ColumnSpan="4"
                 Width="310"
-                Height="42"
+                Height="45"
                 Style="{StaticResource Search}">
                 <TextBox.InputBindings>
                     <KeyBinding
@@ -258,7 +258,7 @@
                         <DockPanel.Background>
                             <ImageBrush
                                 ImageSource="/Assets/Images/beatspy-icons-volume.png"
-                                Opacity="0.01"
+                                Opacity="0.1"
                                 Stretch="UniformToFill">
                                 <ImageBrush.RelativeTransform>
                                     <TranslateTransform X="-0.15" Y="0" />
@@ -285,7 +285,7 @@
                         <DockPanel.Background>
                             <ImageBrush
                                 ImageSource="/Assets/Images/beatspy-icons-heart.png"
-                                Opacity="0.01"
+                                Opacity="0.1"
                                 Stretch="UniformToFill">
                                 <ImageBrush.RelativeTransform>
                                     <TranslateTransform X="-0.15" Y="0" />
@@ -316,7 +316,7 @@
                         <DockPanel.Background>
                             <ImageBrush
                                 ImageSource="/Assets/Images/beatspy-icons-clock.png"
-                                Opacity="0.01"
+                                Opacity="0.1"
                                 Stretch="UniformToFill">
                                 <ImageBrush.RelativeTransform>
                                     <TranslateTransform X="-0.15" Y="0" />
@@ -343,7 +343,7 @@
                         <DockPanel.Background>
                             <ImageBrush
                                 ImageSource="/Assets/Images/beatspy-icons-note.png"
-                                Opacity="0.01"
+                                Opacity="0.1"
                                 Stretch="UniformToFill">
                                 <ImageBrush.RelativeTransform>
                                     <TranslateTransform X="-0.15" Y="0" />
