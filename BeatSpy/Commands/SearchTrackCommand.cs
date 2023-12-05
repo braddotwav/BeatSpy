@@ -44,7 +44,10 @@ internal class SearchTrackCommand : AsyncCommandBase
     {
         if (parameter is TextBox searchQuery)
         {
+            //Clear the focus of search object
             FocusManager.SetFocusedElement(FocusManager.GetFocusScope(searchQuery), null);
+            //Clear the keyboard focus of the search object
+            Keyboard.ClearFocus();
             try
             {
                 var fetchedTrack = await SearchTrack(spotify.Client, searchQuery.Text);
