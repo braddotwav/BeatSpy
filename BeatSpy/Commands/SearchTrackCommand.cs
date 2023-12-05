@@ -17,12 +17,14 @@ internal class SearchTrackCommand : AsyncCommandBase
 {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
+    private readonly MainWindowViewModel mainViewModel;
     private readonly ISpotifyService spotify;
     private readonly IMessageNotify messageNotify;
     private readonly TrackViewModel trackViewModel;
 
-    public SearchTrackCommand(TrackViewModel trackViewModel, IMessageNotify messageNotify, ISpotifyService spotify)
+    public SearchTrackCommand(MainWindowViewModel mainViewModel, TrackViewModel trackViewModel, IMessageNotify messageNotify, ISpotifyService spotify)
     {
+        this.mainViewModel = mainViewModel;
         this.spotify = spotify;
         this.messageNotify = messageNotify;
         this.trackViewModel = trackViewModel;
@@ -44,13 +46,10 @@ internal class SearchTrackCommand : AsyncCommandBase
     {
         if (parameter is TextBox searchQuery)
         {
-            //Clear the focus of search object
-            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(searchQuery), null);
-            //Clear the keyboard focus of the search object
-            Keyboard.ClearFocus();
             try
             {
                 var fetchedTrack = await SearchTrack(spotify.Client, searchQuery.Text);
+                mainViewModel.RemoveFocus!.Execute(searchQuery);
                 trackViewModel.Track = fetchedTrack;
             }
             catch (ArgumentOutOfRangeException ex)
