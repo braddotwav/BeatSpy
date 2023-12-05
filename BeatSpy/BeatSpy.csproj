@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\Gilroy-Medium.ttf" />
     <None Remove="Assets\Fonts\Gilroy-Regular.ttf" />
     <None Remove="Assets\Images\beatspy-icons-clock.png" />
     <None Remove="Assets\Images\beatspy-icons-heart.png" />
@@ -28,6 +29,9 @@
 
   <ItemGroup>
     <Resource Include="Assets\Fonts\Gilroy-ExtraBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Fonts\Gilroy-Medium.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\Fonts\Gilroy-Regular.ttf">
