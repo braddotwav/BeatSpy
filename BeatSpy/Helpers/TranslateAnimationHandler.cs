@@ -4,7 +4,7 @@ using System.Windows.Media.Animation;
 
 namespace BeatSpy.Helpers;
 
-internal class TitleAnimationBuilder
+internal class TranslateAnimationHandler
 {
     private readonly DoubleAnimation animation;
     public bool IsAnimationPlaying { get; private set; }
@@ -14,7 +14,7 @@ internal class TitleAnimationBuilder
     /// </summary>
     /// <param name="animationDuration"></param>
     /// <param name="deceleration"></param>
-    public TitleAnimationBuilder(Duration animationDuration, double deceleration)
+    public TranslateAnimationHandler(Duration animationDuration, double deceleration)
     {
         //Init animation
         animation = new()

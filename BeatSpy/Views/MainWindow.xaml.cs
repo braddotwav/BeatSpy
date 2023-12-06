@@ -15,7 +15,7 @@ namespace BeatSpy
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly TitleAnimationBuilder titleAnimBuilder;
+        private readonly TranslateAnimationHandler titleAnimBuilder;
 
         public MainWindow()
         {
