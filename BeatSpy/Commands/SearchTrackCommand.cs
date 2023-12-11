@@ -17,6 +17,8 @@ internal class SearchTrackCommand : AsyncCommandBase
     private readonly ISpotifyService spotifyService;
     private readonly TrackViewModel trackViewModel;
 
+    private string currentQuery = string.Empty;
+
     public SearchTrackCommand(ISpotifyService spotifyService, IApplicationCommands applicationCommands, TrackViewModel trackViewModel, IMessageDisplayService messageDisplayService)
     {
         this.messageDisplayService = messageDisplayService;
@@ -27,7 +29,8 @@ internal class SearchTrackCommand : AsyncCommandBase
 
     public override bool CanExecute(object? parameter)
     {
-        return spotifyService.IsLoggedIn && !string.IsNullOrEmpty(((TextBox)parameter!).Text);
+        string queryContent = ((TextBox)parameter!).Text;
+        return spotifyService.IsLoggedIn && !string.IsNullOrEmpty(((TextBox)parameter!).Text) && !string.Equals(currentQuery, queryContent);
     }
 
     protected override async Task ExcuteAsync(object? parameter)
@@ -38,6 +41,7 @@ internal class SearchTrackCommand : AsyncCommandBase
             TrackAudioFeatures features = await spotifyService.GetAudioTrackFeatures(track.Id);
 
             trackViewModel.SetCurrentTrack(new BeatTrack(track, features));
+            currentQuery = ((TextBox)parameter!).Text;
             applicationCommands.RemoveFocus.Execute(parameter);
         }
         catch (Exception ex)
