@@ -23,9 +23,11 @@
     <SolidColorBrush x:Key="AccentError" Color="#cd1a2b" />
 
     <!--  Text Sizes  -->
-    <sys:Double x:Key="TextSizeExtraLarge">38</sys:Double>
-    <sys:Double x:Key="TextSizeLarge">24</sys:Double>
+    <sys:Double x:Key="TextSizeExtraLarge">42</sys:Double>
+    <sys:Double x:Key="TextSizeLarge">36</sys:Double>
+    <sys:Double x:Key="TextSizeMedium">24</sys:Double>
     <sys:Double x:Key="TextSizeBase">14</sys:Double>
+
 
     <DrawingImage x:Key="SVGSearch">
         <DrawingImage.Drawing>

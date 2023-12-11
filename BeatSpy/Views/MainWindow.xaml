@@ -199,7 +199,7 @@
                             Orientation="Vertical">
 
                             <TextBlock
-                                FontSize="{StaticResource TextSizeLarge}"
+                                FontSize="{StaticResource TextSizeMedium}"
                                 Style="{StaticResource TrackStyle}"
                                 Text="{Binding TrackViewModel.Track.TrackArtist}" />
 
@@ -278,7 +278,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="{StaticResource TextSizeExtraLarge}"
+                            FontSize="{StaticResource TextSizeLarge}"
                             Style="{StaticResource TrackStyle}"
                             Text="{Binding TrackViewModel.Track.TrackVolume}" />
                     </DockPanel>
@@ -305,7 +305,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="{StaticResource TextSizeExtraLarge}"
+                            FontSize="{StaticResource TextSizeLarge}"
                             Style="{StaticResource TrackStyle}"
                             Text="{Binding TrackViewModel.Track.TrackTempo}" />
                     </DockPanel>
@@ -336,7 +336,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="{StaticResource TextSizeExtraLarge}"
+                            FontSize="{StaticResource TextSizeLarge}"
                             Style="{StaticResource TrackStyle}"
                             Text="{Binding TrackViewModel.Track.TrackDuration}" />
                     </DockPanel>
@@ -363,7 +363,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="{StaticResource TextSizeExtraLarge}"
+                            FontSize="{StaticResource TextSizeLarge}"
                             Style="{StaticResource TrackStyle}"
                             Text="{Binding TrackViewModel.Track.TrackKey}" />
                     </DockPanel>
