@@ -95,10 +95,10 @@ namespace BeatSpy
                 if (TrackTitle.IsMouseOver)
                 {
                     //Check if we should play the animation
-                    if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 290))
+                    if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 315))
                     {
                         //Set the animation to location
-                        titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 290));
+                        titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 315));
 
                         TranslateTransform translateTransform = new();
                         TrackTitle.RenderTransform = translateTransform;
@@ -121,10 +121,10 @@ namespace BeatSpy
             Dispatcher.BeginInvoke(new Action(() =>
             {
                 //Check if we should play the animation
-                if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 290))
+                if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 315))
                 {
                     //Set the animation to location
-                    titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 290));
+                    titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 315));
 
                     TranslateTransform translateTransform = new();
                     TrackTitle.RenderTransform = translateTransform;

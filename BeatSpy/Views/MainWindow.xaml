@@ -98,7 +98,6 @@
                     <svgc:SvgIcon
                         Width="10"
                         Height="10"
-                        Margin="0,0,0,0"
                         Fill="{StaticResource TextPrimary}">
                         <svgc:SvgIcon.SvgSource>
                             <![CDATA[
@@ -114,7 +113,6 @@
                     <svgc:SvgIcon
                         Width="10"
                         Height="10"
-                        Margin="0,0,0,0"
                         Fill="{StaticResource TextPrimary}">
                         <svgc:SvgIcon.SvgSource>
                             <![CDATA[
@@ -193,8 +191,8 @@
                         <!--  Track Artist & Title  -->
                         <StackPanel
                             Grid.Row="1"
-                            MinWidth="290"
-                            Margin="25,0"
+                            MinWidth="315"
+                            Margin="25,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             ClipToBounds="True"
@@ -207,7 +205,7 @@
 
                             <Canvas
                                 x:Name="TrackTitleCanvas"
-                                Height="48"
+                                Height="42"
                                 HorizontalAlignment="Stretch"
                                 Background="Transparent">
                                 <TextBlock
