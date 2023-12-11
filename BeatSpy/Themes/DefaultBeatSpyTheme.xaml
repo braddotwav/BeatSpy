@@ -225,7 +225,6 @@
                                 FontSize="{StaticResource TextSizeBase}"
                                 Foreground="{StaticResource TextSecondary}"
                                 IsHitTestVisible="False"
-                                Opacity="0.5"
                                 Text="Search for a song">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
