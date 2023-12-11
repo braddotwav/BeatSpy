@@ -5,25 +5,14 @@ using BeatSpy.ViewModels.Base;
 
 namespace BeatSpy.ViewModels;
 
-internal class ContextMenuViewModel : ObservableObject
+internal class ContextMenuViewModel : ViewModelBase
 {
-    private bool isConnected = false;
-    public bool IsConnected 
-    {
-        get => isConnected;
-        set
-        {
-            isConnected = value;
-            OnPropertyChanged(nameof(IsConnected));
-        }
-    }
-
     public ICommand LoginSpotify { get; }
     public ICommand LogOutSpotify { get; }
 
-    public ContextMenuViewModel(ISpotifyService service)
+    public ContextMenuViewModel(ISpotifyService service, IMessageDisplayService messageDisplayService)
     {
-        LoginSpotify = new LogInToSpotifyCommand(service);
+        LoginSpotify = new LogInToSpotifyCommand(service, messageDisplayService);
         LogOutSpotify = new LogOutOfSpotifyCommand(service);
     }
 }

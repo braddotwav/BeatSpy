@@ -1,10 +1,10 @@
-﻿using SpotifyAPI.Web;
-using BeatSpy.Helpers;
+﻿using BeatSpy.Helpers;
+using SpotifyAPI.Web;
 
 namespace BeatSpy.Models;
 
 internal class BeatTrack
-{ 
+{
     public string? TrackArtist { get; }
     public string? TrackTitle { get; set; }
     public string? TrackCoverUrl { get; }

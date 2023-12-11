@@ -1,20 +1,31 @@
-﻿using BeatSpy.Services;
-using BeatSpy.Commands.Base;
+﻿using BeatSpy.Commands.Base;
+using BeatSpy.DataTypes.Enums;
+using BeatSpy.Services;
+using System;
 using System.Threading.Tasks;
 
 namespace BeatSpy.Commands;
 
 internal class LogInToSpotifyCommand : AsyncCommandBase
 {
-    private readonly ISpotifyService service;
+    private readonly IMessageDisplayService messageDisplayService;
+    private readonly ISpotifyService spotifyService;
 
-    public LogInToSpotifyCommand(ISpotifyService service)
+    public LogInToSpotifyCommand(ISpotifyService spotifyService, IMessageDisplayService messageDisplayService)
     {
-        this.service = service;
+        this.spotifyService = spotifyService;
+        this.messageDisplayService = messageDisplayService;
     }
 
     protected override async Task ExcuteAsync(object? parameter)
     {
-        await Task.Run(() => service.Login());
+        try
+        {
+            await Task.Run(() => spotifyService.LogIn(LoginType.Manual));
+        }
+        catch (Exception ex)
+        {
+            messageDisplayService.DisplayErrorMessage(ex);
+        }
     }
 }

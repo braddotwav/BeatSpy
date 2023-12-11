@@ -62,12 +62,12 @@
                                 Command="{Binding ContextMenuViewModel.LoginSpotify}"
                                 Header="Log In"
                                 Style="{StaticResource MenuItemStyle}"
-                                Visibility="{Binding ContextMenuViewModel.IsConnected, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}" />
+                                Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}" />
                             <MenuItem
                                 Command="{Binding ContextMenuViewModel.LogOutSpotify}"
                                 Header="Log Out"
                                 Style="{StaticResource MenuItemStyle}"
-                                Visibility="{Binding ContextMenuViewModel.IsConnected, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Normal}" />
+                                Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Normal}" />
                             <MenuItem
                                 Command="{Binding ExitApplication}"
                                 Header="Exit"

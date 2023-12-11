@@ -1,6 +1,6 @@
 ﻿namespace BeatSpy.DataTypes.Enums;
 
-internal enum Pitches
+public enum Pitches
 {
     PITCH_C = 0,
     PITCH_CSHARP = 1,

@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Windows;
 using BeatSpy.Helpers;
-using System.Windows.Media;
+using BeatSpy.Services;
 using System.Windows.Input;
+using System.Windows.Media;
 using System.Threading.Tasks;
 using System.Windows.Controls;
+using BeatSpy.DataTypes.Structs;
 using BeatSpy.DataTypes.Constants;
-using System.Diagnostics;
 
 namespace BeatSpy
 {
@@ -15,13 +16,18 @@ namespace BeatSpy
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly TranslateAnimationHandler titleAnimBuilder;
+        private readonly ITitleAnimationService titleAnimationService;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            titleAnimBuilder = new(TimeSpan.FromSeconds(5), 0.5);
+            titleAnimationService = new TitleAnimationService(new TitleAnimationInfo
+            {
+                Duration = 5,
+                Deceleration = 0.5,
+                ShouldReverse = true
+            });
         }
 
         /// <summary>
@@ -44,7 +50,7 @@ namespace BeatSpy
         /// <param name="e"></param>
         private void OnContextMenuClick(object sender, RoutedEventArgs e)
         {
-            if(sender is Button contextButton)
+            if (sender is Button contextButton)
             {
                 contextButton.ContextMenu.IsOpen = true;
             }
@@ -57,7 +63,7 @@ namespace BeatSpy
         /// <param name="e"></param>
         private void OnContextMenuLoaded(object sender, RoutedEventArgs e)
         {
-            if(sender is ContextMenu contextMenu)
+            if (sender is ContextMenu contextMenu)
             {
                 contextMenu.DataContext = DataContext;
             }
@@ -70,7 +76,7 @@ namespace BeatSpy
         /// <param name="e"></param>
         private void OnBeatSpyClicked(object sender, RoutedEventArgs e)
         {
-            BrowsUtil.OpenUrl(DefaultConstants.LINK_GITHUB_REPO);
+            BrowserHelper.OpenURLInBrowser(DefaultConstants.LINK_GITHUB_REPO);
         }
 
         /// <summary>
@@ -88,16 +94,18 @@ namespace BeatSpy
                 //Check if the mouse is hovered over the track title
                 if (TrackTitle.IsMouseOver)
                 {
-                    //Check if the tracks title width is passed the animation bounds
-                    if (titleAnimBuilder.ShouldAnimate(TrackTitle.ActualWidth) && !titleAnimBuilder.IsAnimationPlaying)
+                    //Check if we should play the animation
+                    if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 290))
                     {
                         //Set the animation to location
-                        titleAnimBuilder.SetAnimationTo(-(TrackTitle.ActualWidth - 290));
+                        titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 290));
 
                         TranslateTransform translateTransform = new();
                         TrackTitle.RenderTransform = translateTransform;
 
-                        titleAnimBuilder.StartAnimation(translateTransform);
+                        //Start the animation
+                        titleAnimationService.StartAnimation(translateTransform);
+
                     }
                 }
             }));
@@ -112,16 +120,17 @@ namespace BeatSpy
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                //Check if the tracks title width is passed the animation bounds
-                if (titleAnimBuilder.ShouldAnimate(TrackTitle.ActualWidth) && !titleAnimBuilder.IsAnimationPlaying)
+                //Check if we should play the animation
+                if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 290))
                 {
                     //Set the animation to location
-                    titleAnimBuilder.SetAnimationTo(-(TrackTitle.ActualWidth - 290));
+                    titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 290));
 
                     TranslateTransform translateTransform = new();
                     TrackTitle.RenderTransform = translateTransform;
 
-                    titleAnimBuilder.StartAnimation(translateTransform);
+                    //Start the animation
+                    titleAnimationService.StartAnimation(translateTransform);
                 }
             }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }

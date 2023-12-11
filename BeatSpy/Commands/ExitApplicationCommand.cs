@@ -1,5 +1,5 @@
-﻿using System.Windows;
-using BeatSpy.Commands.Base;
+﻿using BeatSpy.Commands.Base;
+using System.Windows;
 
 namespace BeatSpy.Commands;
 
