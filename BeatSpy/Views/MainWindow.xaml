@@ -194,27 +194,26 @@
                         <StackPanel
                             Grid.Row="1"
                             MinWidth="290"
-                            Margin="25"
+                            Margin="25,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             ClipToBounds="True"
                             Orientation="Vertical">
 
                             <TextBlock
-                                FontSize="24"
+                                FontSize="{StaticResource TextSizeLarge}"
                                 Style="{StaticResource TrackStyle}"
                                 Text="{Binding TrackViewModel.Track.TrackArtist}" />
 
                             <Canvas
                                 x:Name="TrackTitleCanvas"
-                                Height="45"
+                                Height="48"
                                 HorizontalAlignment="Stretch"
                                 Background="Transparent">
                                 <TextBlock
                                     x:Name="TrackTitle"
-                                    Width="Auto"
                                     HorizontalAlignment="Stretch"
-                                    FontSize="38"
+                                    FontSize="{StaticResource TextSizeExtraLarge}"
                                     MouseEnter="OnTrackTitleMouseEnter"
                                     Style="{StaticResource TrackStyle}"
                                     TargetUpdated="OnTrackTitleUpdated"
@@ -281,7 +280,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="34"
+                            FontSize="{StaticResource TextSizeExtraLarge}"
                             Style="{StaticResource TrackStyle}"
                             Text="{Binding TrackViewModel.Track.TrackVolume}" />
                     </DockPanel>
@@ -308,7 +307,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="34"
+                            FontSize="{StaticResource TextSizeExtraLarge}"
                             Style="{StaticResource TrackStyle}"
                             Text="{Binding TrackViewModel.Track.TrackTempo}" />
                     </DockPanel>
@@ -339,7 +338,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="34"
+                            FontSize="{StaticResource TextSizeExtraLarge}"
                             Style="{StaticResource TrackStyle}"
                             Text="{Binding TrackViewModel.Track.TrackDuration}" />
                     </DockPanel>
@@ -366,7 +365,7 @@
                         <TextBlock
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
-                            FontSize="34"
+                            FontSize="{StaticResource TextSizeExtraLarge}"
                             Style="{StaticResource TrackStyle}"
                             Text="{Binding TrackViewModel.Track.TrackKey}" />
                     </DockPanel>
@@ -397,7 +396,7 @@
                     </svgc:SvgIcon>
                     <TextBlock
                         VerticalAlignment="Center"
-                        FontSize="14"
+                        FontSize="{StaticResource TextSizeBase}"
                         Style="{StaticResource ErrorStyle}"
                         Text="{Binding Message}" />
                 </DockPanel>
