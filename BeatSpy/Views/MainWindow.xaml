@@ -183,7 +183,10 @@
                         </Border.Background>
                     </Border>
 
-                    <Grid Grid.Column="1" Background="Transparent">
+                    <Grid
+                        Grid.Column="1"
+                        Margin="25,0,0,0"
+                        Background="Transparent">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
@@ -192,7 +195,6 @@
                         <StackPanel
                             Grid.Row="1"
                             MinWidth="315"
-                            Margin="25,0,0,0"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             ClipToBounds="True"
@@ -205,7 +207,7 @@
 
                             <Canvas
                                 x:Name="TrackTitleCanvas"
-                                Height="42"
+                                Height="48"
                                 HorizontalAlignment="Stretch"
                                 Background="Transparent">
                                 <TextBlock
@@ -224,7 +226,6 @@
                         <!--  Open with spotify button  -->
                         <Button
                             Width="28"
-                            Height="28"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
                             Command="{Binding ListenOnSpotify}"
