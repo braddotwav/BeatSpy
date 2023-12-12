@@ -1,6 +1,9 @@
-﻿using System.Windows;
+﻿using BeatSpy.DataTypes.Enums;
 using BeatSpy.Services;
 using BeatSpy.ViewModels;
+using BeatSpy.ViewModels.Base;
+using System;
+using System.Windows;
 
 namespace BeatSpy;
 
@@ -9,18 +12,39 @@ namespace BeatSpy;
 /// </summary>
 public partial class App : Application
 {
+    private ViewModelBase? mainViewModel;
+
     protected override async void OnStartup(StartupEventArgs e)
     {
-        base.OnStartup(e);
+        //Set up spotify service
+        IMessageDisplayService messageDisplayService = new MessageDisplayService();
+        ISpotifyAuthenticationService spotifyAuth = new SpotifyAuthenticationService();
+        ISpotifyService spotifyService = new SpotifyService(spotifyAuth);
 
-        ISpotifyService spotifyService = new SpotifyService();
-
+        //Create main window and data context
         MainWindow mainWindow = new();
-        MainWindowViewModel mainViewModel = new(spotifyService);
+        mainViewModel = new MainWindowViewModel(spotifyService, messageDisplayService);
         mainWindow.DataContext = mainViewModel;
 
-        await spotifyService.Connect();
+        //Try and connect to spotify
+        try
+        {
+            await spotifyService.LogIn(LoginType.Automatic);
+        }
+        catch (Exception ex)
+        {
+            messageDisplayService.DisplayErrorMessage(ex);
+        }
 
+        //Make main window visable
         mainWindow.Show();
+
+        base.OnStartup(e);
+    }
+
+    protected override void OnExit(ExitEventArgs e)
+    {
+        mainViewModel!.Dispose();
+        base.OnExit(e);
     }
 }

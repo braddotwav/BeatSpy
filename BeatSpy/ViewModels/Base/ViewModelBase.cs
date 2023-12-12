@@ -1,9 +1,10 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
 namespace BeatSpy.ViewModels.Base;
 
-internal class ObservableObject : INotifyPropertyChanged
+internal class ViewModelBase : INotifyPropertyChanged, IDisposable
 {
     public event PropertyChangedEventHandler? PropertyChanged;
 
@@ -11,4 +12,6 @@ internal class ObservableObject : INotifyPropertyChanged
     {
         PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
     }
+
+    public virtual void Dispose() { }
 }

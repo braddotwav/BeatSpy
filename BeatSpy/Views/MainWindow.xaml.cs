@@ -1,7 +1,12 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using BeatSpy.Helpers;
+using BeatSpy.Services;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.Threading.Tasks;
 using System.Windows.Controls;
+using BeatSpy.DataTypes.Structs;
 using BeatSpy.DataTypes.Constants;
 
 namespace BeatSpy
@@ -11,9 +16,18 @@ namespace BeatSpy
     /// </summary>
     public partial class MainWindow : Window
     {
+        private readonly ITitleAnimationService titleAnimationService;
+
         public MainWindow()
         {
             InitializeComponent();
+
+            titleAnimationService = new TitleAnimationService(new TitleAnimationInfo
+            {
+                Duration = 5,
+                Deceleration = 0.5,
+                ShouldReverse = true
+            });
         }
 
         /// <summary>
@@ -30,33 +44,13 @@ namespace BeatSpy
         }
 
         /// <summary>
-        /// This method is fired when ever the user mouse clicks the close button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnWindowCloseClick(object sender, RoutedEventArgs e)
-        {
-            Application.Current.Shutdown();
-        }
-
-        /// <summary>
-        /// This method is fired when ever the user mouse clicks the minimise button
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnWindowMinimiseClick(object sender, RoutedEventArgs e)
-        {
-            Application.Current.MainWindow.WindowState = WindowState.Minimized;
-        }
-
-        /// <summary>
         /// This method is fired when ever the user mouse clicks on the context button
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void OnContextMenuClick(object sender, RoutedEventArgs e)
         {
-            if(sender is Button contextButton)
+            if (sender is Button contextButton)
             {
                 contextButton.ContextMenu.IsOpen = true;
             }
@@ -69,15 +63,76 @@ namespace BeatSpy
         /// <param name="e"></param>
         private void OnContextMenuLoaded(object sender, RoutedEventArgs e)
         {
-            if(sender is ContextMenu contextMenu)
+            if (sender is ContextMenu contextMenu)
             {
                 contextMenu.DataContext = DataContext;
             }
         }
 
+        /// <summary>
+        /// This method is fired when the user clicks BeatSpy logo
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void OnBeatSpyClicked(object sender, RoutedEventArgs e)
         {
-            BrowsUtil.OpenUrl(DefaultConstants.LINK_GITHUB_REPO);
+            BrowserHelper.OpenURLInBrowser(DefaultConstants.LINK_GITHUB_REPO);
+        }
+
+        /// <summary>
+        /// This method is fired when the user's mouse enters the title element
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTrackTitleMouseEnter(object sender, MouseEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(async () =>
+            {
+                //Allow for a 500ms delay
+                await Task.Delay(500);
+
+                //Check if the mouse is hovered over the track title
+                if (TrackTitle.IsMouseOver)
+                {
+                    //Check if we should play the animation
+                    if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 315))
+                    {
+                        //Set the animation to location
+                        titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 315));
+
+                        TranslateTransform translateTransform = new();
+                        TrackTitle.RenderTransform = translateTransform;
+
+                        //Start the animation
+                        titleAnimationService.StartAnimation(translateTransform);
+
+                    }
+                }
+            }));
+        }
+
+        /// <summary>
+        /// This method is fired when the track title is updated
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnTrackTitleUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
+        {
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                //Check if we should play the animation
+                if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 315))
+                {
+                    //Set the animation to location
+                    titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 315));
+
+                    TranslateTransform translateTransform = new();
+                    TrackTitle.RenderTransform = translateTransform;
+
+                    //Start the animation
+                    titleAnimationService.StartAnimation(translateTransform);
+                }
+            }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
         }
     }
 }

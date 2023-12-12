@@ -1,5 +1,5 @@
-﻿using BeatSpy.Services;
-using BeatSpy.Commands.Base;
+﻿using BeatSpy.Commands.Base;
+using BeatSpy.Services;
 
 namespace BeatSpy.Commands;
 
@@ -14,6 +14,6 @@ internal class LogOutOfSpotifyCommand : CommandBase
 
     public override void Execute(object? parameter)
     {
-        spotifyService.Disconnect();
+        spotifyService.LogOut();
     }
 }

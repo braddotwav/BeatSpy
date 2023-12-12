@@ -2,22 +2,24 @@
 using BeatSpy.Services;
 using System.Windows.Input;
 using BeatSpy.ViewModels.Base;
+using BeatSpy.DataTypes.Enums;
+using BeatSpy.DataTypes.Constants;
+using BeatSpy.DataTypes.Interfaces;
 
 namespace BeatSpy.ViewModels;
 
-internal class MainWindowViewModel : ObservableObject
+internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
 {
-    /// <summary>
-    /// Commands
-    /// </summary>
-    public ICommand? ListenOnSpotify { get; private set; }
-    public ICommand? SearchQueryEntered { get; private set; }
+    public bool IsLoggedIn => spotify.IsLoggedIn;
 
-    private ICommand? RandomTrack { get; }
+    public ICommand RemoveFocus { get; }
+    public ICommand ExitApplication { get; }
+    public ICommand MinimizeApplication { get; }
 
-    /// <summary>
-    /// View Models
-    /// </summary>
+    public ICommand ListenOnSpotify { get; }
+    public ICommand SearchQueryEntered { get; }
+    private ICommand RandomTrack { get; }
+
     public TrackViewModel TrackViewModel => trackViewModel;
     public MessageHandlerViewModel MessageHandler => messageViewModel;
     public ContextMenuViewModel ContextMenuViewModel => contextMenuViewModel;
@@ -26,40 +28,54 @@ internal class MainWindowViewModel : ObservableObject
     private readonly MessageHandlerViewModel messageViewModel;
     private readonly ContextMenuViewModel contextMenuViewModel;
 
+    //Services
+    private readonly IMessageDisplayService messageService;
     private readonly ISpotifyService spotify;
 
-    public MainWindowViewModel(ISpotifyService spotifyService)
+    public MainWindowViewModel(ISpotifyService spotifyService, IMessageDisplayService messageDisplayService)
     {
         spotify = spotifyService;
-        spotify.OnConnected += OnSpotifyConnected;
-        spotify.OnDisconnected += OnSpotifyDisconnected;
+        messageService = messageDisplayService;
+        spotify.OnServiceStateChanged += OnSpotifyServiceStateChanged;
+        messageViewModel = new(messageService);
         trackViewModel = new();
-        messageViewModel = new();
-        contextMenuViewModel = new(spotify);
-        ListenOnSpotify = new ListenOnSpotifyCommand();
-        SearchQueryEntered = new SearchTrackCommand(trackViewModel, messageViewModel, spotify);
-        RandomTrack = new RandomTrackCommand(trackViewModel, spotify);
+        contextMenuViewModel = new(spotify, messageService);
+        ExitApplication = new ExitApplicationCommand();
+        MinimizeApplication = new MinimizeApplicationCommand();
+        ListenOnSpotify = new ListenOnSpotifyCommand(spotify);
+        RemoveFocus = new RemoveFocusCommand();
+        SearchQueryEntered = new SearchTrackCommand(spotify, this, trackViewModel, messageService);
+        RandomTrack = new RandomTrackCommand(spotify, trackViewModel, messageService);
     }
 
     /// <summary>
-    /// This method is raised when the spotify service is connected
+    /// Responds to changes in Spotify service state
     /// </summary>
-    private void OnSpotifyConnected()
+    /// <param name="state">Client state</param>
+    private void OnSpotifyServiceStateChanged(ConnectionType state)
     {
-        if(spotify.Client != null)
+        switch (state)
         {
-            RandomTrack?.Execute(this);
-            contextMenuViewModel.IsConnected = true;
+            case ConnectionType.Connected:
+                RandomTrack.Execute(this);
+                messageService.ClearMessage();
+                messageService.DisplayInfoMessage(MessageType.Silent, LogConstants.CLIENT_CONNECTED);
+                break;
+            case ConnectionType.Disconnected:
+                messageService.DisplayInfoMessage(MessageType.Normal, LogConstants.CLIENT_DISCONNECTED);
+                break;
         }
+
+        OnPropertyChanged(nameof(IsLoggedIn));
     }
 
     /// <summary>
-    /// This method is raised when the spotify service is disconnected
+    /// Dispose of any application resources
     /// </summary>
-    /// <exception cref="System.NotImplementedException"></exception>
-    private void OnSpotifyDisconnected()
+    public override void Dispose()
     {
-        contextMenuViewModel.IsConnected = false;
-        messageViewModel.SetMessage("Disconnected from spotify.");
+        spotify.OnServiceStateChanged -= OnSpotifyServiceStateChanged;
+        messageViewModel.Dispose();
+        base.Dispose();
     }
 }

@@ -1,161 +1,100 @@
-﻿using NLog;
-using System;
-using System.IO;
-using System.Net;
-using BeatSpy.Models;
+﻿using System;
 using SpotifyAPI.Web;
 using BeatSpy.Helpers;
-using System.Text.Json;
 using System.Threading.Tasks;
-using BeatSpy.DataTypes.Constants;
+using BeatSpy.DataTypes.Enums;
 
 namespace BeatSpy.Services;
 
 internal class SpotifyService : ISpotifyService
 {
-    private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+    private readonly ISpotifyAuthenticationService authenticationService;
 
-    public SpotifyClient Client => spotifyClient;
-    private SpotifyClient? spotifyClient;
+    private SpotifyClient? client;
 
-    private readonly string tokenFilePath = $"{Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData)}/BeatSpy/auth.json";
-
-    public event Action? OnConnected;
-    public event Action? OnDisconnected;
-
-    public async Task Connect()
+    public SpotifyClient? Client
     {
-        try
+        get { return client; }
+        set
         {
-            if (File.Exists(tokenFilePath))
-            {
-                logger.Info(LogInfoConstants.AUTH_FILE_FOUND);
-                string tokenContent = File.ReadAllText(tokenFilePath);
-                SpotifyToken token = JsonSerializer.Deserialize<SpotifyToken>(tokenContent);
-                if (token != null)
-                {
-                    logger.Info(LogInfoConstants.AUTH_FILE_LOADED);
-                    PKCETokenResponse? newToken = await TryGetPKCERefreshTokenResponse(token.RefreshToken);
-                    if (newToken != null)
-                    {
-                        token.RefreshToken = newToken.RefreshToken;
-                        string serializedJson = JsonSerializer.Serialize(token);
-                        File.WriteAllText(tokenFilePath, serializedJson);
-                        logger.Info(LogInfoConstants.AUTH_FILE_UPDATED);
-                        spotifyClient = new SpotifyClient(newToken.AccessToken);
-                        OnConnected?.Invoke();
-                        logger.Info(LogInfoConstants.SERVER_CONNECTED);
-                        return;
-                    }
-                }
-            }
-            else
-            {
-                throw new FileNotFoundException();
-            }
-        }
-        catch (Exception ex)
-        {
-            logger.Info(ex, LogInfoConstants.AUTH_FILE_NOTFOUND);
+            client = value;
+            OnServiceStateChanged?.Invoke(client == null ? ConnectionType.Disconnected : ConnectionType.Connected);
         }
     }
 
-    public void Disconnect()
+    public bool IsLoggedIn => Client != null;
+
+    public event Action<ConnectionType>? OnServiceStateChanged;
+
+    public SpotifyService(ISpotifyAuthenticationService authenticationService)
     {
-        if(spotifyClient != null)
+        this.authenticationService = authenticationService;
+    }
+
+    /// <summary>
+    /// Logs the user in creating a client
+    /// </summary>
+    /// <param name="loginType">Login type</param>
+    /// <returns></returns>
+    public async Task LogIn(LoginType loginType)
+    {
+        switch (loginType)
         {
-            spotifyClient = null;
-            File.Delete(tokenFilePath);
-            OnDisconnected?.Invoke();
-            logger.Info(LogInfoConstants.SERVER_DISCONNECTED);
+            case LoginType.Automatic:
+                Client = await authenticationService.Connect();
+                break;
+            case LoginType.Manual:
+                await authenticationService.LogIn();
+                goto case LoginType.Automatic;
         }
     }
 
-    public bool IsConnected()
+    /// <summary>
+    /// Logs the user out by clearing the client and initiating authentication service logout.
+    /// </summary>
+    public void LogOut()
     {
-        return spotifyClient != null;
+        Client = null;
+        authenticationService.LogOut();
     }
 
-    public async Task Login()
+    /// <summary>
+    /// Asynchronously searches for a track using the provided search query.
+    /// </summary>
+    /// <param name="searchQuery">Search query</param>
+    /// <returns></returns>
+    public async Task<FullTrack> GetTrack(string searchQuery)
     {
-        var (verifier, challenge) = PKCEUtil.GenerateCodes(120);
+        SearchResponse response = await client!.Search.Item(new SearchRequest(SearchRequest.Types.Track, searchQuery!));
 
-        var loginRequest = new LoginRequest(
-          new Uri(AuthConstants.CALL_BACK),
-          Properties.Settings.Default.SpotClientId,
-          LoginRequest.ResponseType.Code
-        )
-        {
-            CodeChallengeMethod = "S256",
-            CodeChallenge = challenge,
-        };
-
-        BrowsUtil.OpenUrl(loginRequest.ToUri().AbsoluteUri);
-
-        await StartListenServer(verifier);
+        FullTrack track = await client.Tracks.Get(response.Tracks.Items![0].Id);
+        return track;
     }
 
-    private async Task StartListenServer(string verifier)
+    /// <summary>
+    /// Asynchronously fetches the audio features of a provided track using its ID
+    /// </summary>
+    /// <param name="trackID">Track ID</param>
+    /// <returns></returns>
+    public async Task<TrackAudioFeatures> GetAudioTrackFeatures(string trackID)
     {
-        using HttpListener listener = new();
-        listener.Prefixes.Add(string.Concat(AuthConstants.CALL_BACK, "/"));
-
-        try
-        {
-            listener.Start();
-            logger.Info(LogInfoConstants.SERVER_CALLBACK_INIT);
-
-            while (spotifyClient == null)
-            {
-                HttpListenerContext context = listener.GetContext();
-                if (context != null)
-                {
-                    logger.Info(LogInfoConstants.SERVER_CALLBACK_RECIVED);
-                    if (context.Request.QueryString.Get("code") != null)
-                    {
-                        await GetCallback(context.Request.QueryString["code"]!, verifier);
-                    }
-                    else
-                    {
-                        throw new Exception();
-                    }
-                }
-            }
-        }
-        catch (Exception ex)
-        {
-            logger.Error(ex, LogInfoConstants.SERVER_ERROR);
-        }
+        TrackAudioFeatures trackFeatures = await client!.Tracks.GetAudioFeatures(trackID);
+        return trackFeatures;
     }
 
-    private async Task GetCallback(string code, string verifier)
+    /// <summary>
+    /// Asynchronously obtains the details of a specific playlist using the provided playlist ID
+    /// </summary>
+    /// <param name="playlistId">Playlist ID</param>
+    /// <returns></returns>
+    public async Task<FullTrack> GetRandomTrackFromPlaylist(string playlistId)
     {
-        var initialResponse = await new OAuthClient().RequestToken(
-          new PKCETokenRequest(Properties.Settings.Default.SpotClientId, code, new Uri(AuthConstants.CALL_BACK), verifier)
-        );
+        FullPlaylist playlist = await client!.Playlists.Get(playlistId);
 
-        if (initialResponse != null)
-        {
-            var serializedJson = JsonSerializer.Serialize(new SpotifyToken() { RefreshToken = initialResponse.RefreshToken });
-            File.WriteAllText(tokenFilePath, serializedJson);
-            logger.Info(LogInfoConstants.AUTH_FILE_UPDATED);
-            spotifyClient = new SpotifyClient(initialResponse.AccessToken);
-            OnConnected?.Invoke();
-        }
-    }
+        if (playlist.Tracks == null)
+            throw new NullReferenceException();
 
-    private async Task<PKCETokenResponse?> TryGetPKCERefreshTokenResponse(string refreshToken)
-    {
-        try
-        {
-            PKCETokenResponse reponse = await new OAuthClient().RequestToken(new PKCETokenRefreshRequest(Properties.Settings.Default.SpotClientId, refreshToken)) ?? throw new NullReferenceException();
-            logger.Info(LogInfoConstants.AUTH_REQUEST_SUCCESS);
-            return reponse;
-        }
-        catch (Exception ex)
-        {
-            logger.Error(ex, LogInfoConstants.AUTH_REQUEST_FAILED);
-            return null;
-        }
+        FullTrack track = (FullTrack)playlist.Tracks.Items![RandomRange.Range(0, playlist.Tracks.Items.Count)].Track;
+        return track;
     }
 }

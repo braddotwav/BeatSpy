@@ -1,41 +1,41 @@
 ﻿using BeatSpy.Commands;
+using BeatSpy.Services;
 using System.Windows.Input;
 using BeatSpy.ViewModels.Base;
-using BeatSpy.DataTypes.Interfaces;
 
 namespace BeatSpy.ViewModels;
 
-internal class MessageHandlerViewModel : ObservableObject, IMessageNotify
+internal class MessageHandlerViewModel : ViewModelBase
 {
-	private string message = string.Empty;
+    public string Message => messageDisplayService.Message;
+    public bool IsMessageEmpty => messageDisplayService.IsMessageEmpty;
 
-	public string Message
-	{
-		get { return message; }
-		private set 
-		{ 
-			message = value;
-			OnPropertyChanged();
-			OnPropertyChanged(nameof(IsMessageEmpty));
-		}
-	}
+    public ICommand DismissError { get; }
 
-    public ICommand? DismissError { get; }
+    private readonly IMessageDisplayService messageDisplayService;
 
-    public bool IsMessageEmpty => string.IsNullOrEmpty(message);
-
-    public MessageHandlerViewModel()
+    public MessageHandlerViewModel(IMessageDisplayService messageDisplayService)
     {
-		DismissError = new DismissErrorCommand(this);
+        this.messageDisplayService = messageDisplayService;
+        messageDisplayService.OnMessageUpdated += OnDisplayMessageUpdated;
+        DismissError = new DismissErrorCommand(messageDisplayService);
     }
 
-	public void SetMessage(string message)
-	{
-		Message = message;
-	}
+    /// <summary>
+    /// Updates property notifications when the display message has been updated
+    /// </summary>
+    private void OnDisplayMessageUpdated()
+    {
+        OnPropertyChanged(nameof(Message));
+        OnPropertyChanged(nameof(IsMessageEmpty));
+    }
 
-	public void ClearMessage()
-	{
-		Message = string.Empty;
-	}
+    /// <summary>
+    /// Disposes of resources by unsubscribing to any events
+    /// </summary>
+    public override void Dispose()
+    {
+        messageDisplayService.OnMessageUpdated -= OnDisplayMessageUpdated;
+        base.Dispose();
+    }
 }

@@ -1,35 +1,24 @@
-﻿using NLog;
-using System;
-using BeatSpy.Models;
+﻿using BeatSpy.Models;
 using BeatSpy.Helpers;
+using BeatSpy.Services;
 using BeatSpy.Commands.Base;
 
 namespace BeatSpy.Commands;
 
 internal class ListenOnSpotifyCommand : CommandBase
 {
-    private static readonly Logger logger = LogManager.GetCurrentClassLogger();
+    private readonly ISpotifyService spotifyService;
+
+    public ListenOnSpotifyCommand(ISpotifyService spotifyService)
+    {
+        this.spotifyService = spotifyService;
+    }
 
     public override void Execute(object? parameter)
     {
-        if(parameter is BeatTrack currentTrack)
+        if(parameter is BeatTrack track)
         {
-            try
-            {
-                if(!string.IsNullOrEmpty(currentTrack.TrackUrl))
-                {
-                    BrowsUtil.OpenUrl(currentTrack.TrackUrl);
-                    logger.Info($"Opening {currentTrack.TrackTitle} URL: {currentTrack.TrackUrl}");
-                }
-                else
-                {
-                    throw new ArgumentNullException(nameof(currentTrack.TrackUrl));
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.Error(ex);
-            }
+            BrowserHelper.OpenURLInBrowser(track.TrackUrl!);
         }
     }
 }

@@ -3,10 +3,10 @@ using System.Windows;
 
 namespace BeatSpy.Commands;
 
-internal class ExitApplicationCommand : CommandBase
+internal class MinimizeApplicationCommand : CommandBase
 {
     public override void Execute(object? parameter)
     {
-        Application.Current.Shutdown();
+        Application.Current.MainWindow.WindowState = WindowState.Minimized;
     }
 }

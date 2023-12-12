@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Assets\Fonts\Gilroy-Medium.ttf" />
     <None Remove="Assets\Fonts\Gilroy-Regular.ttf" />
     <None Remove="Assets\Images\beatspy-icons-clock.png" />
     <None Remove="Assets\Images\beatspy-icons-heart.png" />
@@ -30,6 +31,9 @@
     <Resource Include="Assets\Fonts\Gilroy-ExtraBold.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
+    <Resource Include="Assets\Fonts\Gilroy-Medium.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
     <Resource Include="Assets\Fonts\Gilroy-Regular.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
@@ -48,7 +52,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="LICENSES.txt">
+    <None Update="Assets\Licenses\LICENSES.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="NLog.config">
@@ -59,5 +63,4 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-
 </Project>
