@@ -1,21 +1,17 @@
-<center>
-    <img src="Media/beatspy_appicon-black.png" alt="Logo" width="128" height="128" />
-</center>
+<img src="Media/beatspy_appicon-black.png" alt="Logo" width="128" height="128" />
 
 # BeatSpy
-A helpful tool for producers and music lovers to see valuable information of there favourite songs.
+BeatSpy lets music producers and enthusiasts search for songs and instantly access valuable details like tempo, key, loudness, and more, all using Spotify integration.
 
-Screenshots can be found on [my personal site.](https://realjamako.github.io/)
-
-*If you find BeatSpy useful please consider staring the project.*
+A screenshot of the application can be found in the [Media](https://github.com/RealJamako/BeatSpy/tree/master/Media) section of the repo.
 
 Download
 ---------
-*Currently waiting for spotify to accept API extention*
+You can grab the latest installer or portable package from the [download section](https://github.com/RealJamako/BeatSpy/releases)
 
 Privacy
 ---------
-BeatSpy does require a valid spotify account in order to connect to the Spotify API. However, BeatSpy **does not** store any user infomation. Your personal access token is stored locally on your PC.
+BeatSpy **does** require a valid spotify account in order to connect to the Spotify API. However, BeatSpy **does not** store any user infomation. Your personal access token is stored locally on your machine.
 
 Questions, issues
 ---------
