@@ -43,8 +43,12 @@ internal class SpotifyAuthenticationService : ISpotifyAuthenticationService
                 spotifyToken.RefreshToken = tokenReponse.RefreshToken;
                 AuthenticationHelper.SerializeTokenContent(spotifyToken);
 
+                //Set up authenticator and config to re-grab a token when it expires
+                PKCEAuthenticator authenticator = new(CLIENT_ID, tokenReponse);
+                SpotifyClientConfig config = SpotifyClientConfig.CreateDefault().WithAuthenticator(authenticator);
+
                 //Return a spotify client
-                return new SpotifyClient(tokenReponse.AccessToken);
+                return new SpotifyClient(config);
             }
             else
             {
@@ -95,8 +99,7 @@ internal class SpotifyAuthenticationService : ISpotifyAuthenticationService
         }
         else
         {
-            //TODO: throw some sort of error here
-            throw new NotImplementedException();
+            throw new NullReferenceException();
         }
     }
 }
