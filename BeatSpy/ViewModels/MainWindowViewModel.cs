@@ -24,6 +24,7 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
     public MessageHandlerViewModel MessageHandler => messageViewModel;
     public ContextMenuViewModel ContextMenuViewModel => contextMenuViewModel;
 
+    //Viewmodels
     private readonly TrackViewModel trackViewModel;
     private readonly MessageHandlerViewModel messageViewModel;
     private readonly ContextMenuViewModel contextMenuViewModel;
@@ -44,7 +45,7 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
         MinimizeApplication = new MinimizeApplicationCommand();
         ListenOnSpotify = new ListenOnSpotifyCommand(spotify);
         RemoveFocus = new RemoveFocusCommand();
-        SearchQueryEntered = new SearchTrackCommand(spotify, this, trackViewModel, messageService);
+        SearchQueryEntered = new SearchTrackCommand(spotify, trackViewModel, messageService);
         RandomTrack = new RandomTrackCommand(spotify, trackViewModel, messageService);
     }
 
