@@ -31,39 +31,26 @@ internal class SpotifyService : ISpotifyService
         this.authenticationService = authenticationService;
     }
 
-    /// <summary>
-    /// Logs the user in creating a client
-    /// </summary>
-    /// <param name="loginType">Login type</param>
-    /// <returns></returns>
-    public async Task LogIn(LoginType loginType)
+    public async Task LoginAsync(LoginType loginType)
     {
         switch (loginType)
         {
             case LoginType.Automatic:
-                Client = await authenticationService.Connect();
+                Client = await authenticationService.ConnectAsync();
                 break;
             case LoginType.Manual:
-                await authenticationService.LogIn();
+                await authenticationService.LoginAsync();
                 goto case LoginType.Automatic;
         }
     }
 
-    /// <summary>
-    /// Logs the user out by clearing the client and initiating authentication service logout.
-    /// </summary>
     public void LogOut()
     {
         Client = null;
         authenticationService.LogOut();
     }
-
-    /// <summary>
-    /// Asynchronously searches for a track using the provided search query.
-    /// </summary>
-    /// <param name="searchQuery">Search query</param>
-    /// <returns></returns>
-    public async Task<FullTrack> GetTrack(string searchQuery)
+    
+    public async Task<FullTrack> GetTrackAsync(string searchQuery)
     {
         SearchResponse response = await client!.Search.Item(new SearchRequest(SearchRequest.Types.Track, searchQuery!));
 
@@ -71,23 +58,13 @@ internal class SpotifyService : ISpotifyService
         return track;
     }
 
-    /// <summary>
-    /// Asynchronously fetches the audio features of a provided track using its ID
-    /// </summary>
-    /// <param name="trackID">Track ID</param>
-    /// <returns></returns>
-    public async Task<TrackAudioFeatures> GetAudioTrackFeatures(string trackID)
+    public async Task<TrackAudioFeatures> GetAudioTrackFeaturesAsync(string trackId)
     {
-        TrackAudioFeatures trackFeatures = await client!.Tracks.GetAudioFeatures(trackID);
+        TrackAudioFeatures trackFeatures = await client!.Tracks.GetAudioFeatures(trackId);
         return trackFeatures;
     }
 
-    /// <summary>
-    /// Asynchronously obtains the details of a specific playlist using the provided playlist ID
-    /// </summary>
-    /// <param name="playlistId">Playlist ID</param>
-    /// <returns></returns>
-    public async Task<FullTrack> GetRandomTrackFromPlaylist(string playlistId)
+    public async Task<FullTrack> GetRandomTrackFromPlaylistAsync(string playlistId)
     {
         FullPlaylist playlist = await client!.Playlists.Get(playlistId);
 

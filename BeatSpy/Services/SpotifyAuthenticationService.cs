@@ -14,7 +14,9 @@ internal class SpotifyAuthenticationService : ISpotifyAuthenticationService
     private const string CLIENT_ID = "4b675b489cf74ff2a4a2d4483cf1dbe1";
     private const string CALL_BACK = "http://localhost:5543/callback";
 
-    public async Task LogIn()
+    private PKCEAuthenticator? authenticator;
+
+    public async Task LoginAsync()
     {
         var (verifier, challenge) = PKCEUtil.GenerateCodes(120);
 
@@ -29,7 +31,7 @@ internal class SpotifyAuthenticationService : ISpotifyAuthenticationService
         await StartServiceCallbackListener(verifier);
     }
 
-    public async Task<SpotifyClient> Connect()
+    public async Task<SpotifyClient> ConnectAsync()
     {
         if (AuthenticationHelper.TryGetAuthFile(out string tokenContents))
         {
@@ -44,7 +46,8 @@ internal class SpotifyAuthenticationService : ISpotifyAuthenticationService
                 AuthenticationHelper.SerializeTokenContent(spotifyToken);
 
                 //Set up authenticator and config to re-grab a token when it expires
-                PKCEAuthenticator authenticator = new(CLIENT_ID, tokenReponse);
+                authenticator = new PKCEAuthenticator(CLIENT_ID, tokenReponse);
+                authenticator.TokenRefreshed += AuthenticatorTokenRefreshed;
                 SpotifyClientConfig config = SpotifyClientConfig.CreateDefault().WithAuthenticator(authenticator);
 
                 //Return a spotify client
@@ -64,6 +67,19 @@ internal class SpotifyAuthenticationService : ISpotifyAuthenticationService
     public void LogOut()
     {
         File.Delete(DataFolderHelper.GetFullDataPath(FileConstants.AUTH_FILE));
+    }
+
+    private void AuthenticatorTokenRefreshed(object? sender, PKCETokenResponse e)
+    {
+        UpdateTokenRefresh(e.RefreshToken);
+    }
+
+    private void UpdateTokenRefresh(string refreshToken)
+    {
+        AuthenticationHelper.SerializeTokenContent(new SpotifyToken()
+        {
+            RefreshToken = refreshToken,
+        });
     }
 
     private async Task StartServiceCallbackListener(string verifier)
@@ -92,14 +108,16 @@ internal class SpotifyAuthenticationService : ISpotifyAuthenticationService
 
         if (response != null)
         {
-            AuthenticationHelper.SerializeTokenContent(new SpotifyToken()
-            {
-                RefreshToken = response.RefreshToken,
-            });
+            UpdateTokenRefresh(response.RefreshToken);
         }
         else
         {
             throw new NullReferenceException();
         }
+    }
+
+    public void Dispose()
+    {
+        authenticator!.TokenRefreshed -= AuthenticatorTokenRefreshed;
     }
 }
