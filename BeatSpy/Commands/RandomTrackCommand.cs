@@ -27,8 +27,8 @@ internal class RandomTrackCommand : AsyncCommandBase
     {
         try
         {
-            FullTrack track = await spotifyService.GetRandomTrackFromPlaylist(playlistId);
-            TrackAudioFeatures features = await spotifyService.GetAudioTrackFeatures(track.Id);
+            FullTrack track = await spotifyService.GetRandomTrackFromPlaylistAsync(playlistId);
+            TrackAudioFeatures features = await spotifyService.GetAudioTrackFeaturesAsync(track.Id);
 
             trackViewModel.SetCurrentTrack(new BeatTrack(track, features));
         }

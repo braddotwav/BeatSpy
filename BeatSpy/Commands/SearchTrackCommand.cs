@@ -38,8 +38,8 @@ internal class SearchTrackCommand : AsyncCommandBase
         try
         {
             currentSearched = searchQuery;
-            FullTrack track = await spotifyService.GetTrack(searchQuery);
-            TrackAudioFeatures features = await spotifyService.GetAudioTrackFeatures(track.Id);
+            FullTrack track = await spotifyService.GetTrackAsync(searchQuery);
+            TrackAudioFeatures features = await spotifyService.GetAudioTrackFeaturesAsync(track.Id);
 
             trackViewModel.SetCurrentTrack(new BeatTrack(track, features));
             ApplicationHelper.RemoveElementFocus(parameter);

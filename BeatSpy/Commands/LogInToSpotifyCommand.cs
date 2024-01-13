@@ -21,7 +21,7 @@ internal class LogInToSpotifyCommand : AsyncCommandBase
     {
         try
         {
-            await Task.Run(() => spotifyService.LogIn(LoginType.Manual));
+            await Task.Run(() => spotifyService.LoginAsync(LoginType.Manual));
         }
         catch (Exception ex)
         {
