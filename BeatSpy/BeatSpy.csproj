@@ -9,38 +9,72 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Assets\Fonts\Gilroy-Medium.ttf" />
-    <None Remove="Assets\Fonts\Gilroy-Regular.ttf" />
+    <None Remove="Assets\Fonts\Inter-Bold.ttf" />
+    <None Remove="Assets\Fonts\Inter-Medium.ttf" />
+    <None Remove="Assets\Fonts\Inter-Regular.ttf" />
+    <None Remove="Assets\Fonts\Inter-SemiBold.ttf" />
     <None Remove="Assets\Images\beatspy-icons-clock.png" />
     <None Remove="Assets\Images\beatspy-icons-heart.png" />
     <None Remove="Assets\Images\beatspy-icons-note.png" />
     <None Remove="Assets\Images\beatspy-icons-volume.png" />
+    <None Remove="Assets\SVG\chat-right-text.svg" />
+    <None Remove="Assets\SVG\close.svg" />
+    <None Remove="Assets\SVG\dots-menu.svg" />
+    <None Remove="Assets\SVG\info.svg" />
+    <None Remove="Assets\SVG\minimize.svg" />
+    <None Remove="Assets\SVG\spotify.svg" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="Assets\Ico\icon.ico" />
+    <Content Include="Assets\ICO\icon.ico" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="NLog" Version="5.2.8" />
-    <PackageReference Include="SharpVectors" Version="1.8.4" />
+    <PackageReference Include="DotNetProjects.SVGImage" Version="5.2.1" />
+    <PackageReference Include="NLog" Version="5.3.2" />
     <PackageReference Include="SpotifyAPI.Web" Version="7.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <Resource Include="Assets\Fonts\Gilroy-ExtraBold.ttf">
+    <Resource Include="Assets\Fonts\Inter-Bold.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\Fonts\Gilroy-Medium.ttf">
+    <Resource Include="Assets\Fonts\Inter-Medium.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\Fonts\Gilroy-Regular.ttf">
+    <Resource Include="Assets\Fonts\Inter-Regular.ttf">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
-    <Resource Include="Assets\Images\beatspy-icons-clock.png" />
-    <Resource Include="Assets\Images\beatspy-icons-heart.png" />
-    <Resource Include="Assets\Images\beatspy-icons-volume.png" />
-    <Resource Include="Assets\Images\beatspy-icons-note.png" />
+    <Resource Include="Assets\Fonts\Inter-SemiBold.ttf">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\beatspy-icons-clock.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\beatspy-icons-heart.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\beatspy-icons-volume.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\Images\beatspy-icons-note.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\SVG\close.svg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\SVG\dots-menu.svg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\SVG\info.svg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\SVG\minimize.svg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Assets\SVG\spotify.svg">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
   </ItemGroup>
 
   <ItemGroup>

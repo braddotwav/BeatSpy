@@ -1,10 +1,8 @@
-﻿using System;
+﻿namespace BeatSpy.Helpers;
 
-namespace BeatSpy.Helpers;
-
-internal static class RandomRange
+internal static class RandomHelper
 {
-    private readonly static Random random = new();
+    private readonly static System.Random random = new();
 
     /// <summary>
     /// Returns a random range between a miniumum and maximum value

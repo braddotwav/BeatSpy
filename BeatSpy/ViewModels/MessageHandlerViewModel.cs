@@ -10,7 +10,7 @@ internal class MessageHandlerViewModel : ViewModelBase
     public string Message => messageDisplayService.Message;
     public bool IsMessageEmpty => messageDisplayService.IsMessageEmpty;
 
-    public ICommand DismissError { get; }
+    public ICommand DismissErrorCommand { get; }
 
     private readonly IMessageDisplayService messageDisplayService;
 
@@ -18,24 +18,17 @@ internal class MessageHandlerViewModel : ViewModelBase
     {
         this.messageDisplayService = messageDisplayService;
         messageDisplayService.OnMessageUpdated += OnDisplayMessageUpdated;
-        DismissError = new DismissErrorCommand(messageDisplayService);
+        DismissErrorCommand = new ClearMessageDisplayCommand(messageDisplayService);
     }
 
-    /// <summary>
-    /// Updates property notifications when the display message has been updated
-    /// </summary>
     private void OnDisplayMessageUpdated()
     {
         OnPropertyChanged(nameof(Message));
         OnPropertyChanged(nameof(IsMessageEmpty));
     }
 
-    /// <summary>
-    /// Disposes of resources by unsubscribing to any events
-    /// </summary>
     public override void Dispose()
     {
         messageDisplayService.OnMessageUpdated -= OnDisplayMessageUpdated;
-        base.Dispose();
     }
 }

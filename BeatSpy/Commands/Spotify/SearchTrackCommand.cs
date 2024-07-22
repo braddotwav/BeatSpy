@@ -10,27 +10,27 @@ using System.Windows.Controls;
 
 namespace BeatSpy.Commands;
 
-internal class SearchTrackCommand : AsyncCommandBase
+internal sealed class SearchTrackCommand : AsyncCommandBase
 {
     private readonly IMessageDisplayService messageDisplayService;
     private readonly ISpotifyService spotifyService;
-    private readonly TrackViewModel trackViewModel;
+    private readonly MainWindowViewModel mainViewModel;
 
     private string currentSearched = string.Empty;
     private string searchQuery = string.Empty;
 
-    public SearchTrackCommand(ISpotifyService spotifyService, TrackViewModel trackViewModel, IMessageDisplayService messageDisplayService)
+    public SearchTrackCommand(MainWindowViewModel mainViewModel, ISpotifyService spotifyService, IMessageDisplayService messageDisplayService)
     {
+        this.mainViewModel = mainViewModel;
         this.messageDisplayService = messageDisplayService;
         this.spotifyService = spotifyService;
-        this.trackViewModel = trackViewModel;
     }
 
     public override bool CanExecute(object? parameter)
     {
         searchQuery = ((TextBox)parameter!).Text;
 
-        return spotifyService.IsLoggedIn && !string.IsNullOrEmpty(searchQuery) && !string.Equals(searchQuery, currentSearched);
+        return spotifyService.IsLoggedIn && IsQueryValidAndNew(searchQuery);
     }
 
     protected override async Task ExcuteAsync(object? parameter)
@@ -41,12 +41,17 @@ internal class SearchTrackCommand : AsyncCommandBase
             FullTrack track = await spotifyService.GetTrackAsync(searchQuery);
             TrackAudioFeatures features = await spotifyService.GetAudioTrackFeaturesAsync(track.Id);
 
-            trackViewModel.SetCurrentTrack(new BeatTrack(track, features));
+            mainViewModel.SetTrack(new BeatTrack(track, features));
             ApplicationHelper.RemoveElementFocus(parameter);
         }
         catch (Exception ex)
         {
             messageDisplayService.DisplayErrorMessage(ex);
         }
+    }
+
+    private bool IsQueryValidAndNew(string query)
+    {
+        return !string.IsNullOrEmpty(query) && !string.Equals(query, currentSearched);
     }
 }

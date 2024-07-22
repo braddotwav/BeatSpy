@@ -2,5 +2,5 @@
 
 public static class FileConstants
 {
-    public const string AUTH_FILE = "AppAuth.json";
+    public const string AUTH_FILE = "Authentication.json";
 }

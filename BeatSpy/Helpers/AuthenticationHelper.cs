@@ -15,18 +15,12 @@ public static class AuthenticationHelper
     /// </summary>
     /// <param name="authContent"></param>
     /// <returns></returns>
-    public static bool TryGetAuthFile(out string authContent)
+    public static bool TryGetAuthFile(out string content)
     {
-        string? authPath = DataFolderHelper.GetFullDataPath(FileConstants.AUTH_FILE);
+        string authPath = DataHelper.GetFullFilePath(FileConstants.AUTH_FILE);
 
-        if (File.Exists(authPath))
-        {
-            authContent = File.ReadAllText(authPath);
-            return !string.IsNullOrEmpty(authContent);
-        }
-
-        authContent = string.Empty;
-        return false;
+        content = File.ReadAllText(authPath);
+        return !string.IsNullOrEmpty(content);
     }
 
     /// <summary>
@@ -34,19 +28,19 @@ public static class AuthenticationHelper
     /// </summary>
     /// <param name="authContent">Authentication content</param>
     /// <returns></returns>
-    public static SpotifyToken? DeserializeTokenContent(string authContent)
+    public static SpotifyToken? DeserializeTokenContent(string content)
     {
-        return JsonSerializer.Deserialize<SpotifyToken>(authContent);
+        return JsonSerializer.Deserialize<SpotifyToken>(content);
     }
 
     /// <summary>
     /// Serializes the provided authentication token and writes to data path
     /// </summary>
     /// <param name="authToken">Authentication object</param>
-    public static void SerializeTokenContent(SpotifyToken authToken)
+    public static void SerializeTokenContent(SpotifyToken token)
     {
-        string serializedToken = JsonSerializer.Serialize(authToken)!;
-        File.WriteAllText(DataFolderHelper.GetFullDataPath("AppAuth.json"), serializedToken);
+        string serializedToken = JsonSerializer.Serialize(token)!;
+        File.WriteAllText(DataHelper.GetFullFilePath(FileConstants.AUTH_FILE), serializedToken);
     }
 
     /// <summary>
@@ -57,9 +51,9 @@ public static class AuthenticationHelper
     /// <param name="code">The code query from the listener context</param>
     /// <param name="verifier">Verifier code</param>
     /// <returns></returns>
-    public static async Task<PKCETokenResponse> PKCETokenRequestResponse(string clientID, string callBack, string code, string verifier)
+    public static async Task<PKCETokenResponse> PKCETokenRequestResponseAsync(string clientid, string callBack, string code, string verifier)
     {
-        PKCETokenResponse reponse = await new OAuthClient().RequestToken(new PKCETokenRequest(clientID, code, new Uri(callBack), verifier));
+        PKCETokenResponse reponse = await new OAuthClient().RequestToken(new PKCETokenRequest(clientid, code, new Uri(callBack), verifier));
         return reponse;
     }
 
@@ -69,9 +63,9 @@ public static class AuthenticationHelper
     /// <param name="clientID">Spotify client ID</param>
     /// <param name="refreshToken">Current refresh token</param>
     /// <returns></returns>
-    public static async Task<PKCETokenResponse> PKCETokenRefreshResponse(string clientID, string refreshToken)
+    public static async Task<PKCETokenResponse> PKCETokenRefreshResponseAsync(string clientid, string refreshToken)
     {
-        PKCETokenResponse response = await new OAuthClient().RequestToken(new PKCETokenRefreshRequest(clientID, refreshToken));
+        PKCETokenResponse response = await new OAuthClient().RequestToken(new PKCETokenRefreshRequest(clientid, refreshToken));
         return response;
     }
 }

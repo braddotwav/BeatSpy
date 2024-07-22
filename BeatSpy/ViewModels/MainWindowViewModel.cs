@@ -1,4 +1,5 @@
-﻿using BeatSpy.Commands;
+﻿using BeatSpy.Models;
+using BeatSpy.Commands;
 using BeatSpy.Services;
 using System.Windows.Input;
 using BeatSpy.ViewModels.Base;
@@ -12,20 +13,25 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
 {
     public bool IsLoggedIn => spotify.IsLoggedIn;
 
-    public ICommand RemoveFocus { get; }
-    public ICommand ExitApplication { get; }
-    public ICommand MinimizeApplication { get; }
+    public BeatTrack Track { get; private set; }
+    public bool IsTrackEmpty => Track == null;
 
-    public ICommand ListenOnSpotify { get; }
-    public ICommand SearchQueryEntered { get; }
-    private ICommand RandomTrack { get; }
+    #region Application Commands
+    public ICommand RemoveFocusCommand { get; }
+    public ICommand ExitApplicationCommand { get; }
+    public ICommand MinimizeApplicationCommand { get; }
+    public ICommand OpenInBrowserCommand { get; }
+    #endregion
 
-    public TrackViewModel TrackViewModel => trackViewModel;
+    #region Spotify Commands
+    public ICommand SearchTrackCommand { get; }
+    private ICommand RandomTrackCommand { get; }
+    #endregion
+
     public MessageHandlerViewModel MessageHandler => messageViewModel;
     public ContextMenuViewModel ContextMenuViewModel => contextMenuViewModel;
 
     //Viewmodels
-    private readonly TrackViewModel trackViewModel;
     private readonly MessageHandlerViewModel messageViewModel;
     private readonly ContextMenuViewModel contextMenuViewModel;
 
@@ -39,44 +45,42 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
         messageService = messageDisplayService;
         spotify.OnServiceStateChanged += OnSpotifyServiceStateChanged;
         messageViewModel = new(messageService);
-        trackViewModel = new();
         contextMenuViewModel = new(spotify, messageService);
-        ExitApplication = new ExitApplicationCommand();
-        MinimizeApplication = new MinimizeApplicationCommand();
-        ListenOnSpotify = new ListenOnSpotifyCommand(spotify);
-        RemoveFocus = new RemoveFocusCommand();
-        SearchQueryEntered = new SearchTrackCommand(spotify, trackViewModel, messageService);
-        RandomTrack = new RandomTrackCommand(spotify, trackViewModel, messageService);
+        ExitApplicationCommand = new ExitApplicationCommand();
+        MinimizeApplicationCommand = new MinimizeApplicationCommand();
+        RemoveFocusCommand = new RemoveElementFocusCommand();
+        OpenInBrowserCommand = new OpenBrowserCommand(messageService);
+        SearchTrackCommand = new SearchTrackCommand(this, spotify, messageService);
+        RandomTrackCommand = new RandomTrackCommand(this, spotify, messageService);
     }
 
-    /// <summary>
-    /// Responds to changes in Spotify service state
-    /// </summary>
-    /// <param name="state">Client state</param>
+    public void SetTrack(BeatTrack track)
+    {
+        Track = track;
+        OnPropertyChanged(nameof(Track));
+        OnPropertyChanged(nameof(IsTrackEmpty));
+    }
+
     private void OnSpotifyServiceStateChanged(ConnectionType state)
     {
         switch (state)
         {
             case ConnectionType.Connected:
-                RandomTrack.Execute(this);
+                RandomTrackCommand.Execute(this);
                 messageService.ClearMessage();
-                messageService.DisplayInfoMessage(MessageType.Silent, LogConstants.CLIENT_CONNECTED);
+                messageService.DisplayInfoMessage(LogConstants.CLIENT_CONNECTED, silent: true);
                 break;
             case ConnectionType.Disconnected:
-                messageService.DisplayInfoMessage(MessageType.Normal, LogConstants.CLIENT_DISCONNECTED);
+                messageService.DisplayInfoMessage(LogConstants.CLIENT_DISCONNECTED);
                 break;
         }
 
         OnPropertyChanged(nameof(IsLoggedIn));
     }
 
-    /// <summary>
-    /// Dispose of any application resources
-    /// </summary>
     public override void Dispose()
     {
         spotify.OnServiceStateChanged -= OnSpotifyServiceStateChanged;
         messageViewModel.Dispose();
-        base.Dispose();
     }
 }

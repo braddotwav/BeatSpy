@@ -9,10 +9,7 @@ public static class ApplicationHelper
     {
         if (parameter is DependencyObject depObj)
         {
-            //Clear the focus of focused object
             FocusManager.SetFocusedElement(FocusManager.GetFocusScope(depObj), null);
-
-            //Clear keyboard focus
             Keyboard.ClearFocus();
         }
     }

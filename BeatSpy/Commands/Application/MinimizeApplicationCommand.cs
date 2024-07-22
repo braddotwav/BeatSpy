@@ -1,9 +1,9 @@
-﻿using BeatSpy.Commands.Base;
-using System.Windows;
+﻿using System.Windows;
+using BeatSpy.Commands.Base;
 
 namespace BeatSpy.Commands;
 
-internal class MinimizeApplicationCommand : CommandBase
+internal sealed class MinimizeApplicationCommand : CommandBase
 {
     public override void Execute(object? parameter)
     {

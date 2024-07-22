@@ -1,10 +1,9 @@
 ﻿using NLog;
 using System;
-using BeatSpy.DataTypes.Enums;
 
 namespace BeatSpy.Services;
 
-internal class MessageDisplayService : IMessageDisplayService
+internal sealed class MessageDisplayService : IMessageDisplayService
 {
     private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -33,9 +32,9 @@ internal class MessageDisplayService : IMessageDisplayService
     }
 
     /// <summary>
-    /// Displays and logs error that has been thrown
+    /// Displays an exception message and logs the exception.
     /// </summary>
-    /// <param name="ex">Exception to be shown</param>
+    /// <param name="ex"></param>
     public void DisplayErrorMessage(Exception ex)
     {
         Message = ex.Message;
@@ -43,15 +42,13 @@ internal class MessageDisplayService : IMessageDisplayService
     }
 
     /// <summary>
-    /// Displays and logs message based on the specified type
+    /// Displays an info message to the UI with the option of being silent.
     /// </summary>
-    /// <param name="messageType">Message type</param>
-    /// <param name="message">Message to be shown</param>
-    public void DisplayInfoMessage(MessageType messageType, string message)
+    /// <param name="message">Message to log</param>
+    /// <param name="silent">Should the message be shown to the user</param>
+    public void DisplayInfoMessage(string message, bool silent)
     {
-        if (messageType == MessageType.Normal)
-            Message = message;
-
+        Message = silent ? string.Empty : message;
         logger.Info(message);
     }
 }

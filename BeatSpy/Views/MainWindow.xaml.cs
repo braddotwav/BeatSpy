@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Windows;
-using BeatSpy.Helpers;
 using BeatSpy.Services;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using BeatSpy.DataTypes.Structs;
-using BeatSpy.DataTypes.Constants;
 
 namespace BeatSpy
 {
@@ -22,12 +19,7 @@ namespace BeatSpy
         {
             InitializeComponent();
 
-            titleAnimationService = new TitleAnimationService(new TitleAnimationInfo
-            {
-                Duration = 5,
-                Deceleration = 0.5,
-                ShouldReverse = true
-            });
+            titleAnimationService = new TitleAnimationService(5, 0.5);
         }
 
         /// <summary>
@@ -67,16 +59,6 @@ namespace BeatSpy
             {
                 contextMenu.DataContext = DataContext;
             }
-        }
-
-        /// <summary>
-        /// This method is fired when the user clicks BeatSpy logo
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void OnBeatSpyClicked(object sender, RoutedEventArgs e)
-        {
-            BrowserHelper.OpenURLInBrowser(DefaultConstants.LINK_GITHUB_REPO);
         }
 
         /// <summary>

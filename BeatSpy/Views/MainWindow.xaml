@@ -6,14 +6,14 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BeatSpy"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:svgc="http://sharpvectors.codeplex.com/svgc/"
+    xmlns:svg1="https://github.com/dotnetprojects/SVGImage"
     xmlns:viewmodels="clr-namespace:BeatSpy.ViewModels"
     Title="BeatSpy"
     Width="580"
-    Height="600"
+    Height="616"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
     AllowsTransparency="True"
-    Background="{StaticResource BackgroundPrimary}"
+    Background="{StaticResource clr-primary-1000}"
     ResizeMode="CanMinimize"
     WindowStyle="None"
     mc:Ignorable="d">
@@ -24,11 +24,11 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="90" />
-            <RowDefinition Height="190" />
-            <RowDefinition Height="250" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="32" />
+            <RowDefinition Height="96" />
+            <RowDefinition Height="192" />
+            <RowDefinition Height="256" />
+            <RowDefinition Height="40" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -69,21 +69,17 @@
                                 Style="{StaticResource MenuItemStyle}"
                                 Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Normal}" />
                             <MenuItem
-                                Command="{Binding ExitApplication}"
+                                Command="{Binding ExitApplicationCommand}"
                                 Header="Exit"
                                 Style="{StaticResource MenuItemStyle}" />
                         </ContextMenu>
                     </Button.ContextMenu>
-                    <svgc:SvgIcon
+                    <svg1:SVGImage
                         Width="20"
-                        Height="15"
-                        Fill="{StaticResource TextPrimary}">
-                        <svgc:SvgIcon.SvgSource>
-                            <![CDATA[
-                            <svg xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M240-400q-33 0-56.5-23.5T160-480q0-33 23.5-56.5T240-560q33 0 56.5 23.5T320-480q0 33-23.5 56.5T240-400Zm240 0q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm240 0q-33 0-56.5-23.5T640-480q0-33 23.5-56.5T720-560q33 0 56.5 23.5T800-480q0 33-23.5 56.5T720-400Z"/></svg>
-                            ]]>
-                        </svgc:SvgIcon.SvgSource>
-                    </svgc:SvgIcon>
+                        Height="20"
+                        VerticalContentAlignment="Center"
+                        OverrideColor="White"
+                        Source="/BeatSpy;component/Assets/SVG/dots-menu.svg" />
                 </Button>
             </StackPanel>
 
@@ -92,34 +88,26 @@
                 HorizontalAlignment="Right"
                 Orientation="Horizontal">
                 <Button
-                    Command="{Binding MinimizeApplication}"
+                    Command="{Binding MinimizeApplicationCommand}"
                     IsTabStop="False"
                     Style="{StaticResource WindowButton}">
-                    <svgc:SvgIcon
+                    <svg1:SVGImage
                         Width="10"
                         Height="10"
-                        Fill="{StaticResource TextPrimary}">
-                        <svgc:SvgIcon.SvgSource>
-                            <![CDATA[
-                            <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="M240-120v-60h481v60H240Z"/></svg>
-                            ]]>
-                        </svgc:SvgIcon.SvgSource>
-                    </svgc:SvgIcon>
+                        VerticalContentAlignment="Center"
+                        OverrideColor="White"
+                        Source="/BeatSpy;component/Assets/SVG/minimize.svg" />
                 </Button>
                 <Button
-                    Command="{Binding ExitApplication}"
+                    Command="{Binding ExitApplicationCommand}"
                     IsTabStop="False"
                     Style="{StaticResource WindowCloseButton}">
-                    <svgc:SvgIcon
+                    <svg1:SVGImage
                         Width="10"
                         Height="10"
-                        Fill="{StaticResource TextPrimary}">
-                        <svgc:SvgIcon.SvgSource>
-                            <![CDATA[
-                            <svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 -960 960 960" width="48"><path d="m249-207-42-42 231-231-231-231 42-42 231 231 231-231 42 42-231 231 231 231-42 42-231-231-231 231Z"/></svg>
-                            ]]>
-                        </svgc:SvgIcon.SvgSource>
-                    </svgc:SvgIcon>
+                        VerticalContentAlignment="Center"
+                        OverrideColor="White"
+                        Source="/BeatSpy;component/Assets/SVG/close.svg" />
                 </Button>
             </StackPanel>
 
@@ -127,65 +115,63 @@
 
         <!--  DISPLAY: Header  -->
         <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-
             <Button
-                Width="75"
-                Height="38"
-                Click="OnBeatSpyClicked"
+                Grid.Column="0"
+                Margin="32"
+                HorizontalAlignment="Left"
+                Command="{Binding OpenInBrowserCommand}"
+                CommandParameter="https://github.com/braddotwav/BeatSpy"
                 IsTabStop="False"
                 Style="{StaticResource ApplicationIcon}" />
 
             <TextBox
                 x:Name="SearchQuery"
-                Grid.ColumnSpan="4"
-                Width="310"
-                Height="45"
+                Width="320"
+                Height="44"
                 Style="{StaticResource Search}">
                 <TextBox.InputBindings>
                     <KeyBinding
                         Key="Return"
-                        Command="{Binding SearchQueryEntered}"
+                        Command="{Binding SearchTrackCommand}"
                         CommandParameter="{Binding ElementName=SearchQuery}" />
                     <KeyBinding
                         Key="Esc"
-                        Command="{Binding RemoveFocus}"
+                        Command="{Binding RemoveFocusCommand}"
                         CommandParameter="{Binding ElementName=SearchQuery}" />
                 </TextBox.InputBindings>
             </TextBox>
         </Grid>
 
         <!--  DISPLAY: Track  -->
-        <Grid Grid.Row="2" Margin="25,0,25,0">
+        <Grid Grid.Row="2" Margin="24,0,24,0">
             <Border
                 Width="530"
                 Height="190"
                 Padding="25"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top"
-                Background="{StaticResource BackgroundSecondary}"
+                Background="{StaticResource clr-primary-900}"
                 CornerRadius="28">
                 <Grid Background="Transparent">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="140" />
+                        <ColumnDefinition Width="144" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
 
                     <!--  Track Image  -->
                     <Border Grid.Column="0">
                         <Border.Background>
-                            <ImageBrush ImageSource="{Binding TrackViewModel.Track.TrackCoverUrl}" />
+                            <VisualBrush>
+                                <VisualBrush.Visual>
+                                    <Image RenderOptions.BitmapScalingMode="LowQuality" Source="{Binding Track.CoverUrl}" />
+                                </VisualBrush.Visual>
+                            </VisualBrush>
                         </Border.Background>
                     </Border>
 
                     <Grid
                         Grid.Column="1"
-                        Margin="25,0,0,0"
+                        Margin="24,0,0,0"
                         Background="Transparent">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="*" />
@@ -193,55 +179,55 @@
 
                         <!--  Track Artist & Title  -->
                         <StackPanel
-                            Grid.Row="1"
                             MinWidth="315"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
                             ClipToBounds="True"
                             Orientation="Vertical">
 
-                            <TextBlock
-                                FontSize="{StaticResource TextSizeMedium}"
-                                Style="{StaticResource TrackStyle}"
-                                Text="{Binding TrackViewModel.Track.TrackArtist}" />
-
                             <Canvas
                                 x:Name="TrackTitleCanvas"
-                                Height="48"
+                                Height="36"
                                 HorizontalAlignment="Stretch"
                                 Background="Transparent">
                                 <TextBlock
                                     x:Name="TrackTitle"
                                     HorizontalAlignment="Stretch"
-                                    FontSize="{StaticResource TextSizeExtraLarge}"
+                                    FontFamily="{StaticResource font-bold}"
+                                    FontSize="{StaticResource text-4xl}"
+                                    Foreground="{StaticResource clr-primary-100}"
                                     MouseEnter="OnTrackTitleMouseEnter"
-                                    Style="{StaticResource TrackStyle}"
                                     TargetUpdated="OnTrackTitleUpdated"
-                                    Text="{Binding TrackViewModel.Track.TrackTitle, NotifyOnTargetUpdated=True}"
+                                    Text="{Binding Track.Title, NotifyOnTargetUpdated=True}"
                                     TextWrapping="NoWrap" />
                             </Canvas>
+
+                            <TextBlock
+                                Padding="0,8,0,0"
+                                FontFamily="{StaticResource font-bold}"
+                                FontSize="{StaticResource text-2xl}"
+                                Foreground="{StaticResource clr-primary-300}"
+                                Text="{Binding Track.Artist}" />
 
                         </StackPanel>
 
                         <!--  Open with spotify button  -->
                         <Button
-                            Width="28"
+                            Width="32"
+                            Margin="-6"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
-                            Command="{Binding ListenOnSpotify}"
-                            CommandParameter="{Binding TrackViewModel.Track}"
+                            Command="{Binding OpenInBrowserCommand}"
+                            CommandParameter="{Binding Track.Url}"
                             IsTabStop="False"
                             Style="{StaticResource SpotifyIcon}"
-                            Visibility="{Binding TrackViewModel.IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}">
-                            <svgc:SvgIcon Fill="{StaticResource TextSecondary}">
-                                <svgc:SvgIcon.SvgSource>
-                                    <![CDATA[
-                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48">
-                            <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.669 11.538a.498.498 0 0 1-.686.165c-1.879-1.147-4.243-1.407-7.028-.77a.499.499 0 0 1-.222-.973c3.048-.696 5.662-.397 7.77.892a.5.5 0 0 1 .166.686zm.979-2.178a.624.624 0 0 1-.858.205c-2.15-1.321-5.428-1.704-7.972-.932a.625.625 0 0 1-.362-1.194c2.905-.881 6.517-.454 8.986 1.063a.624.624 0 0 1 .206.858zm.084-2.268C10.154 5.56 5.9 5.419 3.438 6.166a.748.748 0 1 1-.434-1.432c2.825-.857 7.523-.692 10.492 1.07a.747.747 0 1 1-.764 1.288z"/>
-                            </svg>
-                            ]]>
-                                </svgc:SvgIcon.SvgSource>
-                            </svgc:SvgIcon>
+                            Visibility="{Binding IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}">
+                            <svg1:SVGImage
+                                Width="32"
+                                Height="32"
+                                VerticalContentAlignment="Center"
+                                OverrideColor="#1ed760"
+                                Source="/BeatSpy;component/Assets/SVG/spotify.svg" />
                         </Button>
                     </Grid>
                 </Grid>
@@ -249,7 +235,7 @@
         </Grid>
 
         <!--  DISPLAY: Track Features  -->
-        <Grid Grid.Row="3" Margin="25,0,25,0">
+        <Grid Grid.Row="3" Margin="24,14,24,14">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -259,57 +245,39 @@
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <Border
                     Width="255"
-                    Height="100"
+                    Height="112"
                     Margin="0,0,0,10"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Background="{StaticResource BackgroundSecondary}"
-                    CornerRadius="14">
-                    <DockPanel>
-                        <DockPanel.Background>
-                            <ImageBrush
-                                ImageSource="/Assets/Images/beatspy-icons-volume.png"
-                                Opacity="0.1"
-                                Stretch="UniformToFill">
-                                <ImageBrush.RelativeTransform>
-                                    <TranslateTransform X="-0.15" Y="0" />
-                                </ImageBrush.RelativeTransform>
-                            </ImageBrush>
-                        </DockPanel.Background>
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource TextSizeLarge}"
-                            Style="{StaticResource TrackStyle}"
-                            Text="{Binding TrackViewModel.Track.TrackVolume}" />
-                    </DockPanel>
+                    VerticalAlignment="Top">
+                    <Border.Background>
+                        <ImageBrush
+                            ImageSource="/Assets/Images/beatspy-icons-volume.png"
+                            Opacity="1"
+                            Stretch="UniformToFill">
+                            <ImageBrush.RelativeTransform>
+                                <TranslateTransform X="-0.15" Y="0" />
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Border.Background>
+                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Volume}" />
                 </Border>
                 <Border
                     Width="255"
-                    Height="100"
+                    Height="112"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Left"
-                    VerticalAlignment="Top"
-                    Background="{StaticResource BackgroundSecondary}"
-                    CornerRadius="14">
-                    <DockPanel>
-                        <DockPanel.Background>
-                            <ImageBrush
-                                ImageSource="/Assets/Images/beatspy-icons-heart.png"
-                                Opacity="0.1"
-                                Stretch="UniformToFill">
-                                <ImageBrush.RelativeTransform>
-                                    <TranslateTransform X="-0.15" Y="0" />
-                                </ImageBrush.RelativeTransform>
-                            </ImageBrush>
-                        </DockPanel.Background>
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource TextSizeLarge}"
-                            Style="{StaticResource TrackStyle}"
-                            Text="{Binding TrackViewModel.Track.TrackTempo}" />
-                    </DockPanel>
+                    VerticalAlignment="Top">
+                    <Border.Background>
+                        <ImageBrush
+                            ImageSource="/Assets/Images/beatspy-icons-heart.png"
+                            Opacity="1"
+                            Stretch="UniformToFill">
+                            <ImageBrush.RelativeTransform>
+                                <TranslateTransform X="-0.25 " Y="0" />
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Border.Background>
+                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Tempo}" />
                 </Border>
             </StackPanel>
 
@@ -317,86 +285,65 @@
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <Border
                     Width="255"
-                    Height="100"
+                    Height="112"
                     Margin="0,0,0,10"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Background="{StaticResource BackgroundSecondary}"
-                    CornerRadius="14">
-                    <DockPanel>
-                        <DockPanel.Background>
-                            <ImageBrush
-                                ImageSource="/Assets/Images/beatspy-icons-clock.png"
-                                Opacity="0.1"
-                                Stretch="UniformToFill">
-                                <ImageBrush.RelativeTransform>
-                                    <TranslateTransform X="-0.15" Y="0" />
-                                </ImageBrush.RelativeTransform>
-                            </ImageBrush>
-                        </DockPanel.Background>
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource TextSizeLarge}"
-                            Style="{StaticResource TrackStyle}"
-                            Text="{Binding TrackViewModel.Track.TrackDuration}" />
-                    </DockPanel>
+                    VerticalAlignment="Top">
+                    <Border.Background>
+                        <ImageBrush
+                            ImageSource="/Assets/Images/beatspy-icons-clock.png"
+                            Opacity="1"
+                            Stretch="UniformToFill">
+                            <ImageBrush.RelativeTransform>
+                                <TranslateTransform X="-0.25" Y="0" />
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Border.Background>
+                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Duration}" />
                 </Border>
                 <Border
                     Width="255"
-                    Height="100"
+                    Height="112"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Right"
-                    VerticalAlignment="Top"
-                    Background="{StaticResource BackgroundSecondary}"
-                    CornerRadius="14">
-                    <DockPanel>
-                        <DockPanel.Background>
-                            <ImageBrush
-                                ImageSource="/Assets/Images/beatspy-icons-note.png"
-                                Opacity="0.1"
-                                Stretch="UniformToFill">
-                                <ImageBrush.RelativeTransform>
-                                    <TranslateTransform X="-0.15" Y="0" />
-                                </ImageBrush.RelativeTransform>
-                            </ImageBrush>
-                        </DockPanel.Background>
-                        <TextBlock
-                            HorizontalAlignment="Center"
-                            VerticalAlignment="Center"
-                            FontSize="{StaticResource TextSizeLarge}"
-                            Style="{StaticResource TrackStyle}"
-                            Text="{Binding TrackViewModel.Track.TrackKey}" />
-                    </DockPanel>
+                    VerticalAlignment="Top">
+                    <Border.Background>
+                        <ImageBrush
+                            ImageSource="/Assets/Images/beatspy-icons-note.png"
+                            Opacity="1"
+                            Stretch="UniformToFill">
+                            <ImageBrush.RelativeTransform>
+                                <TranslateTransform X="-0.25" Y="0" />
+                            </ImageBrush.RelativeTransform>
+                        </ImageBrush>
+                    </Border.Background>
+                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Key}" />
                 </Border>
             </StackPanel>
         </Grid>
 
-        <!--  DISPLAY: Message Handler  -->
+        <!--  Message Handler  -->
         <Grid Grid.Row="4">
             <Border
                 DataContext="{Binding MessageHandler}"
                 Style="{StaticResource MessageHandler}"
                 Visibility="{Binding IsMessageEmpty, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}">
                 <Border.InputBindings>
-                    <MouseBinding Command="{Binding DismissError}" Gesture="LeftClick" />
+                    <MouseBinding Command="{Binding DismissErrorCommand}" Gesture="LeftClick" />
                 </Border.InputBindings>
-                <DockPanel Margin="25,0,25,0">
-                    <svgc:SvgIcon
+                <DockPanel Margin="24,0,24,0">
+                    <svg1:SVGImage
                         Width="20"
                         Height="20"
                         Margin="0,0,8,0"
-                        Fill="{StaticResource TextSecondary}">
-                        <svgc:SvgIcon.SvgSource>
-                            <![CDATA[
-<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 -960 960 960"><path d="M453-280h60v-240h-60v240Zm26.982-314q14.018 0 23.518-9.2T513-626q0-14.45-9.482-24.225-9.483-9.775-23.5-9.775-14.018 0-23.518 9.775T447-626q0 13.6 9.482 22.8 9.483 9.2 23.5 9.2Zm.284 514q-82.734 0-155.5-31.5t-127.266-86q-54.5-54.5-86-127.341Q80-397.681 80-480.5q0-82.819 31.5-155.659Q143-709 197.5-763t127.341-85.5Q397.681-880 480.5-880q82.819 0 155.659 31.5Q709-817 763-763t85.5 127Q880-563 880-480.266q0 82.734-31.5 155.5T763-197.684q-54 54.316-127 86Q563-80 480.266-80Zm.234-60Q622-140 721-239.5t99-241Q820-622 721.188-721 622.375-820 480-820q-141 0-240.5 98.812Q140-622.375 140-480q0 141 99.5 240.5t241 99.5Zm-.5-340Z"/></svg>                           
-                            ]]>
-                        </svgc:SvgIcon.SvgSource>
-                    </svgc:SvgIcon>
+                        VerticalContentAlignment="Center"
+                        OverrideColor="#868686"
+                        Source="/BeatSpy;component/Assets/SVG/info.svg" />
                     <TextBlock
                         VerticalAlignment="Center"
-                        FontSize="{StaticResource TextSizeBase}"
-                        Style="{StaticResource ErrorStyle}"
+                        FontFamily="{StaticResource font-normal}"
+                        FontSize="{StaticResource text-sm}"
+                        Foreground="{StaticResource clr-primary-500}"
                         Text="{Binding Message}" />
                 </DockPanel>
             </Border>

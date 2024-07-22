@@ -15,16 +15,16 @@ BeatSpy **does** require a valid spotify account in order to connect to the Spot
 
 Questions, issues
 ---------
-If you encounter a bug or have any questions, please feel free to open an issue with the appropriate label. If possible, kindly include your log file located in the applications directory for better assistance.
+If you encounter a bug or have any questions, please feel free to open an issue with the appropriate label.
 
 Resources & Packages used
 ---------
 - [NLog](https://github.com/NLog/NLog)
-- [Spotify API by JohnnyCrazy](https://github.com/JohnnyCrazy/SpotifyAPI-NET)
-- [SharpVectors by ElinamLLC](https://github.com/ElinamLLC/SharpVectors)
+- [SVGImage](https://github.com/dotnetprojects/SVGImage)
+- [Inno Set up](https://github.com/jrsoftware/issrc/)
 - [Google Icons](https://fonts.google.com/icons)
 - [Bootstrap Icons](https://icons.getbootstrap.com/)
-- [Inno Set up](https://github.com/jrsoftware/issrc/)
+- [Spotify API by JohnnyCrazy](https://github.com/JohnnyCrazy/SpotifyAPI-NET)
 
 License
 ---------

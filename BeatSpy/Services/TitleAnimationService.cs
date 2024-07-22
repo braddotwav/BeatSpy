@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Windows.Media;
-using BeatSpy.DataTypes.Structs;
 using System.Windows.Media.Animation;
 
 namespace BeatSpy.Services;
@@ -11,14 +10,14 @@ internal class TitleAnimationService : ITitleAnimationService
 
     public bool IsPlaying { get; private set; }
 
-    public TitleAnimationService(TitleAnimationInfo animationInfo)
+    public TitleAnimationService(int duration, double deceleration)
     {
         //Create double animation
         animation = new()
         {
-            Duration = TimeSpan.FromSeconds(animationInfo.Duration),
-            DecelerationRatio = animationInfo.Deceleration,
-            AutoReverse = animationInfo.ShouldReverse,
+            Duration = TimeSpan.FromSeconds(duration),
+            DecelerationRatio = deceleration,
+            AutoReverse = true,
         };
 
         //Set the easing function on the animation

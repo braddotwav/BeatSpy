@@ -3,11 +3,11 @@ using BeatSpy.Commands.Base;
 
 namespace BeatSpy.Commands;
 
-internal class DismissErrorCommand : CommandBase
+internal sealed class ClearMessageDisplayCommand : CommandBase
 {
     private readonly IMessageDisplayService messageDisplayService;
 
-    public DismissErrorCommand(IMessageDisplayService messageDisplayService)
+    public ClearMessageDisplayCommand(IMessageDisplayService messageDisplayService)
     {
         this.messageDisplayService = messageDisplayService;
     }

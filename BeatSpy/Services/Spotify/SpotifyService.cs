@@ -6,23 +6,13 @@ using BeatSpy.DataTypes.Enums;
 
 namespace BeatSpy.Services;
 
-internal class SpotifyService : ISpotifyService
+internal sealed class SpotifyService : ISpotifyService
 {
     private readonly ISpotifyAuthenticationService authenticationService;
 
     private SpotifyClient? client;
 
-    public SpotifyClient? Client
-    {
-        get { return client; }
-        set
-        {
-            client = value;
-            OnServiceStateChanged?.Invoke(client == null ? ConnectionType.Disconnected : ConnectionType.Connected);
-        }
-    }
-
-    public bool IsLoggedIn => Client != null;
+    public bool IsLoggedIn => client != null;
 
     public event Action<ConnectionType>? OnServiceStateChanged;
 
@@ -36,7 +26,8 @@ internal class SpotifyService : ISpotifyService
         switch (loginType)
         {
             case LoginType.Automatic:
-                Client = await authenticationService.ConnectAsync();
+                client = await authenticationService.ConnectAsync();
+                OnServiceStateChanged?.Invoke(client == null ? ConnectionType.Disconnected : ConnectionType.Connected);
                 break;
             case LoginType.Manual:
                 await authenticationService.LoginAsync();
@@ -46,7 +37,8 @@ internal class SpotifyService : ISpotifyService
 
     public void LogOut()
     {
-        Client = null;
+        client = null;
+        OnServiceStateChanged?.Invoke(client == null ? ConnectionType.Disconnected : ConnectionType.Connected);
         authenticationService.LogOut();
     }
     
@@ -71,7 +63,7 @@ internal class SpotifyService : ISpotifyService
         if (playlist.Tracks == null)
             throw new NullReferenceException();
 
-        FullTrack track = (FullTrack)playlist.Tracks.Items![RandomRange.Range(0, playlist.Tracks.Items.Count)].Track;
+        FullTrack track = (FullTrack)playlist.Tracks.Items![RandomHelper.Range(0, playlist.Tracks.Items.Count)].Track;
         return track;
     }
 }

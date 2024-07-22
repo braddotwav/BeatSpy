@@ -1,9 +1,9 @@
-﻿using BeatSpy.Commands.Base;
+﻿using System;
 using BeatSpy.Models;
+using SpotifyAPI.Web;
 using BeatSpy.Services;
 using BeatSpy.ViewModels;
-using SpotifyAPI.Web;
-using System;
+using BeatSpy.Commands.Base;
 using System.Threading.Tasks;
 
 namespace BeatSpy.Commands;
@@ -14,12 +14,13 @@ internal class RandomTrackCommand : AsyncCommandBase
 
     private readonly IMessageDisplayService messageDisplayService;
     private readonly ISpotifyService spotifyService;
-    private readonly TrackViewModel trackViewModel;
 
-    public RandomTrackCommand(ISpotifyService spotifyService, TrackViewModel trackViewModel, IMessageDisplayService messageDisplayService)
+    private readonly MainWindowViewModel mainViewModel;
+
+    public RandomTrackCommand(MainWindowViewModel mainViewModel, ISpotifyService spotifyService, IMessageDisplayService messageDisplayService)
     {
+        this.mainViewModel = mainViewModel;
         this.spotifyService = spotifyService;
-        this.trackViewModel = trackViewModel;
         this.messageDisplayService = messageDisplayService;
     }
 
@@ -30,7 +31,7 @@ internal class RandomTrackCommand : AsyncCommandBase
             FullTrack track = await spotifyService.GetRandomTrackFromPlaylistAsync(playlistId);
             TrackAudioFeatures features = await spotifyService.GetAudioTrackFeaturesAsync(track.Id);
 
-            trackViewModel.SetCurrentTrack(new BeatTrack(track, features));
+            mainViewModel.SetTrack(new BeatTrack(track, features));
         }
         catch (Exception ex)
         {

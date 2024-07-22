@@ -7,10 +7,9 @@ namespace BeatSpy.Services;
 public interface ISpotifyAuthenticationService : IDisposable
 {
     /// <summary>
-    /// Asynchronously returns a spotify client
+    /// Deletes users token file
     /// </summary>
-    /// <returns></returns>
-    public Task<SpotifyClient> ConnectAsync();
+    public void LogOut();
 
     /// <summary>
     /// Asynchronously starts a login request
@@ -19,7 +18,8 @@ public interface ISpotifyAuthenticationService : IDisposable
     public Task LoginAsync();
 
     /// <summary>
-    /// Deletes users token file
+    /// Asynchronously returns a spotify client
     /// </summary>
-    public void LogOut();
+    /// <returns></returns>
+    public Task<SpotifyClient> ConnectAsync();
 }
