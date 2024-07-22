@@ -16,7 +16,6 @@ Param(
 )
 
 #Check if a ".iss" file exists inside of the "Scripts" folder
-#If it doesn't write to the console and break
 $installerScriptPath = Join-Path -Path $slnDirectory -ChildPath "Scripts/*.iss"
 $installerScript = Get-Item -Path $installerScriptPath
 if(!(Test-Path -Path $installerScriptPath))
@@ -25,12 +24,11 @@ if(!(Test-Path -Path $installerScriptPath))
     break
 }
 
-#Check if the "Publish" folder exists inside of the bin folder
-#If it doesn't write to the console and break
-$publishPath = Join-Path -Path $slnDirectory -ChildPath "BeatSpy/bin/Publish/*"
+#Check if the "Release" folder exists inside of the bin folder
+$publishPath = Join-Path -Path $slnDirectory -ChildPath "BeatSpy/bin/Release/*"
 if(!(Test-Path -Path $publishPath))
 {
-    Write-Host "Publish folder does not exist"
+    Write-Host "Release folder does not exist"
     break
 }
 
@@ -44,8 +42,7 @@ if(Test-Path -Path $outputDirectoryContents)
     Start-Sleep -Seconds 2
 }
 
-#Try and compress the contents of the "Publish" folder to the output
-#directory that was specified
+#Try and compress the contents of the "Release" folder
 try 
 {
     #Join both the output directory and the output file name

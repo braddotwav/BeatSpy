@@ -16,7 +16,7 @@ DefaultDirName={commonpf64}\{#AppName}
 DisableProgramGroupPage=auto
 SolidCompression=yes
 WizardStyle=modern
-WizardSmallImageFile=../BeatSpy/Assets/Bmp/icon.bmp
+WizardSmallImageFile=../BeatSpy/Assets/BMP/icon.bmp
 AllowUNCPath=no
 AllowNetworkDrive=no
 LicenseFile=../LICENSE.txt
@@ -27,7 +27,7 @@ SetupIconFile=../BeatSpy/Assets/Ico/icon.ico
 UninstallDisplayName={#AppName}
 
 [Files]
-Source: "../BeatSpy/bin/Publish/*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: "../BeatSpy/bin/Release/*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
