@@ -6,6 +6,8 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Assets\Ico\icon.ico</ApplicationIcon>
+    <Version>1.2.0</Version>
+    <FileVersion>1.2.0</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
