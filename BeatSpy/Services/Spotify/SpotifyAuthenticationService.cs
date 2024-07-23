@@ -7,6 +7,7 @@ using BeatSpy.Helpers;
 using System.Net.Http;
 using System.Threading.Tasks;
 using BeatSpy.DataTypes.Constants;
+using Microsoft.VisualBasic;
 
 namespace BeatSpy.Services;
 
@@ -34,27 +35,20 @@ internal sealed class SpotifyAuthenticationService : ISpotifyAuthenticationServi
 
     public async Task<SpotifyClient> ConnectAsync()
     {
-        if (AuthenticationHelper.TryGetAuthFile(out string contents))
-        {
-            SpotifyToken userToken = AuthenticationHelper.DeserializeTokenContent(contents) ?? throw new InvalidDataException(LogConstants.AUTH_FILE_CONTENTS_ERROR);
-            PKCETokenResponse tokenReponse = await AuthenticationHelper.PKCETokenRefreshResponseAsync(CLIENT_ID, userToken.RefreshToken!);
+        string contents = AuthenticationHelper.GetAuthenticationContent();
+        SpotifyToken userToken = AuthenticationHelper.DeserializeTokenContent(contents)!;
+        PKCETokenResponse tokenReponse = await AuthenticationHelper.PKCETokenRefreshResponseAsync(CLIENT_ID, userToken.RefreshToken!);
 
-            //Update the users refresh token and serialize it to the authentication file
-            userToken.RefreshToken = tokenReponse.RefreshToken;
-            AuthenticationHelper.SerializeTokenContent(userToken);
+        //Update the users refresh token and serialize it to the authentication file
+        userToken.RefreshToken = tokenReponse.RefreshToken;
+        AuthenticationHelper.SerializeTokenContent(userToken);
 
-            //Set up the authenticator and config to re-grab a token when it expires
-            authenticator = new PKCEAuthenticator(CLIENT_ID, tokenReponse);
-            authenticator.TokenRefreshed += AuthenticatorTokenRefreshed;
-            SpotifyClientConfig config = SpotifyClientConfig.CreateDefault().WithAuthenticator(authenticator);
+        //Set up the authenticator and config to re-grab a token when it expires
+        authenticator = new PKCEAuthenticator(CLIENT_ID, tokenReponse);
+        authenticator.TokenRefreshed += AuthenticatorTokenRefreshed;
+        SpotifyClientConfig config = SpotifyClientConfig.CreateDefault().WithAuthenticator(authenticator);
 
-            //Return a spotify client
-            return new SpotifyClient(config);
-        }
-        else
-        {
-            throw new FileNotFoundException(LogConstants.AUTH_FILE_NOTFOUND);
-        }
+        return new SpotifyClient(config);
     }
 
     public void LogOut()

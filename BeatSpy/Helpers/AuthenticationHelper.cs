@@ -11,16 +11,18 @@ namespace BeatSpy.Helpers;
 public static class AuthenticationHelper
 {
     /// <summary>
-    /// Try to retrieve content from the authentication file.
+    /// Gets the content from the authentication file
     /// </summary>
-    /// <param name="authContent"></param>
     /// <returns></returns>
-    public static bool TryGetAuthFile(out string content)
+    /// <exception cref="FileNotFoundException"></exception>
+    public static string GetAuthenticationContent()
     {
         string authPath = DataHelper.GetFullFilePath(FileConstants.AUTH_FILE);
 
-        content = File.ReadAllText(authPath);
-        return !string.IsNullOrEmpty(content);
+        if (!File.Exists(authPath))
+            throw new FileNotFoundException(LogConstants.AUTH_FILE_NOTFOUND);
+
+        return File.ReadAllText(authPath);
     }
 
     /// <summary>
@@ -30,7 +32,14 @@ public static class AuthenticationHelper
     /// <returns></returns>
     public static SpotifyToken? DeserializeTokenContent(string content)
     {
-        return JsonSerializer.Deserialize<SpotifyToken>(content);
+        try
+        {
+            return JsonSerializer.Deserialize<SpotifyToken>(content);
+        }
+        catch
+        {
+            throw new InvalidDataException(LogConstants.AUTH_FILE_CONTENTS_ERROR);
+        }
     }
 
     /// <summary>
