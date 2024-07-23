@@ -8,6 +8,7 @@
     <ApplicationIcon>Assets\Ico\icon.ico</ApplicationIcon>
     <Version>1.2.0</Version>
     <FileVersion>1.2.0</FileVersion>
+	<IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
