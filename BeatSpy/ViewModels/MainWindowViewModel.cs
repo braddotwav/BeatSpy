@@ -13,7 +13,7 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
 {
     public bool IsLoggedIn => spotify.IsLoggedIn;
 
-    public BeatTrack Track { get; private set; }
+    public BeatTrack? Track { get; private set; }
     public bool IsTrackEmpty => Track == null;
 
     #region Application Commands
