@@ -1,7 +1,7 @@
 #define AppName "BeatSpy"
 #define AppExeName "BeatSpy.exe"
-#define AppPublisher "RealJamako"
-#define AppURL "https://github.com/RealJamako/BeatSpy"
+#define AppPublisher "braddotwav"
+#define AppURL "https://github.com/braddotwav/BeatSpy"
 #ifndef AppVersion
   #define AppVersion = '0.0.0.0';
 #endif
