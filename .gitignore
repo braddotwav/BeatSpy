@@ -397,5 +397,5 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-#Ignore Installer folder
-Installer/
+# Publish Script
+/publish.ps1

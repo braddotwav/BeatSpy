@@ -1,8 +1,10 @@
 #define AppName "BeatSpy"
 #define AppExeName "BeatSpy.exe"
-#define AppVersion "1.0"
 #define AppPublisher "RealJamako"
 #define AppURL "https://github.com/RealJamako/BeatSpy"
+#ifndef AppVersion
+  #define AppVersion = '0.0.0.0';
+#endif
 
 [Setup]
 AppId=DD8DF703-E563-41BA-A4F4-31B7CCFD2D6F
@@ -27,7 +29,7 @@ SetupIconFile=../BeatSpy/Assets/Ico/icon.ico
 UninstallDisplayName={#AppName}
 
 [Files]
-Source: "../BeatSpy/bin/Release/*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+Source: "../BeatSpy\bin\framework-dependant\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
 [Tasks]
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
