@@ -91,7 +91,7 @@ Start-Sleep -Seconds 1
 
 $frameworkdependant = Join-Path -Path $output -ChildPath "beatspy-winx64-framework-dependant.zip"
 
-7z a -bsp2 -r $frameworkdependant "./bin/framework-dependant"
+7z a -bsp2 -r $frameworkdependant "./bin/framework-dependant/*"
 
 # Check For Errors
 if ($LASTEXITCODE -ne 0)
