@@ -48,7 +48,7 @@ public static class AuthenticationHelper
     /// <param name="authToken">Authentication object</param>
     public static void SerializeTokenContent(SpotifyToken token)
     {
-        string serializedToken = JsonSerializer.Serialize(token)!;
+        string serializedToken = JsonSerializer.Serialize(token, new JsonSerializerOptions { WriteIndented = true })!;
         File.WriteAllText(DataHelper.GetFullFilePath(FileConstants.AUTH_FILE), serializedToken);
     }
 
