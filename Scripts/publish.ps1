@@ -61,7 +61,7 @@ Write-Host "Finished Setup Process..." -ForegroundColor Green
 Write-Host "Starting Build Process..."
 Start-Sleep -Seconds 1
 
-dotnet publish -p Release --runtime win-x64 --no-self-contained --output "./bin/framework-dependant"
+dotnet publish -c Release -r win-x64 --no-self-contained --output "./bin/framework-dependant"
 
 # Check For Errors
 if ($LASTEXITCODE -ne 0)
