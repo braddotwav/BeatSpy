@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace BeatSpy.Converters;
 
-internal class DurationConverter : IValueConverter
+internal sealed class DurationConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {

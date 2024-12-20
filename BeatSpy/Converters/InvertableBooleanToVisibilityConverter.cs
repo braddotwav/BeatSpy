@@ -5,7 +5,7 @@ using System.Windows.Data;
 
 namespace BeatSpy.Converters;
 
-internal class InvertableBooleanToVisibilityConverter : IValueConverter
+internal sealed class InvertableBooleanToVisibilityConverter : IValueConverter
 {
     enum VisibilityParameter
     {

@@ -4,7 +4,7 @@ using System.Globalization;
 
 namespace BeatSpy.Converters;
 
-internal class LoudnessConverter : IValueConverter
+internal sealed class LoudnessConverter : IValueConverter
 {
     public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
     {
