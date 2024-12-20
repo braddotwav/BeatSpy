@@ -1,6 +1,5 @@
 ﻿using System;
 using SpotifyAPI.Web;
-using BeatSpy.Models;
 using BeatSpy.Helpers;
 using BeatSpy.Services;
 using BeatSpy.ViewModels;
@@ -8,23 +7,16 @@ using BeatSpy.Commands.Base;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 
-namespace BeatSpy.Commands;
+namespace BeatSpy.Commands.Spotify;
 
-internal sealed class SearchTrackCommand : AsyncCommandBase
+internal sealed class SearchTrackCommand(MainWindowViewModel mainViewModel, ISpotifyService spotifyService, IMessageDisplayService messageDisplayService) : AsyncCommandBase
 {
-    private readonly IMessageDisplayService messageDisplayService;
-    private readonly ISpotifyService spotifyService;
-    private readonly MainWindowViewModel mainViewModel;
+    private readonly IMessageDisplayService messageDisplayService = messageDisplayService;
+    private readonly ISpotifyService spotifyService = spotifyService;
+    private readonly MainWindowViewModel mainViewModel = mainViewModel;
 
     private string currentSearched = string.Empty;
     private string searchQuery = string.Empty;
-
-    public SearchTrackCommand(MainWindowViewModel mainViewModel, ISpotifyService spotifyService, IMessageDisplayService messageDisplayService)
-    {
-        this.mainViewModel = mainViewModel;
-        this.messageDisplayService = messageDisplayService;
-        this.spotifyService = spotifyService;
-    }
 
     public override bool CanExecute(object? parameter)
     {
@@ -41,7 +33,7 @@ internal sealed class SearchTrackCommand : AsyncCommandBase
             FullTrack track = await spotifyService.GetTrackAsync(searchQuery);
             TrackAudioFeatures features = await spotifyService.GetAudioTrackFeaturesAsync(track.Id);
 
-            mainViewModel.SetTrack(new BeatTrack(track, features));
+            mainViewModel.SetTrack(track, features);
             ApplicationHelper.RemoveElementFocus(parameter);
         }
         catch (Exception ex)
