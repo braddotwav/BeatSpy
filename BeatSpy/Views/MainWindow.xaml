@@ -19,7 +19,11 @@
     mc:Ignorable="d">
 
     <Window.Resources>
-        <converters:InvertableBooleanToVisibilityConverter x:Key="InvertableBooleanToVisibility" />
+        <converters:InvertableBooleanToVisibilityConverter x:Key="InvertableBooleanToVisibilityConverter" />
+        <converters:DurationConverter x:Key="DurationConverter" />
+        <converters:KeyConverter x:Key="KeyConverter" />
+        <converters:LoudnessConverter x:Key="LoudnessConverter" />
+        <converters:TempoConverter x:Key="TempoConverter" />
     </Window.Resources>
 
     <Grid>
@@ -62,12 +66,12 @@
                                 Command="{Binding ContextMenuViewModel.LoginSpotify}"
                                 Header="Log In"
                                 Style="{StaticResource MenuItemStyle}"
-                                Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}" />
+                                Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
                             <MenuItem
                                 Command="{Binding ContextMenuViewModel.LogOutSpotify}"
                                 Header="Log Out"
                                 Style="{StaticResource MenuItemStyle}"
-                                Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Normal}" />
+                                Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Normal}" />
                             <MenuItem
                                 Command="{Binding ExitApplicationCommand}"
                                 Header="Exit"
@@ -221,7 +225,7 @@
                             CommandParameter="{Binding Track.Url}"
                             IsTabStop="False"
                             Style="{StaticResource SpotifyIcon}"
-                            Visibility="{Binding IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}">
+                            Visibility="{Binding IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}">
                             <svg1:SVGImage
                                 Width="32"
                                 Height="32"
@@ -259,7 +263,7 @@
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Border.Background>
-                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Volume}" />
+                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Loudness, Converter={StaticResource LoudnessConverter}}" />
                 </Border>
                 <Border
                     Width="255"
@@ -277,7 +281,7 @@
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Border.Background>
-                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Tempo}" />
+                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Tempo, Converter={StaticResource TempoConverter}}" />
                 </Border>
             </StackPanel>
 
@@ -299,7 +303,7 @@
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Border.Background>
-                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Duration}" />
+                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Duration, Converter={StaticResource DurationConverter}}" />
                 </Border>
                 <Border
                     Width="255"
@@ -317,7 +321,7 @@
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Border.Background>
-                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Key}" />
+                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Key, Converter={StaticResource KeyConverter}}" />
                 </Border>
             </StackPanel>
         </Grid>
@@ -327,7 +331,7 @@
             <Border
                 DataContext="{Binding MessageHandler}"
                 Style="{StaticResource MessageHandler}"
-                Visibility="{Binding IsMessageEmpty, Converter={StaticResource InvertableBooleanToVisibility}, ConverterParameter=Inverted}">
+                Visibility="{Binding IsMessageEmpty, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}">
                 <Border.InputBindings>
                     <MouseBinding Command="{Binding DismissErrorCommand}" Gesture="LeftClick" />
                 </Border.InputBindings>
