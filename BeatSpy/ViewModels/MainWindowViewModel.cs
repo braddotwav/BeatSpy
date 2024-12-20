@@ -1,9 +1,11 @@
 ﻿using BeatSpy.Models;
+using SpotifyAPI.Web;
 using BeatSpy.Commands;
 using BeatSpy.Services;
 using System.Windows.Input;
 using BeatSpy.ViewModels.Base;
 using BeatSpy.DataTypes.Enums;
+using BeatSpy.Commands.Spotify;
 using BeatSpy.DataTypes.Constants;
 using BeatSpy.DataTypes.Interfaces;
 
@@ -13,7 +15,7 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
 {
     public bool IsLoggedIn => spotify.IsLoggedIn;
 
-    public BeatTrack? Track { get; private set; }
+    public Track? Track { get; private set; }
     public bool IsTrackEmpty => Track == null;
 
     #region Application Commands
@@ -54,9 +56,9 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
         RandomTrackCommand = new RandomTrackCommand(this, spotify, messageService);
     }
 
-    public void SetTrack(BeatTrack track)
+    public void SetTrack(FullTrack track, TrackAudioFeatures features)
     {
-        Track = track;
+        Track = new Track(track, features);
         OnPropertyChanged(nameof(Track));
         OnPropertyChanged(nameof(IsTrackEmpty));
     }
