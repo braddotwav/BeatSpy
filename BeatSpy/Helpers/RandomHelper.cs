@@ -1,17 +1,22 @@
-﻿namespace BeatSpy.Helpers;
+﻿using System;
+
+namespace BeatSpy.Helpers;
 
 internal static class RandomHelper
 {
-    private readonly static System.Random random = new();
+    private static readonly Random _random = new();
 
     /// <summary>
-    /// Returns a random range between a miniumum and maximum value
+    /// Returns a random range between a miniumum and maximum value, both values are incluesive
     /// </summary>
     /// <param name="min">The minimum value</param>
     /// <param name="max">The maximum value</param>
     /// <returns></returns>
-    public static int Range(int min, int max)
+    public static int Range(int minInclusive, int maxInclusive)
     {
-        return random.Next(min, max);
+        if (minInclusive >= maxInclusive)
+            throw new ArgumentException("The minimum number should be less than the maximum value");
+         
+        return _random.Next(minInclusive, maxInclusive + 1);
     }
 }
