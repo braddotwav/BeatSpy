@@ -82,8 +82,8 @@
                         Width="20"
                         Height="20"
                         VerticalContentAlignment="Center"
-                        OverrideColor="White"
-                        Source="/BeatSpy;component/Assets/SVG/dots-menu.svg" />
+                        OverrideColor="#e7e7e7"
+                        Source="/BeatSpy;component/Assets/SVG/menu.svg" />
                 </Button>
             </StackPanel>
 
@@ -96,21 +96,21 @@
                     IsTabStop="False"
                     Style="{StaticResource WindowButton}">
                     <svg1:SVGImage
-                        Width="10"
-                        Height="10"
+                        Width="14"
+                        Height="14"
                         VerticalContentAlignment="Center"
-                        OverrideColor="White"
-                        Source="/BeatSpy;component/Assets/SVG/minimize.svg" />
+                        OverrideColor="#e7e7e7"
+                        Source="/BeatSpy;component/Assets/SVG/minus.svg" />
                 </Button>
                 <Button
                     Command="{Binding ExitApplicationCommand}"
                     IsTabStop="False"
                     Style="{StaticResource WindowCloseButton}">
                     <svg1:SVGImage
-                        Width="10"
-                        Height="10"
+                        Width="12"
+                        Height="12"
                         VerticalContentAlignment="Center"
-                        OverrideColor="White"
+                        OverrideColor="#e7e7e7"
                         Source="/BeatSpy;component/Assets/SVG/close.svg" />
                 </Button>
             </StackPanel>
@@ -342,7 +342,7 @@
                         Margin="0,0,8,0"
                         VerticalContentAlignment="Center"
                         OverrideColor="#868686"
-                        Source="/BeatSpy;component/Assets/SVG/info.svg" />
+                        Source="/BeatSpy;component/Assets/SVG/alert.svg" />
                     <TextBlock
                         VerticalAlignment="Center"
                         FontFamily="{StaticResource font-normal}"
