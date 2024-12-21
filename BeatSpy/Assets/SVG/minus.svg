@@ -1,6 +1,1 @@
-<!-- dash icon by Free Icons (https://free-icons.github.io/free-icons/) -->
-<svg xmlns="http://www.w3.org/2000/svg" height="1em" fill="currentColor" viewBox="0 0 512 512">
-  <path
-    d="M 0 256 Q 2 234 24 232 L 488 232 L 488 232 Q 510 234 512 256 Q 510 278 488 280 L 24 280 L 24 280 Q 2 278 0 256 L 0 256 Z"
-  />
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M5 11h14v2H5z"/></svg>
