@@ -7,7 +7,7 @@ A screenshot of the application can be found in the [Media](https://github.com/R
 
 Download
 ---------
-You can grab the latest installer or portable package from the [download section](https://github.com/RealJamako/BeatSpy/releases)
+You can grab the latest release [here](https://github.com/RealJamako/BeatSpy/releases)
 
 Privacy
 ---------
@@ -20,12 +20,11 @@ If you encounter a bug or have any questions, please feel free to open an issue 
 Resources & Packages used
 ---------
 - [NLog](https://github.com/NLog/NLog)
+- [BoxIcons](https://boxicons.com/)
 - [SVGImage](https://github.com/dotnetprojects/SVGImage)
 - [Inno Set up](https://github.com/jrsoftware/issrc/)
-- [Google Icons](https://fonts.google.com/icons)
-- [Bootstrap Icons](https://icons.getbootstrap.com/)
 - [Spotify API by JohnnyCrazy](https://github.com/JohnnyCrazy/SpotifyAPI-NET)
 
 License
 ---------
-This project is licensed under the [MIT License](https://www.google.com)
+This project is licensed under the [MIT License](https://github.com/braddotwav/BeatSpy/blob/master/LICENSE.txt)
