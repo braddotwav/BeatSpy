@@ -7,61 +7,48 @@ namespace BeatSpy.Services;
 internal class TitleAnimationService : ITitleAnimationService
 {
     private readonly DoubleAnimation animation;
-
     public bool IsPlaying { get; private set; }
 
-    public TitleAnimationService(int duration, double deceleration)
+    private readonly double containerWidth;
+
+    public TitleAnimationService()
     {
-        //Create double animation
+        // Create a double animation
         animation = new()
         {
-            Duration = TimeSpan.FromSeconds(duration),
-            DecelerationRatio = deceleration,
+            EasingFunction = new SineEase() { EasingMode = EasingMode.EaseInOut},
             AutoReverse = true,
         };
 
-        //Set the easing function on the animation
-        QuadraticEase easeIn = new()
-        {
-            EasingMode = EasingMode.EaseIn
-        };
-        animation.EasingFunction = easeIn;
-
-        //Subscribe to the animation completed event
-        animation.Completed += (s, _) =>
+        // Subscribe to the animation completed event
+        animation.Completed += (_, _) =>
         {
             IsPlaying = false;
         };
     }
 
-    /// <summary>
-    /// Adjust the animation's target position 
-    /// </summary>
-    /// <param name="position">Destonation position</param>
-    public void SetAnimationPosition(double position)
+    public void PlayAnimation(TranslateTransform transform, double width)
     {
-        animation.To = position;
-    }
+        animation.To = -(width - 312);
+        animation.Duration = TimeSpan.FromSeconds(width / 110);
 
-    /// <summary>
-    /// Starts a animation using the provided transform
-    /// </summary>
-    /// <param name="transform">Transform to animate</param>
-    public void StartAnimation(TranslateTransform transform)
-    {
         transform.BeginAnimation(TranslateTransform.XProperty, animation);
         IsPlaying = true;
     }
 
-    /// <summary>
-    /// Determines if the animation should occur based on if the title width exceeds a specified size
-    /// And if the animation is already playing
-    /// </summary>
-    /// <param name="titleWidth">The actual size of the element</param>
-    /// <param name="rectSize">The visiable size of element</param>
-    /// <returns></returns>
-    public bool ShouldAnimate(double titleWidth, float rectSize)
+    public void StopAnimation(TranslateTransform transform)
     {
-        return titleWidth > rectSize && !IsPlaying;
+        transform.BeginAnimation(TranslateTransform.XProperty, null);
+        IsPlaying = false;
+    }
+
+    /// <summary>
+    /// Determines if the title width is considered to be out of view
+    /// </summary>
+    /// <param name="width"></param>
+    /// <returns></returns>
+    public bool IsTitleOutOfView(double width)
+    {
+        return width > containerWidth;
     }
 }

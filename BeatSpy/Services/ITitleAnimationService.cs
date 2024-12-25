@@ -5,7 +5,7 @@ namespace BeatSpy.Services;
 public interface ITitleAnimationService
 {
     public bool IsPlaying { get; }
-    public void StartAnimation(TranslateTransform transform);
-    public bool ShouldAnimate(double titleWidth, float rectSize);
-    public void SetAnimationPosition(double position);
+    public void PlayAnimation(TranslateTransform transform, double width);
+    public void StopAnimation(TranslateTransform transform);
+    public bool IsTitleOutOfView(double width);
 }

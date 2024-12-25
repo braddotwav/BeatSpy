@@ -183,31 +183,24 @@
 
                         <!--  Track Artist & Title  -->
                         <StackPanel
-                            MinWidth="315"
+                            Name="TrackAndTitlePanel"
+                            Width="auto"
                             HorizontalAlignment="Left"
                             VerticalAlignment="Center"
-                            ClipToBounds="True"
                             Orientation="Vertical">
 
-                            <Canvas
-                                x:Name="TrackTitleCanvas"
-                                Height="36"
-                                HorizontalAlignment="Stretch"
-                                Background="Transparent">
+                            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
                                 <TextBlock
                                     x:Name="TrackTitle"
-                                    HorizontalAlignment="Stretch"
                                     FontFamily="{StaticResource font-bold}"
                                     FontSize="{StaticResource text-4xl}"
                                     Foreground="{StaticResource clr-primary-100}"
                                     MouseEnter="OnTrackTitleMouseEnter"
                                     TargetUpdated="OnTrackTitleUpdated"
-                                    Text="{Binding Track.Title, NotifyOnTargetUpdated=True}"
-                                    TextWrapping="NoWrap" />
-                            </Canvas>
+                                    Text="{Binding Track.Title}" />
+                            </ScrollViewer>
 
                             <TextBlock
-                                Padding="0,8,0,0"
                                 FontFamily="{StaticResource font-bold}"
                                 FontSize="{StaticResource text-2xl}"
                                 Foreground="{StaticResource clr-primary-300}"
@@ -223,7 +216,6 @@
                             VerticalAlignment="Bottom"
                             Command="{Binding OpenInBrowserCommand}"
                             CommandParameter="{Binding Track.Url}"
-                            IsTabStop="False"
                             Style="{StaticResource SpotifyIcon}"
                             Visibility="{Binding IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}">
                             <svg1:SVGImage

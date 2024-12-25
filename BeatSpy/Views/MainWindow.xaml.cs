@@ -13,13 +13,17 @@ namespace BeatSpy
     /// </summary>
     public partial class MainWindow : Window
     {
-        private readonly ITitleAnimationService titleAnimationService;
+        private readonly TitleAnimationService titleAnimationService;
+        private readonly TranslateTransform titleTransform;
 
         public MainWindow()
         {
             InitializeComponent();
 
-            titleAnimationService = new TitleAnimationService(5, 0.5);
+            titleAnimationService = new TitleAnimationService();
+
+            titleTransform = new TranslateTransform();
+            TrackTitle.RenderTransform = titleTransform;
         }
 
         /// <summary>
@@ -68,27 +72,19 @@ namespace BeatSpy
         /// <param name="e"></param>
         private void OnTrackTitleMouseEnter(object sender, MouseEventArgs e)
         {
+            // If the title animation is already playing return
+            if (titleAnimationService.IsPlaying) return;
+
             Dispatcher.BeginInvoke(new Action(async () =>
             {
-                //Allow for a 500ms delay
-                await Task.Delay(500);
+                // Wait a second until procceeding
+                await Task.Delay(1000);
 
-                //Check if the mouse is hovered over the track title
-                if (TrackTitle.IsMouseOver)
+                // Insure the user is still hoovering over the title and that the title is out of bounds
+                if (TrackTitle.IsMouseOver && titleAnimationService.IsTitleOutOfView(TrackTitle.ActualWidth))
                 {
-                    //Check if we should play the animation
-                    if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 315))
-                    {
-                        //Set the animation to location
-                        titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 315));
-
-                        TranslateTransform translateTransform = new();
-                        TrackTitle.RenderTransform = translateTransform;
-
-                        //Start the animation
-                        titleAnimationService.StartAnimation(translateTransform);
-
-                    }
+                    // Start the title animation
+                    titleAnimationService.PlayAnimation(titleTransform, TrackTitle.ActualWidth);
                 }
             }));
         }
@@ -100,21 +96,24 @@ namespace BeatSpy
         /// <param name="e"></param>
         private void OnTrackTitleUpdated(object sender, System.Windows.Data.DataTransferEventArgs e)
         {
-            Dispatcher.BeginInvoke(new Action(() =>
+            // Reset the track title if the animation is playing
+            if (titleAnimationService.IsPlaying)
             {
-                //Check if we should play the animation
-                if (titleAnimationService.ShouldAnimate(TrackTitle.ActualWidth, 315))
+                titleAnimationService.StopAnimation(titleTransform);
+            }
+
+            Dispatcher.BeginInvoke(new Action(async () =>
+            {
+                // Wait a second until procceeding
+                await Task.Delay(1000);
+
+                // Insure that the title is out of bounds
+                if (titleAnimationService.IsTitleOutOfView(TrackTitle.ActualWidth))
                 {
-                    //Set the animation to location
-                    titleAnimationService.SetAnimationPosition(-(TrackTitle.ActualWidth - 315));
-
-                    TranslateTransform translateTransform = new();
-                    TrackTitle.RenderTransform = translateTransform;
-
-                    //Start the animation
-                    titleAnimationService.StartAnimation(translateTransform);
+                    // Start the title animation
+                    titleAnimationService.PlayAnimation(titleTransform, TrackTitle.ActualWidth);
                 }
-            }), System.Windows.Threading.DispatcherPriority.ApplicationIdle);
+            }));
         }
     }
 }
