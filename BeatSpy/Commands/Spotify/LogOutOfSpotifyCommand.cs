@@ -3,14 +3,9 @@ using BeatSpy.Services;
 
 namespace BeatSpy.Commands;
 
-internal class LogOutOfSpotifyCommand : CommandBase
+internal sealed class LogOutOfSpotifyCommand(ISpotifyService spotifyService) : CommandBase
 {
-    private readonly ISpotifyService spotifyService;
-
-    public LogOutOfSpotifyCommand(ISpotifyService spotifyService)
-    {
-        this.spotifyService = spotifyService;
-    }
+    private readonly ISpotifyService spotifyService = spotifyService;
 
     public override void Execute(object? parameter)
     {

@@ -3,14 +3,9 @@ using BeatSpy.Commands.Base;
 
 namespace BeatSpy.Commands;
 
-internal sealed class ClearMessageDisplayCommand : CommandBase
+internal sealed class ClearMessageDisplayCommand(IMessageDisplayService messageDisplayService) : CommandBase
 {
-    private readonly IMessageDisplayService messageDisplayService;
-
-    public ClearMessageDisplayCommand(IMessageDisplayService messageDisplayService)
-    {
-        this.messageDisplayService = messageDisplayService;
-    }
+    private readonly IMessageDisplayService messageDisplayService = messageDisplayService;
 
     public override bool CanExecute(object? parameter)
     {
