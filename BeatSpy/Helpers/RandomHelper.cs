@@ -7,16 +7,17 @@ internal static class RandomHelper
     private static readonly Random _random = new();
 
     /// <summary>
-    /// Returns a random range between a miniumum and maximum value, both values are incluesive
+    /// Returns a random number within a set range
     /// </summary>
-    /// <param name="min">The minimum value</param>
-    /// <param name="max">The maximum value</param>
+    /// <param name="min"></param>
+    /// <param name="max"></param>
     /// <returns></returns>
-    public static int Range(int minInclusive, int maxInclusive)
+    /// <exception cref="ArgumentException"></exception>
+    public static int Range(int min, int max)
     {
-        if (minInclusive >= maxInclusive)
+        if (min >= max)
             throw new ArgumentException("The minimum number should be less than the maximum value");
-         
-        return _random.Next(minInclusive, maxInclusive + 1);
+
+        return _random.Next(min, max);
     }
 }
