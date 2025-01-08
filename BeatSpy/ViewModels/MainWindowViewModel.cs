@@ -53,7 +53,7 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
         RemoveFocusCommand = new RemoveElementFocusCommand();
         OpenInBrowserCommand = new OpenBrowserCommand(messageService);
         SearchTrackCommand = new SearchTrackCommand(this, spotify, messageService);
-        RandomTrackCommand = new RandomTrackFromPlaylistCommand("4OIVU71yO7SzyGrh0ils2i", this, spotify, messageService);
+        RandomTrackCommand = new RandomTrackFromPlaylistCommand("37i9dQZEVXbNG2KDcFcKOF", this, spotify, messageService);
     }
 
     public void SetTrack(FullTrack track, TrackAudioFeatures features)
