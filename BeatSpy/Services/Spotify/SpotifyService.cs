@@ -55,10 +55,7 @@ internal sealed class SpotifyService(ISpotifyAuthenticationService authenticatio
     {
         FullPlaylist playlist = await client!.Playlists.Get(playlistId);
 
-        if (playlist.Tracks == null)
-            throw new NullReferenceException();
-
-        FullTrack track = (FullTrack)playlist.Tracks.Items![RandomHelper.Range(0, playlist.Tracks.Items.Count)].Track;
+        FullTrack track = (FullTrack)playlist.Tracks!.Items![RandomHelper.Range(0, playlist.Tracks.Items.Count)].Track;
         return track;
     }
 }
