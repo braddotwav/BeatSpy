@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BeatSpy.Commands.Spotify;
 
-internal class RandomTrackFromPlaylistCommand(string playlistId, MainWindowViewModel mainViewModel, ISpotifyService spotifyService, IMessageDisplayService messageDisplayService) : AsyncCommandBase
+internal sealed class RandomTrackFromPlaylistCommand(string playlistId, MainWindowViewModel mainViewModel, ISpotifyService spotifyService, IMessageDisplayService messageDisplayService) : AsyncCommandBase
 {
     private readonly string playlistId = playlistId;
 
