@@ -2,6 +2,7 @@
     x:Class="BeatSpy.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:controls="clr-namespace:BeatSpy.UserControls"
     xmlns:converters="clr-namespace:BeatSpy.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BeatSpy"
@@ -181,34 +182,25 @@
                             <RowDefinition Height="*" />
                         </Grid.RowDefinitions>
 
-                        <!--  Track Artist & Title  -->
-                        <StackPanel
-                            Name="TrackAndTitlePanel"
-                            Width="auto"
-                            HorizontalAlignment="Left"
-                            VerticalAlignment="Center"
-                            Orientation="Vertical">
+                        <StackPanel VerticalAlignment="Center" ClipToBounds="True">
+                            <!--  Track Title Marquee  -->
+                            <controls:MarqueeUserControl
+                                FontFamily="{StaticResource font-bold}"
+                                FontSize="{StaticResource text-4xl}"
+                                Foreground="{StaticResource clr-primary-100}"
+                                Text="{Binding Track.Title}" />
 
-                            <ScrollViewer HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-                                <TextBlock
-                                    x:Name="TrackTitle"
-                                    FontFamily="{StaticResource font-bold}"
-                                    FontSize="{StaticResource text-4xl}"
-                                    Foreground="{StaticResource clr-primary-100}"
-                                    MouseEnter="OnTrackTitleMouseEnter"
-                                    TargetUpdated="OnTrackTitleUpdated"
-                                    Text="{Binding Track.Title}" />
-                            </ScrollViewer>
-
+                            <!--  Track Artist  -->
                             <TextBlock
+                                x:Name="MarqueeText"
                                 FontFamily="{StaticResource font-bold}"
                                 FontSize="{StaticResource text-2xl}"
                                 Foreground="{StaticResource clr-primary-300}"
-                                Text="{Binding Track.Artist}" />
-
+                                Text="{Binding Track.Artist}"
+                                TextTrimming="CharacterEllipsis" />
                         </StackPanel>
 
-                        <!--  Open with spotify button  -->
+                        <!--  Open With Spotify  -->
                         <Button
                             Width="32"
                             Margin="-6"
