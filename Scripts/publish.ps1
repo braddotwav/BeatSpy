@@ -43,13 +43,16 @@ catch {
     exit
 }
 
-Write-Host "Cleaning Output Folder..."
-try {
-    Remove-Item -Path $output -Recurse -Force
-}
-catch {
-    Write-Host "Failed To Clean Output Folder"
-    exit
+if (Test-Path -Path $output)
+{
+    Write-Host "Cleaning Output Folder..."
+    try {
+        Remove-Item -Path $output -Recurse -Force
+    }
+    catch {
+        Write-Host "Failed To Clean Output Folder"
+        exit
+    }
 }
 
 Write-Host "Finished Setup Process..." -ForegroundColor Green
