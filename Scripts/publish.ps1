@@ -17,7 +17,7 @@ if(!($output) -or !(Test-Path -Path $output))
 {
     $current = Get-Location
     $output = Join-Path -Path $current -ChildPath "dist"
-    Write-Host "No output path was explicitly set. \n The output will now default to: $output" -ForegroundColor Yellow
+    Write-Host "No output path was explicitly set. Using default: $output" -ForegroundColor Yellow
 }
 
 Write-Host "Setting Path..."
