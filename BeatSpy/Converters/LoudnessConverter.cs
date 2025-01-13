@@ -10,10 +10,10 @@ internal sealed class LoudnessConverter : IValueConverter
     {
         if (value is float loudness)
         {
-            return $"{MathF.Round(loudness, 2)}Db";
+            return $"{MathF.Round(loudness, 2)}db";
         }
 
-        return "0Db";
+        return "0db";
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture) => Binding.DoNothing;
