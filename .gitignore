@@ -399,3 +399,9 @@ FodyWeavers.xsd
 
 # Publish Script
 /publish.ps1
+
+# Bump Script
+/bump.ps1
+
+# dist 
+/dist

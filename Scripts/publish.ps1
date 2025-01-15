@@ -17,7 +17,7 @@ if(!($output) -or !(Test-Path -Path $output))
 {
     $current = Get-Location
     $output = Join-Path -Path $current -ChildPath "dist"
-    Write-Host "No output path was explicitly set. \n The output will now default to: $output" -ForegroundColor Yellow
+    Write-Host "No output path was explicitly set. Using default: $output" -ForegroundColor Yellow
 }
 
 Write-Host "Setting Path..."
@@ -43,25 +43,28 @@ catch {
     exit
 }
 
-Write-Host "Cleaning Output Folder..."
-try {
-    Remove-Item -Path $output -Recurse -Force
-}
-catch {
-    Write-Host "Failed To Clean Output Folder"
-    exit
+if (Test-Path -Path $output)
+{
+    Write-Host "Cleaning Output Folder..."
+    try {
+        Remove-Item -Path $output -Recurse -Force
+    }
+    catch {
+        Write-Host "Failed To Clean Output Folder"
+        exit
+    }
 }
 
 Write-Host "Finished Setup Process..." -ForegroundColor Green
 
 # -------------------------------------------
-# Build
+# Build Framework Dependant
 # -------------------------------------------
 
-Write-Host "Starting Build Process..."
+Write-Host "Starting Framework Dependant Build Process..."
 Start-Sleep -Seconds 1
 
-dotnet publish -c Release -r win-x64 --no-self-contained --output "./bin/framework-dependant"
+dotnet publish -c Release -r win-x64 --no-self-contained --nologo --output "./bin/framework-dependant"
 
 # Check For Errors
 if ($LASTEXITCODE -ne 0)
@@ -70,7 +73,26 @@ if ($LASTEXITCODE -ne 0)
     exit
 }
 
-Write-Host "Finished Framework Dependant..." -ForegroundColor Green
+Write-Host "Finished Framework Dependant Build Process..." -ForegroundColor Green
+Start-Sleep -Seconds 1
+
+# -------------------------------------------
+# Build Self Contained
+# -------------------------------------------
+
+Write-Host "Starting Self Contained Build Process..."
+Start-Sleep -Seconds 1
+
+dotnet publish -c Release -r win-x64 --self-contained --nologo --output "./bin/self-contained"
+
+# Check For Errors
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Host "An Error Occurred While Building" -ForegroundColor Red
+    exit
+}
+
+Write-Host "Finished Self Contained Build Process..." -ForegroundColor Green
 Start-Sleep -Seconds 1
 
 # -------------------------------------------
@@ -80,7 +102,7 @@ Start-Sleep -Seconds 1
 Write-Host "Starting Installer Process..."
 Start-Sleep -Seconds 1
 
-iscc /Qp /O"$output" /F"beatspy-winx64-setup" "../Scripts/beatspy-installer.iss" /DAppVersion=$version
+iscc /Qp /O"$output" /F"BeatSpy_Installer_x64" "../Scripts/beatspy-installer.iss" /DAppVersion=$version
 
 # Check For Errors
 if ($LASTEXITCODE -ne 0)
@@ -95,12 +117,12 @@ Write-Host "Finished Installer" -ForegroundColor Green
 # Zipping
 # -------------------------------------------
 
-Write-Host "Starting Zip Process..."
+Write-Host "Starting Self Contained Zip Process..."
 Start-Sleep -Seconds 1
 
-$frameworkdependant = Join-Path -Path $output -ChildPath "beatspy-winx64-framework-dependant.zip"
+$selfcontained = Join-Path -Path $output -ChildPath "BeatSpy_SelfContained_x64.zip"
 
-7z a -bsp2 -r $frameworkdependant "./bin/framework-dependant/*"
+7z a -bsp2 -r $selfcontained "./bin/self-contained/*"
 
 # Check For Errors
 if ($LASTEXITCODE -ne 0)
@@ -109,9 +131,27 @@ if ($LASTEXITCODE -ne 0)
     exit
 }
 
-Write-Host "Finished Zipping" -ForegroundColor Green
-Start-Sleep -Seconds 2
+Write-Host "Finished Self Contained Zip Process..." -ForegroundColor Green
+Start-Sleep -Seconds 1
+
+Write-Host "Starting Framework Dependent Zip Process..."
+Start-Sleep -Seconds 1
+
+$framework = Join-Path -Path $output -ChildPath "BeatSpy_FrameworkDependent_x64.zip"
+
+7z a -bsp2 -r $framework "./bin/framework-dependant/*"
+
+# Check For Errors
+if ($LASTEXITCODE -ne 0)
+{
+    Write-Host "An Error Occurred While Zipping" -ForegroundColor Red
+    exit
+}
+
+Write-Host "Finished Framework Dependent Zip Process..." -ForegroundColor Green
+Start-Sleep -Seconds 1
 
 Write-Host "Publish Completed!" -ForegroundColor Green
+Start-Sleep -Seconds 2
 
 Set-Location "../"

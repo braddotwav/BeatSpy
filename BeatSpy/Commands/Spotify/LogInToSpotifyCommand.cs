@@ -1,21 +1,15 @@
-﻿using BeatSpy.Commands.Base;
-using BeatSpy.DataTypes.Enums;
+﻿using System;
 using BeatSpy.Services;
-using System;
+using BeatSpy.Commands.Base;
 using System.Threading.Tasks;
+using BeatSpy.DataTypes.Enums;
 
 namespace BeatSpy.Commands;
 
-internal class LogInToSpotifyCommand : AsyncCommandBase
+internal sealed class LogInToSpotifyCommand(ISpotifyService spotifyService, IMessageDisplayService messageDisplayService) : AsyncCommandBase
 {
-    private readonly IMessageDisplayService messageDisplayService;
-    private readonly ISpotifyService spotifyService;
-
-    public LogInToSpotifyCommand(ISpotifyService spotifyService, IMessageDisplayService messageDisplayService)
-    {
-        this.spotifyService = spotifyService;
-        this.messageDisplayService = messageDisplayService;
-    }
+    private readonly IMessageDisplayService messageDisplayService = messageDisplayService;
+    private readonly ISpotifyService spotifyService = spotifyService;
 
     protected override async Task ExcuteAsync(object? parameter)
     {

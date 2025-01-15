@@ -1,4 +1,4 @@
-BEATSPY LICENSE:
+BEATSPY LICENSE (https://github.com/braddotwav/BeatSpy/blob/master/LICENSE.txt):
 Copyright 2024 braddotwav
 
 Permission is hereby granted, free of charge, to any person
@@ -25,7 +25,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
-NLOG LICENSE:
+NLOG LICENSE (https://github.com/NLog/NLog/blob/dev/LICENSE.txt):
 Copyright (c) 2004-2021 Jaroslaw Kowalski <jaak@jkowalski.net>, Kim Christensen, Julian Verdurmen
 
 All rights reserved.
@@ -59,7 +59,7 @@ THE POSSIBILITY OF SUCH DAMAGE.
 
 ---
 
-SPOTIFYAPI-NET LICENSE:
+SPOTIFYAPI-NET LICENSE (https://github.com/JohnnyCrazy/SpotifyAPI-NET/blob/master/LICENSE):
 Copyright 2020 Jonas Dellinger
 
 Permission is hereby granted, free of charge, to any person
@@ -86,6 +86,7 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
+SVGIMAGE LICENSE (https://github.com/dotnetprojects/SVGImage/blob/master/LICENSE):
 The MIT License (MIT)
 
 Copyright (c) 2023 PropertyTools and DotNetProjects contributors
@@ -111,11 +112,10 @@ SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ---
 
-BOOTSTRAP LICENSE:
+BOXICONS LICENSE (https://github.com/atisawd/boxicons/blob/master/LICENSE):
 The MIT License (MIT)
 
-Copyright (c) 2011-2018 Twitter, Inc.
-Copyright (c) 2011-2018 The Bootstrap Authors
+Copyright (c) 2015-2021 Aniket Suvarna
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -124,20 +124,20 @@ to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 copies of the Software, and to permit persons to whom the Software is
 furnished to do so, subject to the following conditions:
 
-The above copyright notice and this permission notice shall be included in
-all copies or substantial portions of the Software.
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 ---
 
-INNO SETUP LICENSE:
+INNO SETUP LICENSE (https://jrsoftware.org/files/is/license.txt):
 Except where otherwise noted, all of the documentation and
 software included in the Inno Setup
 package is copyrighted by Jordan Russell.
@@ -184,6 +184,7 @@ https://jrsoftware.org/
 
 ---
 
+INTER FONT LICENSE (https://github.com/rsms/inter/blob/master/LICENSE.txt):
 Copyright 2020 The Inter Project Authors (https://github.com/rsms/inter)
 
 This Font Software is licensed under the SIL Open Font License, Version 1.1.

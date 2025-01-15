@@ -19,15 +19,19 @@
     <None Remove="Assets\Images\beatspy-icons-heart.png" />
     <None Remove="Assets\Images\beatspy-icons-note.png" />
     <None Remove="Assets\Images\beatspy-icons-volume.png" />
-    <None Remove="Assets\SVG\chat-right-text.svg" />
+    <None Remove="Assets\SVG\alert.svg" />
     <None Remove="Assets\SVG\close.svg" />
-    <None Remove="Assets\SVG\dots-menu.svg" />
-    <None Remove="Assets\SVG\info.svg" />
-    <None Remove="Assets\SVG\minimize.svg" />
+    <None Remove="Assets\SVG\menu.svg" />
+    <None Remove="Assets\SVG\minus.svg" />
     <None Remove="Assets\SVG\spotify.svg" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\ICO\icon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\SVG\alert.svg" />
+    <Resource Include="Assets\SVG\menu.svg" />
+    <Resource Include="Assets\SVG\minus.svg" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="DotNetProjects.SVGImage" Version="5.2.1" />
@@ -60,15 +64,6 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\SVG\close.svg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\SVG\dots-menu.svg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\SVG\info.svg">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
-    </Resource>
-    <Resource Include="Assets\SVG\minimize.svg">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </Resource>
     <Resource Include="Assets\SVG\spotify.svg">

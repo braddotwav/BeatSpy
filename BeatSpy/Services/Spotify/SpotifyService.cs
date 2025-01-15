@@ -4,22 +4,17 @@ using BeatSpy.Helpers;
 using System.Threading.Tasks;
 using BeatSpy.DataTypes.Enums;
 
-namespace BeatSpy.Services;
+namespace BeatSpy.Services.Spotify;
 
-internal sealed class SpotifyService : ISpotifyService
+internal sealed class SpotifyService(ISpotifyAuthenticationService authenticationService) : ISpotifyService
 {
-    private readonly ISpotifyAuthenticationService authenticationService;
+    private readonly ISpotifyAuthenticationService authenticationService = authenticationService;
 
     private SpotifyClient? client;
 
     public bool IsLoggedIn => client != null;
 
     public event Action<ConnectionType>? OnServiceStateChanged;
-
-    public SpotifyService(ISpotifyAuthenticationService authenticationService)
-    {
-        this.authenticationService = authenticationService;
-    }
 
     public async Task LoginAsync(LoginType loginType)
     {
@@ -38,10 +33,10 @@ internal sealed class SpotifyService : ISpotifyService
     public void LogOut()
     {
         client = null;
-        OnServiceStateChanged?.Invoke(client == null ? ConnectionType.Disconnected : ConnectionType.Connected);
+        OnServiceStateChanged?.Invoke(client != null ? ConnectionType.Connected : ConnectionType.Disconnected);
         authenticationService.LogOut();
     }
-    
+
     public async Task<FullTrack> GetTrackAsync(string searchQuery)
     {
         SearchResponse response = await client!.Search.Item(new SearchRequest(SearchRequest.Types.Track, searchQuery!));
@@ -60,10 +55,7 @@ internal sealed class SpotifyService : ISpotifyService
     {
         FullPlaylist playlist = await client!.Playlists.Get(playlistId);
 
-        if (playlist.Tracks == null)
-            throw new NullReferenceException();
-
-        FullTrack track = (FullTrack)playlist.Tracks.Items![RandomHelper.Range(0, playlist.Tracks.Items.Count)].Track;
+        FullTrack track = (FullTrack)playlist.Tracks!.Items![RandomHelper.Range(0, playlist.Tracks.Items.Count)].Track;
         return track;
     }
 }

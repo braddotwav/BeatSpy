@@ -9,10 +9,7 @@ internal abstract class AsyncCommandBase : ICommand
     protected bool isExecuting;
     public bool IsExecuting
     {
-        get
-        {
-            return isExecuting;
-        }
+        get { return isExecuting; }
         set
         {
             isExecuting = value;

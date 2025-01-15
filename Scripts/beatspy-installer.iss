@@ -17,6 +17,7 @@ VersionInfoVersion={#AppVersion}
 DefaultDirName={commonpf64}\{#AppName}
 DisableProgramGroupPage=auto
 SolidCompression=yes
+PrivilegesRequired=none
 WizardStyle=modern
 WizardSmallImageFile=../BeatSpy/Assets/BMP/icon.bmp
 AllowUNCPath=no
