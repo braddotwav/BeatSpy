@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace BeatSpy.ViewModels.Base;
+namespace BeatSpy.ViewModels;
 
 internal class ViewModelBase : INotifyPropertyChanged, IDisposable
 {

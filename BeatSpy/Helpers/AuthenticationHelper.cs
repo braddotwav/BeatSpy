@@ -11,42 +11,29 @@ namespace BeatSpy.Helpers;
 public static class AuthenticationHelper
 {
     /// <summary>
-    /// Gets the content from the authentication file
+    /// Retrieves and deserializes the Spotify authentication token from local storage.
     /// </summary>
     /// <returns></returns>
     /// <exception cref="FileNotFoundException"></exception>
-    public static string GetAuthenticationContent()
+    /// <exception cref="InvalidDataException"></exception>
+    public static UserToken? GetToken()
     {
         string authPath = DataHelper.GetFullFilePath(FileConstants.AUTH_FILE);
 
         if (!File.Exists(authPath))
             throw new FileNotFoundException(LogConstants.AUTH_FILE_NOTFOUND);
 
-        return File.ReadAllText(authPath);
-    }
+        string content = File.ReadAllText(authPath);
 
-    /// <summary>
-    /// Deserializes the provided authentication content
-    /// </summary>
-    /// <param name="authContent">Authentication content</param>
-    /// <returns></returns>
-    public static SpotifyToken? DeserializeTokenContent(string content)
-    {
-        try
-        {
-            return JsonSerializer.Deserialize<SpotifyToken>(content);
-        }
-        catch
-        {
-            throw new InvalidDataException(LogConstants.AUTH_FILE_CONTENTS_ERROR);
-        }
+        var token = JsonSerializer.Deserialize<UserToken>(content);
+        return token ?? throw new InvalidDataException(LogConstants.AUTH_FILE_CONTENTS_ERROR);
     }
 
     /// <summary>
     /// Serializes the provided authentication token and writes to data path
     /// </summary>
     /// <param name="authToken">Authentication object</param>
-    public static void SerializeTokenContent(SpotifyToken token)
+    public static void SerializeTokenContent(UserToken token)
     {
         string serializedToken = JsonSerializer.Serialize(token, new JsonSerializerOptions { WriteIndented = true })!;
         File.WriteAllText(DataHelper.GetFullFilePath(FileConstants.AUTH_FILE), serializedToken);
