@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace BeatSpy.Commands.Base;
+namespace BeatSpy.Commands;
 
 internal abstract class AsyncCommandBase : ICommand
 {
