@@ -16,7 +16,7 @@ public static class AuthenticationHelper
     /// <returns></returns>
     /// <exception cref="FileNotFoundException"></exception>
     /// <exception cref="InvalidDataException"></exception>
-    public static UserToken? GetToken()
+    public static UserToken GetToken()
     {
         string authPath = DataHelper.GetFullFilePath(FileConstants.AUTH_FILE);
 
@@ -33,9 +33,13 @@ public static class AuthenticationHelper
     /// Serializes the provided authentication token and writes to data path
     /// </summary>
     /// <param name="authToken">Authentication object</param>
-    public static void SerializeTokenContent(UserToken token)
+    public static void SerializeAndStoreToken(string token)
     {
-        string serializedToken = JsonSerializer.Serialize(token, new JsonSerializerOptions { WriteIndented = true })!;
+        string serializedToken = JsonSerializer.Serialize(new UserToken() 
+        { 
+            Token = token
+        });
+
         File.WriteAllText(DataHelper.GetFullFilePath(FileConstants.AUTH_FILE), serializedToken);
     }
 
