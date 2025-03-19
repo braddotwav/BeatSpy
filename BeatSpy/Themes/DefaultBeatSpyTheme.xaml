@@ -16,7 +16,7 @@
     <SolidColorBrush x:Key="clr-primary-100" Color="#e7e7e7" />
 
     <!--  Additional Colours  -->
-    <SolidColorBrush x:Key="clr-warning" Color="#e71d36" />
+    <SolidColorBrush x:Key="clr-warning" Color="#D00000" />
     <SolidColorBrush x:Key="clr-spotify" Color="#1ed760" />
 
     <!--  Text Sizes  -->
@@ -165,7 +165,6 @@
 
     <Style x:Key="Search" TargetType="TextBox">
         <Setter Property="OverridesDefaultStyle" Value="True" />
-        <Setter Property="Cursor" Value="IBeam" />
         <Setter Property="CaretBrush" Value="{StaticResource clr-primary-100}" />
         <Setter Property="FontFamily" Value="{StaticResource font-normal}" />
         <Setter Property="FontSize" Value="{StaticResource text-sm}" />
@@ -214,14 +213,14 @@
 
                             <TextBlock
                                 Name="SearchText"
-                                Margin="3,0"
+                                Margin="2,0"
                                 HorizontalAlignment="Left"
                                 VerticalAlignment="Center"
                                 FontFamily="{StaticResource font-normal}"
                                 FontSize="{StaticResource text-sm}"
-                                Foreground="{StaticResource clr-primary-800}"
+                                Foreground="{StaticResource clr-primary-700}"
                                 IsHitTestVisible="False"
-                                Text="Search">
+                                Text="What song do you want to explore today?">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock">
                                         <Style.Triggers>
