@@ -6,6 +6,6 @@ namespace BeatSpy.Services;
 interface INotificationSerivce
 {
     public event Action<Notification> OnNotificationRecived;
-    public void ShowNotification(NotificationType type, string message);
+    public void ShowNotification(Notification notification);
     public void ClearNotification();
 }
