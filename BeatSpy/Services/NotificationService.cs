@@ -12,12 +12,8 @@ internal class NotificationService : INotificationSerivce
         OnNotificationRecived?.Invoke(Notification.Empty);
     }
 
-    public void ShowNotification(NotificationType type, string message)
+    public void ShowNotification(Notification notification)
     {
-        OnNotificationRecived?.Invoke(new Notification()
-        {
-            Type = type,
-            Message = message
-        });
+        OnNotificationRecived?.Invoke(notification);
     }
 }
