@@ -84,5 +84,12 @@ internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
     {
         spotify.OnServiceStateChanged -= OnSpotifyServiceStateChanged;
         messageViewModel.Dispose();
+    private void ExecuteRemoveFocusFromElement(object parameter)
+    {
+        if (parameter is DependencyObject depObj)
+        {
+            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(depObj), null);
+            Keyboard.ClearFocus();
+        }
     }
 }
