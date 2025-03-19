@@ -153,16 +153,6 @@
         </Setter>
     </Style>
 
-    <Style x:Key="MessageHandler" TargetType="Border">
-        <Setter Property="Background" Value="Transparent" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="Background" Value="{StaticResource clr-primary-900}" />
-                <Setter Property="Cursor" Value="Hand" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <Style x:Key="Search" TargetType="TextBox">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="CaretBrush" Value="{StaticResource clr-primary-100}" />
