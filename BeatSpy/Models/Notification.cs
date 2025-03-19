@@ -1,6 +1,6 @@
 ﻿namespace BeatSpy.Models;
 
-public class Notification()
+public class Notification
 {
     public NotificationType Type { get; set; }
     public string Message { get; set; } = string.Empty;
