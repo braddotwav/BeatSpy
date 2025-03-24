@@ -183,18 +183,9 @@
                     <Border
                         Name="SearchBorder"
                         Background="Transparent"
-                        BorderThickness="2"
+                        BorderBrush="{StaticResource clr-primary-800}"
+                        BorderThickness="1"
                         CornerRadius="12">
-                        <Border.Style>
-                            <Style TargetType="Border">
-                                <Style.Triggers>
-                                    <DataTrigger Binding="{Binding IsFocused, RelativeSource={RelativeSource TemplatedParent}}" Value="true">
-                                        <Setter Property="BorderBrush" Value="{StaticResource clr-primary-700}" />
-                                    </DataTrigger>
-                                </Style.Triggers>
-                                <Setter Property="BorderBrush" Value="{StaticResource clr-primary-800}" />
-                            </Style>
-                        </Border.Style>
                         <Grid Margin="14,0">
                             <ScrollViewer
                                 x:Name="PART_ContentHost"
@@ -209,7 +200,7 @@
                                 VerticalAlignment="Center"
                                 FontFamily="{StaticResource font-normal}"
                                 FontSize="{StaticResource text-sm}"
-                                Foreground="{StaticResource clr-primary-700}"
+                                Foreground="{StaticResource clr-primary-600}"
                                 IsHitTestVisible="False"
                                 Text="What song do you want to explore today?">
                                 <TextBlock.Style>
@@ -230,7 +221,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource clr-primary-700}" />
+                <Setter Property="Foreground" Value="{StaticResource clr-primary-600}" />
             </Trigger>
         </Style.Triggers>
     </Style>
