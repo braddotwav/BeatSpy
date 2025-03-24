@@ -48,7 +48,7 @@
                 Height="20"
                 Margin="0,0,8,0"
                 d:Source="/BeatSpy;component/Assets/SVG/notification-info.svg"
-                OverrideColor="#868686"
+                OverrideColor="#9e9e9e"
                 RenderTransformOrigin=".5,.5">
                 <svg1:SVGImage.RenderTransform>
                     <RotateTransform x:Name="IconRotation" Angle="0" />
@@ -87,7 +87,7 @@
                 d:Text="You received a notification"
                 FontFamily="{StaticResource font-normal}"
                 FontSize="{StaticResource text-sm}"
-                Foreground="{StaticResource clr-primary-500}"
+                Foreground="{StaticResource clr-primary-400}"
                 Text="{Binding CurrentNotification.Message}"
                 TextTrimming="CharacterEllipsis" />
 
@@ -97,7 +97,7 @@
                 d:Text="Dismiss"
                 FontFamily="{StaticResource font-medium}"
                 FontSize="{StaticResource text-sm}"
-                Foreground="{StaticResource clr-primary-500}">
+                Foreground="{StaticResource clr-primary-400}">
                 <TextBlock.Style>
                     <Style TargetType="TextBlock">
                         <Setter Property="Text" Value="Dismiss" />
