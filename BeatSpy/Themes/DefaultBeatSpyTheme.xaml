@@ -230,7 +230,7 @@
         </Setter>
         <Style.Triggers>
             <Trigger Property="IsFocused" Value="False">
-                <Setter Property="Foreground" Value="{StaticResource clr-primary-800}" />
+                <Setter Property="Foreground" Value="{StaticResource clr-primary-700}" />
             </Trigger>
         </Style.Triggers>
     </Style>
