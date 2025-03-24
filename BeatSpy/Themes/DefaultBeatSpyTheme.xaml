@@ -183,7 +183,7 @@
                     <Border
                         Name="SearchBorder"
                         Background="Transparent"
-                        BorderThickness="1.5"
+                        BorderThickness="2"
                         CornerRadius="12">
                         <Border.Style>
                             <Style TargetType="Border">
