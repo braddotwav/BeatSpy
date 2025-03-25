@@ -67,6 +67,7 @@
                             <MenuItem
                                 Command="{Binding ContextMenuViewModel.LoginSpotify}"
                                 Header="Log In"
+                                IsEnabled="{Binding CanLogIn}"
                                 Style="{StaticResource MenuItemStyle}"
                                 Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
                             <MenuItem
