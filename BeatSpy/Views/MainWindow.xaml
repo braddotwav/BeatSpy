@@ -104,7 +104,7 @@
                 </Button>
                 <Button
                     Name="QuitApplication"
-                    Click="QuitApplication_Click"
+                    Click="OnQuitApplicationClicked"
                     Style="{StaticResource WindowCloseButton}">
                     <svg1:SVGImage
                         Width="12"
