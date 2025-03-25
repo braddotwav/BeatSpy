@@ -30,10 +30,10 @@
     <sys:Double x:Key="text-5xl">48</sys:Double>
 
     <!--  Font Familys  -->
-    <FontFamily x:Key="font-normal">/Assets/Fonts/#Inter Regular</FontFamily>
-    <FontFamily x:Key="font-medium">/Assets/Fonts/#Inter Medium</FontFamily>
-    <FontFamily x:Key="font-semibold">/Assets/Fonts/#Inter SemiBold</FontFamily>
-    <FontFamily x:Key="font-bold">/Assets/Fonts/#Inter Bold</FontFamily>
+    <FontFamily x:Key="font-normal">/Resources/Fonts/#Inter Regular</FontFamily>
+    <FontFamily x:Key="font-medium">/Resources/Fonts/#Inter Medium</FontFamily>
+    <FontFamily x:Key="font-semibold">/Resources/Fonts/#Inter SemiBold</FontFamily>
+    <FontFamily x:Key="font-bold">/Resources/Fonts/#Inter Bold</FontFamily>
 
     <Style x:Key="BeatInfomationText" TargetType="TextBlock">
         <Setter Property="HorizontalAlignment" Value="Center" />
