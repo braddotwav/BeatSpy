@@ -308,6 +308,6 @@
         </Grid>
 
         <!--  Notification Banner  -->
-        <controls:NotificationBanner Grid.Row="4" DataContext="{Binding NotificationBannerViewModel}" />
+        <controls:NotificationBannerControl Grid.Row="4" DataContext="{Binding NotificationBannerViewModel}" />
     </Grid>
 </Window>

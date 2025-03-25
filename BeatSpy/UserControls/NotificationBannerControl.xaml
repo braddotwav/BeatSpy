@@ -1,5 +1,5 @@
 ﻿<UserControl
-    x:Class="BeatSpy.UserControls.NotificationBanner"
+    x:Class="BeatSpy.UserControls.NotificationBannerControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:converters="clr-namespace:BeatSpy.Converters"
