@@ -65,13 +65,13 @@
                     <Button.ContextMenu>
                         <ContextMenu Loaded="OnContextMenuLoaded" Style="{StaticResource ContextMenuStyle}">
                             <MenuItem
-                                Command="{Binding ContextMenuViewModel.LoginSpotify}"
+                                Command="{Binding LogInCommand}"
                                 Header="Log In"
                                 IsEnabled="{Binding CanLogIn}"
                                 Style="{StaticResource MenuItemStyle}"
                                 Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
                             <MenuItem
-                                Command="{Binding ContextMenuViewModel.LogOutSpotify}"
+                                Command="{Binding LogOutCommand}"
                                 Header="Log Out"
                                 Style="{StaticResource MenuItemStyle}"
                                 Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Normal}" />
@@ -137,12 +137,8 @@
                 <TextBox.InputBindings>
                     <KeyBinding
                         Key="Return"
-                        Command="{Binding SearchTrackCommand}"
-                        CommandParameter="{Binding ElementName=SearchQuery}" />
-                    <KeyBinding
-                        Key="Esc"
-                        Command="{Binding RemoveFocusCommand}"
-                        CommandParameter="{Binding ElementName=SearchQuery}" />
+                        Command="{Binding SearchCommand}"
+                        CommandParameter="{Binding ElementName=SearchQuery, Path=Text}" />
                 </TextBox.InputBindings>
             </TextBox>
         </Grid>
