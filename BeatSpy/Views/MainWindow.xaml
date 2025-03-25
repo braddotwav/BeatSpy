@@ -310,32 +310,7 @@
             </StackPanel>
         </Grid>
 
-        <!--  Message Handler  -->
-        <Grid Grid.Row="4">
-            <Border
-                DataContext="{Binding MessageHandler}"
-                Style="{StaticResource MessageHandler}"
-                Visibility="{Binding IsMessageEmpty, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}">
-                <Border.InputBindings>
-                    <MouseBinding Command="{Binding DismissErrorCommand}" Gesture="LeftClick" />
-                </Border.InputBindings>
-                <DockPanel Margin="24,0,24,0">
-                    <svg1:SVGImage
-                        Width="20"
-                        Height="20"
-                        Margin="0,0,8,0"
-                        VerticalContentAlignment="Center"
-                        OverrideColor="#868686"
-                        Source="/BeatSpy;component/Assets/SVG/alert.svg" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontFamily="{StaticResource font-normal}"
-                        FontSize="{StaticResource text-sm}"
-                        Foreground="{StaticResource clr-primary-500}"
-                        Text="{Binding Message}" />
-                </DockPanel>
-            </Border>
-        </Grid>
-
+        <!--  Notification Banner  -->
+        <controls:NotificationBanner Grid.Row="4" DataContext="{Binding NotificationBannerViewModel}" />
     </Grid>
 </Window>
