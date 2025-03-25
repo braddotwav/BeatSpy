@@ -37,6 +37,7 @@ namespace BeatSpy.UserControls
                 if (SearchCommand == null || !SearchCommand.CanExecute(Search.Text)) return;
 
                 SearchCommand.Execute(Search.Text);
+                Search.ScrollToHome();
                 FocusManager.SetFocusedElement(FocusManager.GetFocusScope(Search), null);
                 Keyboard.ClearFocus();
             }
