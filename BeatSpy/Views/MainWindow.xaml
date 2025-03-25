@@ -180,7 +180,7 @@
 
                         <StackPanel VerticalAlignment="Center" ClipToBounds="True">
                             <!--  Track Title Marquee  -->
-                            <controls:MarqueeUserControl
+                            <controls:MarqueeControl
                                 FontFamily="{StaticResource font-bold}"
                                 FontSize="{StaticResource text-4xl}"
                                 Foreground="{StaticResource clr-primary-100}"

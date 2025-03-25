@@ -10,13 +10,13 @@ namespace BeatSpy.UserControls
     /// <summary>
     /// Interaction logic for MarqueeUserControl.xaml
     /// </summary>
-    public partial class MarqueeUserControl : UserControl
+    public partial class MarqueeControl : UserControl
     {
-        public static readonly DependencyProperty MarqueePaddingProperty = DependencyProperty.Register("MarqueePadding", typeof(double), typeof(MarqueeUserControl), new PropertyMetadata(10.0));
+        public static readonly DependencyProperty MarqueePaddingProperty = DependencyProperty.Register("MarqueePadding", typeof(double), typeof(MarqueeControl), new PropertyMetadata(10.0));
 
-        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(MarqueeUserControl), new PropertyMetadata(string.Empty));
+        public static readonly DependencyProperty TextProperty = DependencyProperty.Register("Text", typeof(string), typeof(MarqueeControl), new PropertyMetadata(string.Empty));
 
-        public static readonly DependencyProperty ScrollSpeedProperty = DependencyProperty.Register("ScrollSpeed", typeof(double), typeof(MarqueeUserControl), new PropertyMetadata(100.0));
+        public static readonly DependencyProperty ScrollSpeedProperty = DependencyProperty.Register("ScrollSpeed", typeof(double), typeof(MarqueeControl), new PropertyMetadata(100.0));
 
         public string Text
         {
@@ -42,7 +42,7 @@ namespace BeatSpy.UserControls
         private readonly DoubleAnimation marqueeAnimation;
         private readonly TranslateTransform translateTransform;
 
-        public MarqueeUserControl()
+        public MarqueeControl()
         {
             InitializeComponent();
 
