@@ -49,7 +49,6 @@ internal class MainWindowViewModel : ViewModelBase
     public ICommand LogOutCommand { get; }
     public ICommand SearchCommand { get; }
     public ICommand OpenInBrowserCommand { get; }
-    public ICommand RemoveFocusFromElement { get; }
     #endregion
 
     private readonly ISpotifyService spotifyService;
@@ -70,7 +69,6 @@ internal class MainWindowViewModel : ViewModelBase
         LogOutCommand = new DelegateCommand(ExecuteLogOutCommand, (_) => IsLoggedIn);
         SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
         OpenInBrowserCommand = new DelegateCommand(ExecuteOpenInBrowserCommand, (_) => true);
-        RemoveFocusFromElement = new DelegateCommand(ExecuteRemoveFocusFromElement, (_) => true);
     }
 
     private async void SpotifyService_OnConnectionStateChanged(bool success)
@@ -146,15 +144,6 @@ internal class MainWindowViewModel : ViewModelBase
         {
             notificationSerivce.ShowNotification(NotificationFactory.ErrorNotification(
                 "Something went wrong trying to open the browser"));
-        }
-    }
-
-    private void ExecuteRemoveFocusFromElement(object parameter)
-    {
-        if (parameter is DependencyObject depObj)
-        {
-            FocusManager.SetFocusedElement(FocusManager.GetFocusScope(depObj), null);
-            Keyboard.ClearFocus();
         }
     }
 
