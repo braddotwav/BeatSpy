@@ -47,7 +47,7 @@
                 Width="20"
                 Height="20"
                 Margin="0,0,8,0"
-                d:Source="/BeatSpy;component/Assets/SVG/notification-info.svg"
+                d:Source="/BeatSpy;component/Resources/Vectors/notification-info.svg"
                 OverrideColor="#9e9e9e"
                 RenderTransformOrigin=".5,.5">
                 <svg1:SVGImage.RenderTransform>
@@ -58,17 +58,17 @@
                         <Style.Triggers>
                             <!--  INFO  -->
                             <DataTrigger Binding="{Binding CurrentNotification.Type}" Value="INFO">
-                                <Setter Property="Source" Value="/BeatSpy;component/Assets/SVG/notification-info.svg" />
+                                <Setter Property="Source" Value="/BeatSpy;component/Resources/Vectors/notification-info.svg" />
                             </DataTrigger>
 
                             <!--  ERROR  -->
                             <DataTrigger Binding="{Binding CurrentNotification.Type}" Value="ERROR">
-                                <Setter Property="Source" Value="/BeatSpy;component/Assets/SVG/notification-error.svg" />
+                                <Setter Property="Source" Value="/BeatSpy;component/Resources/Vectors/notification-error.svg" />
                             </DataTrigger>
 
                             <!--  PROGRESS  -->
                             <DataTrigger Binding="{Binding CurrentNotification.Type}" Value="PROGRESS">
-                                <Setter Property="Source" Value="/BeatSpy;component/Assets/SVG/notification-progress.svg" />
+                                <Setter Property="Source" Value="/BeatSpy;component/Resources/Vectors/notification-progress.svg" />
                                 <DataTrigger.EnterActions>
                                     <BeginStoryboard x:Name="RotationStoryboard" Storyboard="{StaticResource RotateAnimation}" />
                                 </DataTrigger.EnterActions>

@@ -84,7 +84,7 @@
                         Height="20"
                         VerticalContentAlignment="Center"
                         OverrideColor="#e7e7e7"
-                        Source="/BeatSpy;component/Assets/SVG/menu.svg" />
+                        Source="/BeatSpy;component/Resources/Vectors/menu.svg" />
                 </Button>
             </StackPanel>
 
@@ -101,7 +101,7 @@
                         Height="14"
                         VerticalContentAlignment="Center"
                         OverrideColor="#e7e7e7"
-                        Source="/BeatSpy;component/Assets/SVG/minus.svg" />
+                        Source="/BeatSpy;component/Resources/Vectors/minus.svg" />
                 </Button>
                 <Button
                     Command="{Binding ExitApplicationCommand}"
@@ -112,7 +112,7 @@
                         Height="12"
                         VerticalContentAlignment="Center"
                         OverrideColor="#e7e7e7"
-                        Source="/BeatSpy;component/Assets/SVG/close.svg" />
+                        Source="/BeatSpy;component/Resources/Vectors/close.svg" />
                 </Button>
             </StackPanel>
 
@@ -215,7 +215,7 @@
                                 Height="32"
                                 VerticalContentAlignment="Center"
                                 OverrideColor="#1ed760"
-                                Source="/BeatSpy;component/Assets/SVG/spotify.svg" />
+                                Source="/BeatSpy;component/Resources/Vectors/spotify.svg" />
                         </Button>
                     </Grid>
                 </Grid>
@@ -239,7 +239,7 @@
                     VerticalAlignment="Top">
                     <Border.Background>
                         <ImageBrush
-                            ImageSource="/Assets/Images/beatspy-icons-volume.png"
+                            ImageSource="/Resources/Images/volume.png"
                             Opacity="1"
                             Stretch="UniformToFill">
                             <ImageBrush.RelativeTransform>
@@ -257,7 +257,7 @@
                     VerticalAlignment="Top">
                     <Border.Background>
                         <ImageBrush
-                            ImageSource="/Assets/Images/beatspy-icons-heart.png"
+                            ImageSource="/BeatSpy;component/Resources/Images/heart.png"
                             Opacity="1"
                             Stretch="UniformToFill">
                             <ImageBrush.RelativeTransform>
@@ -279,7 +279,7 @@
                     VerticalAlignment="Top">
                     <Border.Background>
                         <ImageBrush
-                            ImageSource="/Assets/Images/beatspy-icons-clock.png"
+                            ImageSource="/BeatSpy;component/Resources/Images/clock.png"
                             Opacity="1"
                             Stretch="UniformToFill">
                             <ImageBrush.RelativeTransform>
@@ -297,7 +297,7 @@
                     VerticalAlignment="Top">
                     <Border.Background>
                         <ImageBrush
-                            ImageSource="/Assets/Images/beatspy-icons-note.png"
+                            ImageSource="/BeatSpy;component/Resources/Images/note.png"
                             Opacity="1"
                             Stretch="UniformToFill">
                             <ImageBrush.RelativeTransform>
