@@ -128,19 +128,7 @@
                 IsTabStop="False"
                 Style="{StaticResource ApplicationIcon}" />
 
-            <TextBox
-                x:Name="SearchQuery"
-                Width="320"
-                Height="44"
-                IsEnabled="{Binding IsLoggedIn}"
-                Style="{StaticResource Search}">
-                <TextBox.InputBindings>
-                    <KeyBinding
-                        Key="Return"
-                        Command="{Binding SearchCommand}"
-                        CommandParameter="{Binding ElementName=SearchQuery, Path=Text}" />
-                </TextBox.InputBindings>
-            </TextBox>
+            <controls:SearchControl SearchCommand="{Binding SearchCommand}" />
         </Grid>
 
         <!--  DISPLAY: Track  -->
