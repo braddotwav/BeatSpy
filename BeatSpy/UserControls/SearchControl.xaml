@@ -5,89 +5,99 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:local="clr-namespace:BeatSpy.UserControls"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:svg1="https://github.com/dotnetprojects/SVGImage"
     xmlns:viewmodels="clr-namespace:BeatSpy.ViewModels"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
     d:DesignHeight="96"
     d:DesignWidth="576"
     mc:Ignorable="d">
-    <TextBox
-        x:Name="Search"
+
+    <Border
         Width="320"
         Height="48"
-        IsEnabled="{Binding IsLoggedIn}"
-        PreviewKeyDown="OnSearchQueryPreviewKeyDown">
-        <TextBox.Style>
-            <Style TargetType="TextBox">
-                <Setter Property="OverridesDefaultStyle" Value="True" />
-                <Setter Property="CaretBrush" Value="{StaticResource clr-primary-100}" />
-                <Setter Property="FontFamily" Value="{StaticResource font-normal}" />
-                <Setter Property="FontSize" Value="{StaticResource text-sm}" />
-                <Setter Property="Foreground" Value="{StaticResource clr-primary-100}" />
-                <Setter Property="VerticalContentAlignment" Value="Center" />
-                <Setter Property="FocusVisualStyle" Value="{x:Null}" />
-                <Setter Property="Padding" Value="0,0,20,0" />
-                <Setter Property="ContextMenu">
-                    <Setter.Value>
-                        <ContextMenu Style="{StaticResource ContextMenuStyle}">
-                            <MenuItem
-                                Command="Copy"
-                                Header="Copy"
-                                Style="{StaticResource MenuItemStyle}" />
-                            <MenuItem
-                                Command="Paste"
-                                Header="Paste"
-                                Style="{StaticResource MenuItemStyle}" />
-                        </ContextMenu>
-                    </Setter.Value>
-                </Setter>
-                <Setter Property="Template">
-                    <Setter.Value>
-                        <ControlTemplate TargetType="TextBox">
-                            <Border
-                                Name="SearchBorder"
-                                Background="Transparent"
-                                BorderBrush="{StaticResource clr-primary-800}"
-                                BorderThickness="1"
-                                CornerRadius="12">
-                                <Grid Margin="14,0">
-                                    <ScrollViewer
-                                        x:Name="PART_ContentHost"
-                                        Focusable="False"
-                                        HorizontalScrollBarVisibility="Hidden"
-                                        VerticalScrollBarVisibility="Hidden" />
+        Padding="8,0"
+        BorderBrush="{StaticResource clr-primary-800}"
+        BorderThickness="1"
+        CornerRadius="12">
+        <Grid HorizontalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <svg1:SVGImage
+                Width="16"
+                Height="16"
+                Margin="8"
+                IsTabStop="False"
+                OverrideColor="#868686"
+                Source="/BeatSpy;component/Resources/Vectors/search.svg" />
 
-                                    <TextBlock
-                                        Name="SearchText"
-                                        Margin="2,0"
-                                        HorizontalAlignment="Left"
-                                        VerticalAlignment="Center"
-                                        FontFamily="{StaticResource font-normal}"
-                                        FontSize="{StaticResource text-sm}"
-                                        Foreground="{StaticResource clr-primary-600}"
-                                        IsHitTestVisible="False"
-                                        Text="What song do you want to explore today?">
-                                        <TextBlock.Style>
-                                            <Style TargetType="TextBlock">
-                                                <Style.Triggers>
-                                                    <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource TemplatedParent}}" Value="">
-                                                        <Setter Property="Visibility" Value="Visible" />
-                                                    </DataTrigger>
-                                                </Style.Triggers>
-                                                <Setter Property="Visibility" Value="Hidden" />
-                                            </Style>
-                                        </TextBlock.Style>
-                                    </TextBlock>
-                                </Grid>
-                            </Border>
-                        </ControlTemplate>
-                    </Setter.Value>
-                </Setter>
-                <Style.Triggers>
-                    <Trigger Property="IsFocused" Value="False">
-                        <Setter Property="Foreground" Value="{StaticResource clr-primary-600}" />
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-        </TextBox.Style>
-    </TextBox>
+            <TextBox
+                x:Name="Search"
+                Grid.Column="1"
+                Height="48"
+                IsEnabled="{Binding IsLoggedIn}"
+                PreviewKeyDown="OnSearchQueryPreviewKeyDown">
+                <TextBox.Style>
+                    <Style TargetType="TextBox">
+                        <Setter Property="CaretBrush" Value="{StaticResource clr-primary-100}" />
+                        <Setter Property="FontFamily" Value="{StaticResource font-normal}" />
+                        <Setter Property="FontSize" Value="{StaticResource text-sm}" />
+                        <Setter Property="Foreground" Value="{StaticResource clr-primary-100}" />
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="VerticalContentAlignment" Value="Center" />
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="ContextMenu">
+                            <Setter.Value>
+                                <ContextMenu>
+                                    <MenuItem Command="Copy" Header="Copy" />
+                                    <MenuItem Command="Paste" Header="Paste" />
+                                </ContextMenu>
+                            </Setter.Value>
+                        </Setter>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TextBox">
+                                    <Grid VerticalAlignment="Center">
+                                        <ScrollViewer
+                                            x:Name="PART_ContentHost"
+                                            Focusable="False"
+                                            HorizontalScrollBarVisibility="Hidden"
+                                            VerticalScrollBarVisibility="Hidden" />
+
+                                        <!--  PLACEHOLDER TEXT  -->
+                                        <Label
+                                            Padding="2"
+                                            Content="Pick a song to explore!"
+                                            FontFamily="{StaticResource font-normal}"
+                                            FontSize="{StaticResource text-sm}"
+                                            Foreground="{StaticResource clr-primary-500}"
+                                            IsHitTestVisible="False">
+                                            <Label.Style>
+                                                <Style TargetType="Label">
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Path=Text, RelativeSource={RelativeSource Mode=TemplatedParent}}" Value="">
+                                                            <Setter Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                    <Setter Property="Visibility" Value="Hidden" />
+                                                </Style>
+                                            </Label.Style>
+                                        </Label>
+                                    </Grid>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsFocused" Value="False">
+                                <Setter Property="Foreground" Value="{StaticResource clr-primary-500}" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+        </Grid>
+
+    </Border>
+
 </UserControl>
