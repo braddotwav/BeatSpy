@@ -10,6 +10,7 @@
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
     d:DesignHeight="96"
     d:DesignWidth="576"
+    Loaded="OnUserControlLoaded"
     mc:Ignorable="d">
 
     <Border
@@ -67,6 +68,7 @@
 
                                         <!--  PLACEHOLDER TEXT  -->
                                         <Label
+                                            x:Name="SearchPlaceholder"
                                             Padding="2"
                                             Content="Pick a song to explore!"
                                             FontFamily="{StaticResource font-normal}"
