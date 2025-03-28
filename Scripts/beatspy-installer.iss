@@ -19,14 +19,14 @@ DisableProgramGroupPage=auto
 SolidCompression=yes
 PrivilegesRequired=none
 WizardStyle=modern
-WizardSmallImageFile=../BeatSpy/Assets/BMP/icon.bmp
+WizardSmallImageFile=../BeatSpy/Resources/Icon/Icon.bmp
 AllowUNCPath=no
 AllowNetworkDrive=no
 LicenseFile=../LICENSE.txt
 OutputDir=/bin/
 OutputBaseFilename=beatspy_installer_win64
 UninstallDisplayIcon={app}\{#AppExeName}
-SetupIconFile=../BeatSpy/Assets/Ico/icon.ico
+SetupIconFile=../BeatSpy/Resources/Icon/Icon.ico
 UninstallDisplayName={#AppName}
 
 [Files]
