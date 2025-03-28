@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using System;
 using BeatSpy.Models;
 using BeatSpy.Helpers;
 using BeatSpy.Commands;
@@ -103,7 +103,7 @@ internal class MainWindowViewModel : ViewModelBase
         catch
         {
             notificationSerivce.ShowNotification(NotificationFactory.ErrorNotification(
-                $"Something went wrong while authenticating"));
+                "Something went wrong while authenticating"));
         }
 
         CanLogIn = true;
