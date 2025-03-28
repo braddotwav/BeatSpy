@@ -10,10 +10,9 @@
     xmlns:svg1="https://github.com/dotnetprojects/SVGImage"
     xmlns:viewmodels="clr-namespace:BeatSpy.ViewModels"
     Title="BeatSpy"
-    Width="580"
-    Height="616"
+    Width="576"
+    Height="640"
     d:DataContext="{d:DesignInstance Type=viewmodels:MainWindowViewModel}"
-    AllowsTransparency="True"
     Background="{StaticResource clr-primary-1000}"
     ResizeMode="CanMinimize"
     WindowStyle="None"
@@ -31,9 +30,9 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="32" />
             <RowDefinition Height="96" />
-            <RowDefinition Height="192" />
+            <RowDefinition Height="208" />
             <RowDefinition Height="256" />
-            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -50,111 +49,93 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
 
-            <StackPanel
-                Grid.Column="0"
+            <Button
+                Width="60"
                 HorizontalAlignment="Left"
-                Orientation="Horizontal">
-                <Button
-                    x:Name="ContextButton"
-                    Width="60"
-                    Background="Transparent"
-                    Click="OnContextMenuClick"
-                    IsTabStop="False"
-                    Style="{StaticResource WindowContextButton}">
-                    <Button.ContextMenu>
-                        <ContextMenu Loaded="OnContextMenuLoaded" Style="{StaticResource ContextMenuStyle}">
-                            <MenuItem
-                                Command="{Binding ContextMenuViewModel.LoginSpotify}"
-                                Header="Log In"
-                                Style="{StaticResource MenuItemStyle}"
-                                Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
-                            <MenuItem
-                                Command="{Binding ContextMenuViewModel.LogOutSpotify}"
-                                Header="Log Out"
-                                Style="{StaticResource MenuItemStyle}"
-                                Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Normal}" />
-                            <MenuItem
-                                Command="{Binding ExitApplicationCommand}"
-                                Header="Exit"
-                                Style="{StaticResource MenuItemStyle}" />
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                    <svg1:SVGImage
-                        Width="20"
-                        Height="20"
-                        VerticalContentAlignment="Center"
-                        OverrideColor="#e7e7e7"
-                        Source="/BeatSpy;component/Assets/SVG/menu.svg" />
-                </Button>
-            </StackPanel>
+                Click="OnContextMenuClick"
+                Style="{StaticResource WindowButton}"
+                Tag="{StaticResource clr-primary-900}">
+                <Button.ContextMenu>
+                    <ContextMenu Loaded="OnContextMenuLoaded">
+                        <MenuItem
+                            Command="{Binding LogInCommand}"
+                            Header="Log In with Spotify"
+                            IsEnabled="{Binding CanLogIn}"
+                            Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}" />
+                        <MenuItem
+                            Command="{Binding LogOutCommand}"
+                            Header="Log Out"
+                            Visibility="{Binding IsLoggedIn, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Normal}" />
+                    </ContextMenu>
+                </Button.ContextMenu>
+                <svg1:SVGImage
+                    Width="20"
+                    Height="20"
+                    VerticalContentAlignment="Center"
+                    OverrideColor="#e7e7e7"
+                    Source="/BeatSpy;component/Resources/Vectors/menu.svg" />
+            </Button>
 
             <StackPanel
                 Grid.Column="1"
                 HorizontalAlignment="Right"
+                KeyboardNavigation.TabNavigation="None"
                 Orientation="Horizontal">
                 <Button
-                    Command="{Binding MinimizeApplicationCommand}"
-                    IsTabStop="False"
-                    Style="{StaticResource WindowButton}">
+                    Width="50"
+                    Click="OnMinimiseApplicationClicked"
+                    Style="{StaticResource WindowButton}"
+                    Tag="{StaticResource clr-primary-900}">
                     <svg1:SVGImage
                         Width="14"
                         Height="14"
                         VerticalContentAlignment="Center"
                         OverrideColor="#e7e7e7"
-                        Source="/BeatSpy;component/Assets/SVG/minus.svg" />
+                        Source="/BeatSpy;component/Resources/Vectors/minus.svg" />
                 </Button>
+
                 <Button
-                    Command="{Binding ExitApplicationCommand}"
-                    IsTabStop="False"
-                    Style="{StaticResource WindowCloseButton}">
+                    Width="50"
+                    Click="OnQuitApplicationClicked"
+                    Style="{StaticResource WindowButton}"
+                    Tag="{StaticResource clr-warning}">
                     <svg1:SVGImage
                         Width="12"
                         Height="12"
                         VerticalContentAlignment="Center"
                         OverrideColor="#e7e7e7"
-                        Source="/BeatSpy;component/Assets/SVG/close.svg" />
+                        Source="/BeatSpy;component/Resources/Vectors/close.svg" />
                 </Button>
             </StackPanel>
 
         </Grid>
 
         <!--  DISPLAY: Header  -->
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="1" Margin="28,0">
             <Button
-                Grid.Column="0"
-                Margin="32"
+                Height="40"
                 HorizontalAlignment="Left"
                 Command="{Binding OpenInBrowserCommand}"
                 CommandParameter="https://github.com/braddotwav/BeatSpy"
-                IsTabStop="False"
-                Style="{StaticResource ApplicationIcon}" />
+                Style="{StaticResource IconButton}">
+                <svg1:SVGImage
+                    Width="80"
+                    VerticalContentAlignment="Center"
+                    OverrideColor="#e7e7e7"
+                    Source="/BeatSpy;component/Resources/Vectors/beatspy.svg" />
+            </Button>
 
-            <TextBox
-                x:Name="SearchQuery"
-                Width="320"
-                Height="44"
-                Style="{StaticResource Search}">
-                <TextBox.InputBindings>
-                    <KeyBinding
-                        Key="Return"
-                        Command="{Binding SearchTrackCommand}"
-                        CommandParameter="{Binding ElementName=SearchQuery}" />
-                    <KeyBinding
-                        Key="Esc"
-                        Command="{Binding RemoveFocusCommand}"
-                        CommandParameter="{Binding ElementName=SearchQuery}" />
-                </TextBox.InputBindings>
-            </TextBox>
+            <controls:SearchControl SearchCommand="{Binding SearchCommand}" />
         </Grid>
 
         <!--  DISPLAY: Track  -->
-        <Grid Grid.Row="2" Margin="24,0,24,0">
+        <Grid Grid.Row="2" Margin="24,0">
             <Border
                 Width="530"
-                Height="190"
+                Height="192"
                 Padding="25"
                 HorizontalAlignment="Center"
-                VerticalAlignment="Top"
+                VerticalAlignment="Center"
                 Background="{StaticResource clr-primary-900}"
                 CornerRadius="28">
                 <Grid Background="Transparent">
@@ -184,7 +165,8 @@
 
                         <StackPanel VerticalAlignment="Center" ClipToBounds="True">
                             <!--  Track Title Marquee  -->
-                            <controls:MarqueeUserControl
+                            <controls:MarqueeControl
+                                d:Text="Track Title"
                                 FontFamily="{StaticResource font-bold}"
                                 FontSize="{StaticResource text-4xl}"
                                 Foreground="{StaticResource clr-primary-100}"
@@ -193,6 +175,7 @@
                             <!--  Track Artist  -->
                             <TextBlock
                                 x:Name="MarqueeText"
+                                d:Text="Track Artist"
                                 FontFamily="{StaticResource font-bold}"
                                 FontSize="{StaticResource text-2xl}"
                                 Foreground="{StaticResource clr-primary-300}"
@@ -202,20 +185,20 @@
 
                         <!--  Open With Spotify  -->
                         <Button
-                            Width="32"
-                            Margin="-6"
+                            Margin="-12"
                             HorizontalAlignment="Right"
                             VerticalAlignment="Bottom"
                             Command="{Binding OpenInBrowserCommand}"
                             CommandParameter="{Binding Track.Url}"
-                            Style="{StaticResource SpotifyIcon}"
+                            IsTabStop="True"
+                            Style="{StaticResource IconButton}"
                             Visibility="{Binding IsTrackEmpty, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}">
                             <svg1:SVGImage
                                 Width="32"
                                 Height="32"
                                 VerticalContentAlignment="Center"
                                 OverrideColor="#1ed760"
-                                Source="/BeatSpy;component/Assets/SVG/spotify.svg" />
+                                Source="/BeatSpy;component/Resources/Vectors/spotify.svg" />
                         </Button>
                     </Grid>
                 </Grid>
@@ -223,7 +206,7 @@
         </Grid>
 
         <!--  DISPLAY: Track Features  -->
-        <Grid Grid.Row="3" Margin="24,14,24,14">
+        <Grid Grid.Row="3" Margin="24,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -232,14 +215,14 @@
             <!--  FEATURES LEFT  -->
             <StackPanel Grid.Column="0" VerticalAlignment="Center">
                 <Border
-                    Width="255"
+                    Width="256"
                     Height="112"
                     Margin="0,0,0,10"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top">
                     <Border.Background>
                         <ImageBrush
-                            ImageSource="/Assets/Images/beatspy-icons-volume.png"
+                            ImageSource="/Resources/Images/volume.png"
                             Opacity="1"
                             Stretch="UniformToFill">
                             <ImageBrush.RelativeTransform>
@@ -247,17 +230,17 @@
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Border.Background>
-                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Loudness, Converter={StaticResource LoudnessConverter}}" />
+                    <TextBlock Style="{StaticResource MetricText}" Text="{Binding Track.Loudness, Converter={StaticResource LoudnessConverter}}" />
                 </Border>
                 <Border
-                    Width="255"
+                    Width="256"
                     Height="112"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Left"
                     VerticalAlignment="Top">
                     <Border.Background>
                         <ImageBrush
-                            ImageSource="/Assets/Images/beatspy-icons-heart.png"
+                            ImageSource="/BeatSpy;component/Resources/Images/heart.png"
                             Opacity="1"
                             Stretch="UniformToFill">
                             <ImageBrush.RelativeTransform>
@@ -265,21 +248,21 @@
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Border.Background>
-                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Tempo, Converter={StaticResource TempoConverter}}" />
+                    <TextBlock Style="{StaticResource MetricText}" Text="{Binding Track.Tempo, Converter={StaticResource TempoConverter}}" />
                 </Border>
             </StackPanel>
 
             <!--  FEATURES RIGHT  -->
             <StackPanel Grid.Column="1" VerticalAlignment="Center">
                 <Border
-                    Width="255"
+                    Width="256"
                     Height="112"
                     Margin="0,0,0,10"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top">
                     <Border.Background>
                         <ImageBrush
-                            ImageSource="/Assets/Images/beatspy-icons-clock.png"
+                            ImageSource="/BeatSpy;component/Resources/Images/clock.png"
                             Opacity="1"
                             Stretch="UniformToFill">
                             <ImageBrush.RelativeTransform>
@@ -287,17 +270,17 @@
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Border.Background>
-                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Duration, Converter={StaticResource DurationConverter}}" />
+                    <TextBlock Style="{StaticResource MetricText}" Text="{Binding Track.Duration, Converter={StaticResource DurationConverter}}" />
                 </Border>
                 <Border
-                    Width="255"
+                    Width="256"
                     Height="112"
                     Margin="0,10,0,0"
                     HorizontalAlignment="Right"
                     VerticalAlignment="Top">
                     <Border.Background>
                         <ImageBrush
-                            ImageSource="/Assets/Images/beatspy-icons-note.png"
+                            ImageSource="/BeatSpy;component/Resources/Images/note.png"
                             Opacity="1"
                             Stretch="UniformToFill">
                             <ImageBrush.RelativeTransform>
@@ -305,37 +288,12 @@
                             </ImageBrush.RelativeTransform>
                         </ImageBrush>
                     </Border.Background>
-                    <TextBlock Style="{StaticResource BeatInfomationText}" Text="{Binding Track.Key, Converter={StaticResource KeyConverter}}" />
+                    <TextBlock Style="{StaticResource MetricText}" Text="{Binding Track.Key, Converter={StaticResource KeyConverter}}" />
                 </Border>
             </StackPanel>
         </Grid>
 
-        <!--  Message Handler  -->
-        <Grid Grid.Row="4">
-            <Border
-                DataContext="{Binding MessageHandler}"
-                Style="{StaticResource MessageHandler}"
-                Visibility="{Binding IsMessageEmpty, Converter={StaticResource InvertableBooleanToVisibilityConverter}, ConverterParameter=Inverted}">
-                <Border.InputBindings>
-                    <MouseBinding Command="{Binding DismissErrorCommand}" Gesture="LeftClick" />
-                </Border.InputBindings>
-                <DockPanel Margin="24,0,24,0">
-                    <svg1:SVGImage
-                        Width="20"
-                        Height="20"
-                        Margin="0,0,8,0"
-                        VerticalContentAlignment="Center"
-                        OverrideColor="#868686"
-                        Source="/BeatSpy;component/Assets/SVG/alert.svg" />
-                    <TextBlock
-                        VerticalAlignment="Center"
-                        FontFamily="{StaticResource font-normal}"
-                        FontSize="{StaticResource text-sm}"
-                        Foreground="{StaticResource clr-primary-500}"
-                        Text="{Binding Message}" />
-                </DockPanel>
-            </Border>
-        </Grid>
-
+        <!--  Notification Banner  -->
+        <controls:NotificationBannerControl Grid.Row="4" DataContext="{Binding NotificationBannerViewModel}" />
     </Grid>
 </Window>

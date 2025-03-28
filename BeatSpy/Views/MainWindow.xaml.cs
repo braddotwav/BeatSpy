@@ -1,6 +1,6 @@
 ﻿using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace BeatSpy
 {
@@ -51,6 +51,26 @@ namespace BeatSpy
             {
                 contextMenu.DataContext = DataContext;
             }
+        }
+
+        /// <summary>
+        /// This method is fired when the user clicks the minimise button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnMinimiseApplicationClicked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.MainWindow.WindowState = WindowState.Minimized;
+        }
+
+        /// <summary>
+        /// This method is fired when the user clicks the quit button
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnQuitApplicationClicked(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

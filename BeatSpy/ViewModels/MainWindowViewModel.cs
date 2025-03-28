@@ -1,88 +1,155 @@
-﻿using BeatSpy.Models;
-using SpotifyAPI.Web;
+﻿using System.Windows;
+using BeatSpy.Models;
+using BeatSpy.Helpers;
 using BeatSpy.Commands;
+using System.Threading;
 using BeatSpy.Services;
 using System.Windows.Input;
-using BeatSpy.ViewModels.Base;
-using BeatSpy.DataTypes.Enums;
-using BeatSpy.Commands.Spotify;
-using BeatSpy.DataTypes.Constants;
-using BeatSpy.DataTypes.Interfaces;
 
 namespace BeatSpy.ViewModels;
 
-internal class MainWindowViewModel : ViewModelBase, IApplicationCommands
+internal class MainWindowViewModel : ViewModelBase
 {
-    public bool IsLoggedIn => spotify.IsLoggedIn;
+    private bool canLogIn = true;
 
-    public Track? Track { get; private set; }
+    public bool CanLogIn
+    {
+        get { return canLogIn; }
+        set 
+        { 
+            canLogIn = value;
+            OnPropertyChanged(nameof(CanLogIn));
+        }
+    }
+
+    public bool IsLoggedIn => spotifyService.IsConnected;
+
+    private Track? track;
+
+    public Track? Track
+    {
+        get { return track; }
+        set 
+        {
+            if (track != value)
+            {
+                track = value;
+                OnPropertyChanged(nameof(Track));
+                OnPropertyChanged(nameof(IsTrackEmpty));
+            }
+        }
+    }
+
     public bool IsTrackEmpty => Track == null;
 
-    #region Application Commands
-    public ICommand RemoveFocusCommand { get; }
-    public ICommand ExitApplicationCommand { get; }
-    public ICommand MinimizeApplicationCommand { get; }
+    public NotificationBannerViewModel NotificationBannerViewModel { get; }
+
+    #region Commands
+    public ICommand LogInCommand { get; }
+    public ICommand LogOutCommand { get; }
+    public ICommand SearchCommand { get; }
     public ICommand OpenInBrowserCommand { get; }
     #endregion
 
-    #region Spotify Commands
-    public ICommand SearchTrackCommand { get; }
-    private ICommand RandomTrackCommand { get; }
-    #endregion
+    private readonly ISpotifyService spotifyService;
+    private readonly INotificationSerivce notificationSerivce;
 
-    public MessageHandlerViewModel MessageHandler => messageViewModel;
-    public ContextMenuViewModel ContextMenuViewModel => contextMenuViewModel;
+    private string searchQuery = string.Empty;
 
-    //Viewmodels
-    private readonly MessageHandlerViewModel messageViewModel;
-    private readonly ContextMenuViewModel contextMenuViewModel;
-
-    //Services
-    private readonly IMessageDisplayService messageService;
-    private readonly ISpotifyService spotify;
-
-    public MainWindowViewModel(ISpotifyService spotifyService, IMessageDisplayService messageDisplayService)
+    public MainWindowViewModel(ISpotifyService spotifyService, INotificationSerivce notificationSerivce)
     {
-        spotify = spotifyService;
-        messageService = messageDisplayService;
-        spotify.OnServiceStateChanged += OnSpotifyServiceStateChanged;
-        messageViewModel = new(messageService);
-        contextMenuViewModel = new(spotify, messageService);
-        ExitApplicationCommand = new ExitApplicationCommand();
-        MinimizeApplicationCommand = new MinimizeApplicationCommand();
-        RemoveFocusCommand = new RemoveElementFocusCommand();
-        OpenInBrowserCommand = new OpenBrowserCommand(messageService);
-        SearchTrackCommand = new SearchTrackCommand(this, spotify, messageService);
-        RandomTrackCommand = new RandomTrackFromPlaylistCommand("37i9dQZEVXbNG2KDcFcKOF", this, spotify, messageService);
+        this.spotifyService = spotifyService;
+        spotifyService.OnConnectionStateChanged += SpotifyService_OnConnectionStateChanged;
+
+        this.notificationSerivce = notificationSerivce;
+
+        NotificationBannerViewModel = new NotificationBannerViewModel(notificationSerivce);
+
+        LogInCommand = new DelegateCommand(ExecuteLogInCommand, (_) => CanLogIn);
+        LogOutCommand = new DelegateCommand(ExecuteLogOutCommand, (_) => IsLoggedIn);
+        SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
+        OpenInBrowserCommand = new DelegateCommand(ExecuteOpenInBrowserCommand, (_) => true);
     }
 
-    public void SetTrack(FullTrack track, TrackAudioFeatures features)
+    private async void SpotifyService_OnConnectionStateChanged(bool success)
     {
-        Track = new Track(track, features);
-        OnPropertyChanged(nameof(Track));
-        OnPropertyChanged(nameof(IsTrackEmpty));
+        OnPropertyChanged(nameof(IsLoggedIn));
+
+        Track = success ? await spotifyService.GetRandomTrackFromPlaylistAsync("37i9dQZEVXbNG2KDcFcKOF") : null;
     }
 
-    private void OnSpotifyServiceStateChanged(ConnectionType state)
+    private async void ExecuteLogInCommand(object parameter)
     {
-        switch (state)
+        CancellationTokenSource cts = new();
+
+        notificationSerivce.ShowNotification(NotificationFactory.ProgressNotification(
+            "Waiting for you to authenticate with Spotify…", () => cts.Cancel()));
+
+        try
         {
-            case ConnectionType.Connected:
-                RandomTrackCommand.Execute(this);
-                messageService.ClearMessage();
-                messageService.DisplayInfoMessage(LogConstants.CLIENT_CONNECTED, silent: true);
-                break;
-            case ConnectionType.Disconnected:
-                messageService.DisplayInfoMessage(LogConstants.CLIENT_DISCONNECTED);
-                break;
+            CanLogIn = false;
+            bool authed = await spotifyService.AuthenticateAsync(cts.Token);
+
+            if (authed)
+                await spotifyService.ConnectAsync();
+
+            notificationSerivce.ClearNotification();
+        }
+        catch
+        {
+            notificationSerivce.ShowNotification(NotificationFactory.ErrorNotification(
+                $"Something went wrong while authenticating"));
         }
 
-        OnPropertyChanged(nameof(IsLoggedIn));
+        CanLogIn = true;
+    }
+
+    private void ExecuteLogOutCommand(object parameter)
+    {
+        spotifyService.Disconnect();
+        notificationSerivce.ShowNotification(NotificationFactory.InfoNotification(
+            "Disconnected from Spotify"));
+    }
+
+    private async void ExecuteSearchCommand(object parameter)
+    {
+        try
+        {
+            Track = await spotifyService.GetTrackFromSearchAsync(searchQuery);
+        }
+        catch
+        {
+            notificationSerivce.ShowNotification(NotificationFactory.ErrorNotification(
+                $"Something went wrong while searching for {searchQuery}"));
+        }
+    }
+
+    private bool CanExecuteSearchCommand(object parameter)
+    {
+        if (parameter is not string query) return false;
+        if (string.IsNullOrEmpty(query) || string.Equals(query, searchQuery)) return false;
+        searchQuery = query;
+        return true;
+    }
+
+    private void ExecuteOpenInBrowserCommand(object parameter)
+    {
+        if (parameter is not string url) return;
+
+        try
+        {
+            BrowserHelper.OpenURLInBrowser(url);
+        }
+        catch
+        {
+            notificationSerivce.ShowNotification(NotificationFactory.ErrorNotification(
+                "Something went wrong trying to open the browser"));
+        }
     }
 
     public override void Dispose()
     {
-        spotify.OnServiceStateChanged -= OnSpotifyServiceStateChanged;
-        messageViewModel.Dispose();
+        spotifyService.OnConnectionStateChanged -= SpotifyService_OnConnectionStateChanged;
+        NotificationBannerViewModel?.Dispose();
     }
 }

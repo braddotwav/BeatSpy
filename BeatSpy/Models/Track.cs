@@ -2,7 +2,7 @@
 
 namespace BeatSpy.Models;
 
-internal sealed class Track(FullTrack track, TrackAudioFeatures trackFeatures)
+public class Track(FullTrack track, TrackAudioFeatures trackFeatures)
 {
     public string Artist { get; } = track.Artists[0].Name;
     public string Title { get; } = track.Name;
