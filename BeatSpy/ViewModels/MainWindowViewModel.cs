@@ -65,8 +65,8 @@ internal class MainWindowViewModel : ViewModelBase
 
         NotificationBannerViewModel = new NotificationBannerViewModel(notificationSerivce);
 
-        LogInCommand = new DelegateCommand(ExecuteLogInCommand, (_) => CanLogIn);
-        LogOutCommand = new DelegateCommand(ExecuteLogOutCommand, (_) => IsLoggedIn);
+        LogInCommand = new DelegateCommand(ExecuteLogInCommand, (_) => true);
+        LogOutCommand = new DelegateCommand(ExecuteLogOutCommand, (_) => true);
         SearchCommand = new DelegateCommand(ExecuteSearchCommand, CanExecuteSearchCommand);
         OpenInBrowserCommand = new DelegateCommand(ExecuteOpenInBrowserCommand, (_) => true);
     }
