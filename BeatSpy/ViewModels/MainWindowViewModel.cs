@@ -95,6 +95,11 @@ internal class MainWindowViewModel : ViewModelBase
 
             notificationSerivce.ClearNotification();
         }
+        catch (OperationCanceledException)
+        {
+            notificationSerivce.ShowNotification(NotificationFactory.InfoNotification(
+                "Authentication was canceled. Try again anytime."));
+        }
         catch
         {
             notificationSerivce.ShowNotification(NotificationFactory.ErrorNotification(
