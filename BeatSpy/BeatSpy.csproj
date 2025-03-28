@@ -1,27 +1,23 @@
 <Project Sdk="Microsoft.NET.Sdk">
-	
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
     <TargetFramework>net8.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>Resources\Icon\Icon.ico</ApplicationIcon>
-    <Version>1.4.0</Version>
-    <FileVersion>1.4.0</FileVersion>
+    <Version>1.5.0</Version>
+    <FileVersion>1.5.0</FileVersion>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
-    <AssemblyVersion>1.4.0</AssemblyVersion>
+    <AssemblyVersion>1.5.0</AssemblyVersion>
   </PropertyGroup>
-	
   <ItemGroup>
     <Content Include="Resources\Icon\Icon.ico" />
   </ItemGroup>
-	
   <ItemGroup>
     <PackageReference Include="DotNetProjects.SVGImage" Version="5.2.3" />
     <PackageReference Include="NLog" Version="5.4.0" />
     <PackageReference Include="SpotifyAPI.Web" Version="7.2.1" />
   </ItemGroup>
-	
   <ItemGroup>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -29,7 +25,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
   </ItemGroup>
-	
   <ItemGroup>
     <None Update="NLog.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -38,7 +33,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-	  <Resource Include="Resources\**\*"/>
+    <Resource Include="Resources\**\*" />
   </ItemGroup>
-	
 </Project>
