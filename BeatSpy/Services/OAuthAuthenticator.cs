@@ -12,12 +12,22 @@ using System.Windows;
 
 namespace BeatSpy.Services;
 
-internal class OAuthAuthenticator(string clientId, Uri redirectUri) : IDisposable
+internal class OAuthAuthenticator : IDisposable
 {
-    private readonly string clientId = clientId;
-    private readonly Uri redirectUri = redirectUri;
+    private readonly string clientId;
+    private readonly Uri redirectUri;
+    private readonly HttpListener httpListener;
 
     private PKCEAuthenticator? authenticator;
+
+    public OAuthAuthenticator(string clientId, Uri redirectUri)
+    {
+        this.clientId = clientId;
+        this.redirectUri = redirectUri;
+
+        httpListener = new HttpListener();
+        httpListener.Prefixes.Add(string.Concat(redirectUri, "/"));
+    }
 
     public async Task Authenticate()
     {
@@ -35,9 +45,6 @@ internal class OAuthAuthenticator(string clientId, Uri redirectUri) : IDisposabl
 
     private async Task StartCallbackListener(string verifier)
     {
-        using HttpListener httpListener = new();
-        httpListener.Prefixes.Add(string.Concat(redirectUri, "/"));
-
         httpListener.Start();
         HttpListenerContext context = await httpListener.GetContextAsync();
 
@@ -127,6 +134,8 @@ internal class OAuthAuthenticator(string clientId, Uri redirectUri) : IDisposabl
 
     public void Dispose()
     {
+        httpListener.Stop();
+
         if (authenticator != null)
             authenticator.TokenRefreshed -= Authenticator_TokenRefreshed;
     }

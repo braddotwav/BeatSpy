@@ -14,7 +14,7 @@ internal class SpotifyService : ISpotifyService, IDisposable
 
     private const string CLIENT_ID = "4b675b489cf74ff2a4a2d4483cf1dbe1";
     private const string REDIRECT_URI = "http://127.0.0.1:5543/callback";
-    
+
     public bool IsConnected => client != null;
 
     private SpotifyClient? client;
@@ -46,6 +46,7 @@ internal class SpotifyService : ISpotifyService, IDisposable
         }
         catch (Exception ex)
         {
+            authenticator.Dispose();
             logger.Error(ex);
             throw;
         }
